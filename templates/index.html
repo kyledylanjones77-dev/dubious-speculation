@@ -188,18 +188,77 @@
     <!-- ===== JUST FOR FUN ===== -->
     <main class="page" id="page-fun">
         <section class="hero-section">
-            <div class="hero-label">Friday Predictions</div>
+            <div class="hero-label">AI Predictions</div>
             <div class="hero-number" id="funTarget">-</div>
-            <div class="hero-badge badge-neutral" id="funStreak">Loading</div>
+            <div class="hero-badge badge-neutral" id="dpHeroBadge">Self-Learning</div>
+            <div class="hero-sub" style="font-size:11px;color:var(--t3);margin-top:4px">Built from 151 videos &bull; 492K words of Cowen analysis</div>
         </section>
 
+        <!-- What Would Ben Do? -->
+        <section class="card ben-signal-card">
+            <div class="card-label">What Would Ben Do? <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">Combines ALL of Benjamin Cowen's frameworks from 151 video transcripts into a single buy/sell/hold signal. Factors: risk metric, log regression fair value, 4-year cycle position, bull market support band, macro economy, BTC dominance, momentum, and Cowen's explicit thesis. This is what Ben's data says — not financial advice.</div>
+            <div class="ben-action-row">
+                <div class="ben-action-badge" id="benAction">Loading</div>
+                <div class="ben-score" id="benScore">-</div>
+            </div>
+            <div class="ben-detail" id="benDetail"></div>
+            <div class="ben-counts" id="benCounts"></div>
+            <div class="ben-reasoning" id="benReasoning"></div>
+        </section>
+
+        <!-- Daily Predictions -->
         <section class="card">
-            <div class="card-label">This Week's Predictions</div>
+            <div class="card-label">Tomorrow's Predictions <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">Daily price predictions for the next trading day. Uses 8 weighted signals: log regression, 7d/30d momentum, mean reversion, volatility, macro health, Cowen's thesis from 151 transcripts, and halving cycle position. The model automatically adjusts signal weights based on past accuracy.</div>
+            <div id="dailyPredictions"></div>
+        </section>
+
+        <!-- Weekly Predictions -->
+        <section class="card">
+            <div class="card-label">7-Day Predictions <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">Weekly price predictions for 7 days out. Same 8 signals scaled to a weekly horizon. Generally more reliable than daily since noise averages out, but wider expected ranges.</div>
+            <div id="weeklyPredictions"></div>
+        </section>
+
+        <!-- Self-Learning Stats -->
+        <section class="card">
+            <div class="card-label">Self-Learning Performance <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">The model evaluates every prediction after it expires. If momentum signals kept predicting correctly, momentum gets more weight. If a signal keeps being wrong, its influence shrinks. The system gets smarter with every prediction cycle.</div>
+            <div class="row-3" style="margin-bottom:8px">
+                <div class="cell"><div class="cell-val stat-val" id="dpDailyAcc">-</div><div class="cell-label">Daily Acc.</div></div>
+                <div class="cell"><div class="cell-val stat-val" id="dpWeeklyAcc">-</div><div class="cell-label">Weekly Acc.</div></div>
+                <div class="cell"><div class="cell-val stat-val" id="dpStreak">0</div><div class="cell-label">Streak</div></div>
+            </div>
+            <div class="row-3">
+                <div class="cell"><div class="cell-val stat-val" id="dpDailyCount">0</div><div class="cell-label">Daily Eval</div></div>
+                <div class="cell"><div class="cell-val stat-val" id="dpWeeklyCount">0</div><div class="cell-label">Weekly Eval</div></div>
+                <div class="cell"><div class="cell-val stat-val" id="dpUpdates">0</div><div class="cell-label">Wt Updates</div></div>
+            </div>
+        </section>
+
+        <!-- Signal Weights -->
+        <section class="card">
+            <div class="card-label">Signal Weights (Auto-Adjusting) <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">These 8 signals drive every prediction. After each prediction is evaluated, the model nudges weights toward signals that were right and away from signals that were wrong. The green bar shows the current top-weighted signal. Weights always sum to 100%.</div>
+            <div id="dpWeights" class="kv-list"></div>
+        </section>
+
+        <!-- Prediction History -->
+        <section class="card">
+            <div class="card-label">Prediction History</div>
+            <div id="dpLearnHistory"></div>
+        </section>
+
+        <!-- Friday Predictions (original) -->
+        <section class="card">
+            <div class="card-label">Friday Predictions (Legacy) <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">The original weekly Friday prediction system. Runs alongside the new daily/weekly model for comparison.</div>
             <div id="fridayPredictions"></div>
         </section>
 
         <section class="card">
-            <div class="card-label">My Track Record</div>
+            <div class="card-label">Friday Track Record</div>
             <div class="row-3">
                 <div class="cell"><div class="cell-val stat-val" id="funTotal">0</div><div class="cell-label">Predictions</div></div>
                 <div class="cell"><div class="cell-val stat-val" id="funCorrect">-</div><div class="cell-label">Direction %</div></div>
@@ -208,16 +267,16 @@
         </section>
 
         <section class="card">
-            <div class="card-label">Indicator Weights (Self-Learning) <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
-            <div class="info-desc">These weights control how much each signal influences the Friday predictions. The system automatically adjusts them over time — if momentum signals keep being right, momentum gets more weight. If macro signals are consistently wrong, they get less. The weights always add up to 100%.</div>
+            <div class="card-label">Friday Weights (Self-Learning)</div>
             <div id="funWeights" class="kv-list"></div>
         </section>
 
         <section class="card">
-            <div class="card-label">Past Results</div>
+            <div class="card-label">Friday Past Results</div>
             <div id="funHistory"></div>
         </section>
 
+        <!-- Knowledge Base -->
         <section class="card">
             <div class="card-label">Knowledge Base</div>
             <div class="row-3">

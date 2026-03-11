@@ -1214,6 +1214,192 @@ class CowenAnalysisEngine:
             "cycle_position": cycle,
         }
 
+    def get_ben_signal(self):
+        """
+        'What Would Ben Do?' — Buy/Sell/Hold signal for Bitcoin.
+        Combines ALL of Cowen's frameworks from 151 transcripts into
+        a single actionable signal with detailed reasoning.
+
+        Frameworks used:
+        1. Risk Metric (log regression distance)
+        2. 4-Year Cycle Position (halving-based)
+        3. Bull Market Support Band (20W SMA + 21W EMA)
+        4. Macro Overlay (DXY, rates, economy)
+        5. Cowen's Explicit Thesis (from transcript analysis)
+        6. BTC Dominance
+        7. Price vs Fair Value
+        8. Momentum
+        """
+        signals = []  # list of (signal_name, score, reasoning)
+        # score: -2 (strong sell) to +2 (strong buy)
+
+        # 1. Risk Metric
+        risk = self.get_risk_metric()
+        risk_score = risk.get("risk_score", 0.5)
+        fair_value = risk.get("fair_value", 0)
+        current_price = risk.get("current_price", 0)
+        zone = risk.get("zone", "")
+
+        if risk_score <= 0.15:
+            signals.append(("Risk Metric", 2, f"Risk at {risk_score:.3f} — extreme accumulation zone. Historically the best buying opportunity."))
+        elif risk_score <= 0.3:
+            signals.append(("Risk Metric", 1.5, f"Risk at {risk_score:.3f} — accumulation zone. Ben says 'DCA into fear, not euphoria.'"))
+        elif risk_score <= 0.45:
+            signals.append(("Risk Metric", 0.8, f"Risk at {risk_score:.3f} — early bull territory. Price below fair value — continue accumulating."))
+        elif risk_score <= 0.55:
+            signals.append(("Risk Metric", 0, f"Risk at {risk_score:.3f} — near fair value. Neutral — hold position."))
+        elif risk_score <= 0.7:
+            signals.append(("Risk Metric", -0.8, f"Risk at {risk_score:.3f} — elevated. Consider taking some profits off the table."))
+        elif risk_score <= 0.85:
+            signals.append(("Risk Metric", -1.5, f"Risk at {risk_score:.3f} — high risk. Ben would be reducing exposure significantly."))
+        else:
+            signals.append(("Risk Metric", -2, f"Risk at {risk_score:.3f} — extreme risk. Potential blow-off top. Maximum profit-taking."))
+
+        # 2. Price vs Fair Value
+        if current_price > 0 and fair_value > 0:
+            pct_from_fair = ((current_price / fair_value) - 1) * 100
+            if pct_from_fair < -40:
+                signals.append(("Fair Value", 2, f"Price is {pct_from_fair:.0f}% below fair value (${fair_value:,.0f}). Deep discount — generational buy zone."))
+            elif pct_from_fair < -20:
+                signals.append(("Fair Value", 1.2, f"Price is {pct_from_fair:.0f}% below fair value. Undervalued — accumulate."))
+            elif pct_from_fair < 0:
+                signals.append(("Fair Value", 0.5, f"Price is {pct_from_fair:.0f}% below fair value. Slightly cheap — lean buy."))
+            elif pct_from_fair < 30:
+                signals.append(("Fair Value", -0.3, f"Price is +{pct_from_fair:.0f}% above fair value. Near fair — hold."))
+            else:
+                signals.append(("Fair Value", -1.5, f"Price is +{pct_from_fair:.0f}% above fair value. Overextended — take profits."))
+
+        # 3. 4-Year Cycle
+        cycle = self._get_cycle_position()
+        progress = cycle.get("cycle_progress", 0.5)
+        cycle_year = cycle.get("cycle_year", "")
+        days_since = cycle.get("days_since_halving", 0)
+
+        if "Year 1" in cycle_year:
+            signals.append(("Halving Cycle", 1.0, f"Year 1 post-halving ({days_since} days). Historically bullish — BTC tends to rally."))
+        elif "Year 2" in cycle_year:
+            signals.append(("Halving Cycle", -1.0, f"Midterm year ({days_since} days post-halving). Ben's data shows midterm years are the weakest. Expect chop and lower highs."))
+        elif "Year 3" in cycle_year:
+            signals.append(("Halving Cycle", 1.5, f"Year 3 — historically the strongest year in the cycle. Be positioned."))
+        else:
+            signals.append(("Halving Cycle", 0.3, f"Pre-halving year. Accumulation typically builds here."))
+
+        # 4. Bull Market Support Band
+        btc_data = self.market_api.get_bitcoin_data()
+        price_history = btc_data.get("price_history", [])
+        bull_band = self.get_bull_market_support_band(price_history) if price_history else None
+        if bull_band:
+            if bull_band["above_sma"] and bull_band["above_ema"]:
+                signals.append(("Bull Band", 1.0, f"Price above both 20W SMA (${bull_band['sma_20w']:,.0f}) and 21W EMA. Bull trend confirmed."))
+            elif not bull_band["above_sma"] and not bull_band["above_ema"]:
+                signals.append(("Bull Band", -1.0, f"Price BELOW both 20W SMA (${bull_band['sma_20w']:,.0f}) and 21W EMA. Bear trend — Ben says this is not the time to be aggressive."))
+            else:
+                signals.append(("Bull Band", 0, f"Price between 20W SMA and 21W EMA. Indecisive — wait for confirmation."))
+
+        # 5. Macro
+        try:
+            econ = self.market_api.get_macro_economy()
+            macro_score = econ.get("assessment", {}).get("score", 0)
+            outlook = econ.get("assessment", {}).get("outlook", "")
+            if macro_score > 30:
+                signals.append(("Macro Economy", 0.5, f"Economy score +{macro_score} ({outlook}). Supportive environment for risk assets."))
+            elif macro_score > 0:
+                signals.append(("Macro Economy", 0.2, f"Economy score +{macro_score} ({outlook}). Mildly supportive."))
+            elif macro_score > -30:
+                signals.append(("Macro Economy", -0.3, f"Economy score {macro_score} ({outlook}). Headwinds present — be cautious."))
+            else:
+                signals.append(("Macro Economy", -1.0, f"Economy score {macro_score} ({outlook}). Significant headwinds. Ben says macro matters."))
+        except Exception:
+            pass
+
+        # 6. Cowen's Thesis (from 151 transcripts)
+        thesis = self.cowen_thesis
+        if thesis:
+            overall = thesis.get("overall", "")
+            near_term = thesis.get("btc_near_term", "")
+            bottom_case = thesis.get("btc_bottom_base_case", "")
+
+            if "bear" in overall.lower():
+                signals.append(("Cowen's Thesis", -1.2, f"Ben's thesis: '{overall[:80]}' Base case bottom: {bottom_case}."))
+            elif "bull" in overall.lower():
+                signals.append(("Cowen's Thesis", 1.2, f"Ben's thesis: '{overall[:80]}'"))
+            else:
+                signals.append(("Cowen's Thesis", 0, f"Ben's thesis: '{overall[:80]}'"))
+
+            if near_term:
+                if "lower high" in near_term.lower() or "weakness" in near_term.lower():
+                    signals.append(("Near-Term View", -0.8, f"Ben's near-term: '{near_term}'"))
+                elif "rally" in near_term.lower() or "strength" in near_term.lower():
+                    signals.append(("Near-Term View", 0.5, f"Ben's near-term: '{near_term}'"))
+
+        # 7. BTC Dominance
+        dom = self.market_api.get_btc_dominance()
+        btc_dom = dom.get("btc_dominance", 0)
+        if btc_dom > 60:
+            signals.append(("BTC Dominance", -0.3, f"Dominance at {btc_dom}% — very high. Capital hiding in BTC, alt season far away. Bear market behavior."))
+        elif btc_dom > 50:
+            signals.append(("BTC Dominance", 0.3, f"Dominance at {btc_dom}% — BTC leading. Healthy for BTC but alts struggling."))
+        elif btc_dom > 40:
+            signals.append(("BTC Dominance", 0.5, f"Dominance at {btc_dom}% — balanced market. Both BTC and alts can work."))
+        else:
+            signals.append(("BTC Dominance", 0.2, f"Dominance at {btc_dom}% — low. Alt season territory — be selective."))
+
+        # Calculate overall signal
+        total_score = sum(s[1] for s in signals)
+        max_possible = len(signals) * 2
+        normalized = total_score / max_possible * 100 if max_possible > 0 else 0
+
+        # Determine action
+        if normalized > 40:
+            action = "STRONG BUY"
+            action_detail = "Multiple Cowen frameworks align bullish. Aggressive accumulation zone."
+            color = "buy"
+        elif normalized > 15:
+            action = "BUY / DCA"
+            action_detail = "Majority of indicators favor accumulation. Dollar-cost average in."
+            color = "buy"
+        elif normalized > 5:
+            action = "LEAN BUY"
+            action_detail = "Slight bullish edge. Small positions or continued DCA."
+            color = "buy"
+        elif normalized > -5:
+            action = "HOLD"
+            action_detail = "Mixed signals. Ben would say 'patience is a virtue.' Hold current positions."
+            color = "hold"
+        elif normalized > -15:
+            action = "LEAN SELL"
+            action_detail = "Slight bearish edge. Consider trimming positions or tightening stops."
+            color = "sell"
+        elif normalized > -40:
+            action = "REDUCE"
+            action_detail = "Majority of indicators bearish. Take profits and reduce exposure."
+            color = "sell"
+        else:
+            action = "STRONG SELL"
+            action_detail = "Multiple frameworks align bearish. Maximize cash, minimize exposure."
+            color = "sell"
+
+        # Build reasoning list (top signals sorted by absolute strength)
+        sorted_signals = sorted(signals, key=lambda x: abs(x[1]), reverse=True)
+        reasoning = [{"name": s[0], "score": round(s[1], 1), "detail": s[2]} for s in sorted_signals]
+
+        return {
+            "action": action,
+            "action_detail": action_detail,
+            "color": color,
+            "score": round(normalized, 1),
+            "raw_score": round(total_score, 2),
+            "signal_count": len(signals),
+            "bullish_signals": len([s for s in signals if s[1] > 0.3]),
+            "bearish_signals": len([s for s in signals if s[1] < -0.3]),
+            "neutral_signals": len([s for s in signals if -0.3 <= s[1] <= 0.3]),
+            "reasoning": reasoning,
+            "current_price": current_price,
+            "fair_value": round(fair_value, 2),
+            "risk_score": risk_score,
+            "disclaimer": "Based on Benjamin Cowen's analytical frameworks. Not financial advice. Always do your own research.",
+        }
+
     @staticmethod
     def _sma(data, period):
         """Simple Moving Average."""

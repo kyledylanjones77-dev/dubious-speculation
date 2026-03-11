@@ -12,6 +12,7 @@ from api.cowen_engine import CowenAnalysisEngine
 from api.video_updater import VideoUpdater
 from api.adaptive_tracker import AdaptiveTracker
 from api.friday_predictor import FridayPredictor
+from api.daily_predictor import DailyPredictor
 from api.cowen_llm import CowenLLM
 import json
 import os
@@ -26,6 +27,7 @@ cowen_engine = CowenAnalysisEngine()
 video_updater = VideoUpdater()
 adaptive_tracker = AdaptiveTracker()
 friday_predictor = FridayPredictor()
+daily_predictor = DailyPredictor()
 
 # Initialize Cowen LLM (loads existing vector store if available)
 _openai_key = os.environ.get("OPENAI_API_KEY", "")
@@ -150,6 +152,16 @@ def accuracy_report():
 def friday_predictions():
     """Get weekly Friday price predictions with learning stats."""
     return jsonify(friday_predictor.get_current_predictions(market_api, cowen_engine))
+
+@app.route("/api/ben-signal")
+def ben_signal():
+    """What Would Ben Do? Buy/Sell/Hold signal combining all Cowen frameworks."""
+    return jsonify(cowen_engine.get_ben_signal())
+
+@app.route("/api/daily-predictions")
+def daily_predictions():
+    """Get self-learning daily + weekly predictions."""
+    return jsonify(daily_predictor.get_predictions(market_api, cowen_engine))
 
 @app.route("/api/confidence")
 def confidence_adjustments():
@@ -314,6 +326,16 @@ def background_tasks():
 
                 adaptive_tracker.record_daily_snapshot(forecasts, prices)
                 adaptive_tracker.evaluate_expired_predictions(prices)
+
+                # Generate daily predictions and evaluate past ones
+                try:
+                    daily_predictor.evaluate_predictions(market_api)
+                    daily_predictor.generate_daily(market_api, cowen_engine)
+                    daily_predictor.generate_weekly(market_api, cowen_engine)
+                    print(f"[DAILY] Predictions generated/evaluated")
+                except Exception as e:
+                    print(f"[DAILY] Prediction error: {e}")
+
                 last_snapshot = now
                 print(f"[DAILY] Snapshot recorded for {now}")
             except Exception as e:

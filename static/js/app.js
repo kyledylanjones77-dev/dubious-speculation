@@ -22,7 +22,7 @@ function switchPage(name) {
 
 // Init
 async function init() {
-    const [comp, risk, fc, bands, macro, insights, accuracy, history, econ, friday, dash] = await Promise.all([
+    const [comp, risk, fc, bands, macro, insights, accuracy, history, econ, friday, dash, dpred, bensig] = await Promise.all([
         api('/api/composite-score'),
         api('/api/risk-metric'),
         api('/api/forecasts'),
@@ -34,6 +34,8 @@ async function init() {
         api('/api/macro-economy'),
         api('/api/friday-predictions'),
         api('/api/dashboard'),
+        api('/api/daily-predictions'),
+        api('/api/ben-signal'),
     ]);
 
     if (comp) renderComposite(comp);
@@ -52,6 +54,8 @@ async function init() {
     if (insights) renderLearn(insights);
     if (accuracy) renderAccuracy(accuracy);
     if (friday) renderFridayPredictions(friday);
+    if (dpred) renderDailyPredictions(dpred);
+    if (bensig) renderBenSignal(bensig);
     if (history) renderBtcChart(history);
     if (fc && fc.bitcoin && fc.bitcoin.score_components) renderScoreChart(fc.bitcoin.score_components);
     if (econ) renderMacroEconomy(econ);
@@ -1020,6 +1024,197 @@ function renderFridayPredictions(d) {
         }
     } else if (hEl) {
         hEl.innerHTML = '<div style="color:var(--t3);font-size:12px;padding:8px">No evaluated predictions yet. Check back after Friday!</div>';
+    }
+}
+
+// What Would Ben Do? Buy/Sell Signal
+function renderBenSignal(d) {
+    if (!d) return;
+
+    const actionEl = $('benAction');
+    const detailEl = $('benDetail');
+    const scoreEl = $('benScore');
+    const reasonEl = $('benReasoning');
+    const countEl = $('benCounts');
+
+    if (!actionEl) return;
+
+    // Action badge
+    const colorMap = { buy: '#00c805', sell: '#ff5000', hold: '#ff8800' };
+    const bgMap = { buy: 'rgba(0,200,5,0.15)', sell: 'rgba(255,80,0,0.15)', hold: 'rgba(255,136,0,0.15)' };
+    actionEl.textContent = d.action;
+    actionEl.style.color = colorMap[d.color] || '#888';
+    actionEl.style.background = bgMap[d.color] || 'rgba(136,136,136,0.15)';
+
+    if (detailEl) detailEl.textContent = d.action_detail;
+
+    // Score
+    if (scoreEl) {
+        scoreEl.textContent = (d.score > 0 ? '+' : '') + d.score;
+        scoreEl.style.color = d.score > 10 ? '#00c805' : d.score > -10 ? '#ff8800' : '#ff5000';
+    }
+
+    // Signal counts
+    if (countEl) {
+        countEl.innerHTML = `
+            <span style="color:#00c805">${d.bullish_signals} bullish</span> &bull;
+            <span style="color:#888">${d.neutral_signals} neutral</span> &bull;
+            <span style="color:#ff5000">${d.bearish_signals} bearish</span>`;
+    }
+
+    // Reasoning
+    if (reasonEl && d.reasoning) {
+        reasonEl.innerHTML = '';
+        for (const r of d.reasoning) {
+            const scoreColor = r.score > 0.5 ? '#00c805' : r.score < -0.5 ? '#ff5000' : '#888';
+            const scoreLabel = r.score > 0.5 ? 'BUY' : r.score < -0.5 ? 'SELL' : 'HOLD';
+            const icon = r.score > 0.5 ? '&#9650;' : r.score < -0.5 ? '&#9660;' : '&#9644;';
+            reasonEl.innerHTML += `
+                <div class="ben-reason">
+                    <div class="ben-reason-header">
+                        <span class="ben-reason-name">${r.name}</span>
+                        <span style="color:${scoreColor};font-size:11px;font-weight:700">${icon} ${scoreLabel}</span>
+                    </div>
+                    <div class="ben-reason-detail">${r.detail}</div>
+                </div>`;
+        }
+    }
+}
+
+// Daily/Weekly Self-Learning Predictions
+function renderDailyPredictions(d) {
+    if (!d) return;
+
+    const names = { bitcoin: 'BTC', ethereum: 'ETH', gold: 'Gold', silver: 'Silver', uranium: 'URA', dogecoin: 'DOGE' };
+
+    // Daily predictions
+    const dailyEl = $('dailyPredictions');
+    if (dailyEl && d.daily?.predictions) {
+        dailyEl.innerHTML = '';
+        const dt = new Date(d.daily.target_date + 'T12:00:00');
+        const dateStr = dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        for (const [asset, pred] of Object.entries(d.daily.predictions)) {
+            if (pred.error) continue;
+            const dirColor = pred.direction === 'UP' ? '#00c805' : pred.direction === 'DOWN' ? '#ff5000' : '#888';
+            const dirIcon = pred.direction === 'UP' ? '&#9650;' : pred.direction === 'DOWN' ? '&#9660;' : '&#9644;';
+            dailyEl.innerHTML += `
+                <div class="pred-card">
+                    <div class="pred-header">
+                        <span class="pred-name">${names[asset] || asset}</span>
+                        <span class="pred-dir" style="color:${dirColor}">${dirIcon} ${pred.direction}</span>
+                    </div>
+                    <div class="pred-prices">
+                        <div><span class="dim">Now: </span>${fp(pred.current_price)}</div>
+                        <div><span class="dim">${dateStr}: </span><b style="color:${dirColor}">${fp(pred.predicted_price)}</b></div>
+                    </div>
+                    <div class="pred-meta">
+                        <span>${pred.predicted_change_pct > 0 ? '+' : ''}${pred.predicted_change_pct}%</span>
+                        <span class="pred-conf">${pred.confidence}% conf</span>
+                    </div>
+                </div>`;
+        }
+    }
+
+    // Weekly predictions
+    const weeklyEl = $('weeklyPredictions');
+    if (weeklyEl && d.weekly?.predictions) {
+        weeklyEl.innerHTML = '';
+        const dt = new Date(d.weekly.target_date + 'T12:00:00');
+        const dateStr = dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        for (const [asset, pred] of Object.entries(d.weekly.predictions)) {
+            if (pred.error) continue;
+            const dirColor = pred.direction === 'UP' ? '#00c805' : pred.direction === 'DOWN' ? '#ff5000' : '#888';
+            const dirIcon = pred.direction === 'UP' ? '&#9650;' : pred.direction === 'DOWN' ? '&#9660;' : '&#9644;';
+            weeklyEl.innerHTML += `
+                <div class="pred-card">
+                    <div class="pred-header">
+                        <span class="pred-name">${names[asset] || asset}</span>
+                        <span class="pred-dir" style="color:${dirColor}">${dirIcon} ${pred.direction}</span>
+                    </div>
+                    <div class="pred-prices">
+                        <div><span class="dim">Now: </span>${fp(pred.current_price)}</div>
+                        <div><span class="dim">${dateStr}: </span><b style="color:${dirColor}">${fp(pred.predicted_price)}</b></div>
+                    </div>
+                    <div class="pred-meta">
+                        <span>${pred.predicted_change_pct > 0 ? '+' : ''}${pred.predicted_change_pct}%</span>
+                        <span class="pred-conf">${pred.confidence}% conf</span>
+                    </div>
+                </div>`;
+        }
+    }
+
+    // Stats
+    const stats = d.stats || {};
+    const dAccEl = $('dpDailyAcc');
+    const wAccEl = $('dpWeeklyAcc');
+    const dErrEl = $('dpDailyErr');
+    const wErrEl = $('dpWeeklyErr');
+    const dCountEl = $('dpDailyCount');
+    const wCountEl = $('dpWeeklyCount');
+    const streakEl = $('dpStreak');
+    const updatesEl = $('dpUpdates');
+
+    if (dAccEl) dAccEl.textContent = stats.daily_accuracy != null ? stats.daily_accuracy + '%' : 'Learning';
+    if (wAccEl) wAccEl.textContent = stats.weekly_accuracy != null ? stats.weekly_accuracy + '%' : 'Learning';
+    if (dErrEl) dErrEl.textContent = stats.daily_avg_error ? stats.daily_avg_error.toFixed(2) + '%' : '-';
+    if (wErrEl) wErrEl.textContent = stats.weekly_avg_error ? stats.weekly_avg_error.toFixed(2) + '%' : '-';
+    if (dCountEl) dCountEl.textContent = stats.daily_evaluated || 0;
+    if (wCountEl) wCountEl.textContent = stats.weekly_evaluated || 0;
+    if (streakEl) streakEl.textContent = stats.current_streak || 0;
+    if (updatesEl) updatesEl.textContent = stats.weight_updates || 0;
+
+    // Signal weights with bars
+    const swEl = $('dpWeights');
+    if (swEl && d.weights) {
+        swEl.innerHTML = '';
+        const sorted = Object.entries(d.weights).sort((a, b) => b[1] - a[1]);
+        for (const [k, v] of sorted) {
+            const pct = (v * 100).toFixed(1);
+            const barW = Math.min(v * 100 * 3, 100); // scale for visibility
+            const isTop = v === sorted[0][1];
+            swEl.innerHTML += `
+                <div class="kv-row">
+                    <span class="kv-key">${fmtName(k)}</span>
+                    <div style="flex:1;display:flex;align-items:center;gap:6px">
+                        <div style="flex:1;height:4px;background:var(--card);border-radius:2px;overflow:hidden">
+                            <div style="width:${barW}%;height:100%;background:${isTop ? '#00c805' : '#5ac8fa'};border-radius:2px"></div>
+                        </div>
+                        <span class="kv-val" style="min-width:40px;text-align:right">${pct}%</span>
+                    </div>
+                </div>`;
+        }
+    }
+
+    // Learning history
+    const lhEl = $('dpLearnHistory');
+    if (lhEl && d.history && d.history.length > 0) {
+        lhEl.innerHTML = '';
+        for (const entry of d.history.slice(0, 14)) {
+            const typeLabel = entry.type === 'daily' ? '<span style="color:#5ac8fa;font-size:10px">DAILY</span>' : '<span style="color:#ff8800;font-size:10px">WEEKLY</span>';
+            let rows = '';
+            for (const [asset, r] of Object.entries(entry.results || {})) {
+                const icon = r.correct ? '&#10003;' : '&#10007;';
+                const color = r.correct ? '#00c805' : '#ff5000';
+                rows += `<div class="hist-row"><span>${names[asset] || asset}</span><span style="color:${color}">${icon} ${r.error.toFixed(2)}%</span></div>`;
+            }
+            lhEl.innerHTML += `
+                <div class="hist-week">
+                    <div class="hist-date">${entry.date} ${typeLabel}</div>
+                    ${rows}
+                </div>`;
+        }
+    } else if (lhEl) {
+        lhEl.innerHTML = '<div style="color:var(--t3);font-size:12px;padding:8px">Predictions generated! Results will appear after each target date passes.</div>';
+    }
+
+    // Hero badge for daily
+    const heroBadge = $('dpHeroBadge');
+    if (heroBadge && stats.daily_accuracy != null) {
+        heroBadge.textContent = stats.daily_accuracy + '% Accuracy';
+        heroBadge.className = 'hero-badge ' + (stats.daily_accuracy >= 60 ? 'badge-bull' : stats.daily_accuracy >= 40 ? 'badge-neutral' : 'badge-bear');
+    } else if (heroBadge) {
+        heroBadge.textContent = 'Self-Learning';
+        heroBadge.className = 'hero-badge badge-neutral';
     }
 }
 
