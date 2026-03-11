@@ -61,7 +61,7 @@ async function init() {
     _dashData = dash;
     _fcData = fc;
     _sparkDrawn = false;
-    if (fc) { renderTicker(fc); renderBtcPage(fc.bitcoin); renderAssets(fc, dash); }
+    if (fc) { renderTicker(fc, dash); renderBtcPage(fc.bitcoin); renderAssets(fc, dash); }
     // BTC Dominance from faster dashboard endpoint, fallback to forecasts
     const domData = fc?.btc_dominance || {};
     if (dash?.btc_dominance) {
@@ -87,13 +87,25 @@ function renderComposite(d) {
     const el = $('heroNum');
     el.textContent = (s > 0 ? '+' : '') + s.toFixed(0);
     el.style.color = s > 20 ? '#00c805' : s > 0 ? '#88cc00' : s > -20 ? '#ff8800' : '#ff5000';
+    el.classList.remove('loading-pulse');
 
     const badge = $('heroBadge');
+    badge.classList.remove('loading-pulse');
     const isBull = s > 0;
     badge.textContent = d.interpretation?.split(' - ')[0] || (isBull ? 'BULLISH' : 'BEARISH');
     badge.className = 'hero-badge ' + (isBull ? 'badge-bull' : s === 0 ? 'badge-neutral' : 'badge-bear');
 
     $('heroSub').textContent = d.interpretation || '';
+
+    // Last updated timestamp
+    let ts = $('lastUpdated');
+    if (!ts) {
+        ts = document.createElement('div');
+        ts.id = 'lastUpdated';
+        ts.className = 'last-updated';
+        $('heroSub').parentElement.appendChild(ts);
+    }
+    ts.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 }
 
 // Risk
@@ -112,32 +124,54 @@ function renderRisk(d) {
 }
 
 // Ticker
-function renderTicker(fc) {
+function renderTicker(fc, dash) {
     const strip = $('tickerStrip');
+    if (!strip) return;
     strip.innerHTML = '';
     const items = [
-        { k: 'bitcoin', n: 'BTC', f: 'current_price' },
-        { k: 'ethereum', n: 'ETH', f: 'current_price' },
-        { k: 'gold', n: 'GOLD', f: 'current_price' },
-        { k: 'silver', n: 'SILVER', f: 'current_price' },
-        { k: 'uranium', n: 'URA', f: 'current_price' },
-        { k: 'dogecoin', n: 'DOGE', f: 'current_price' },
-        { k: 'btc_dominance', n: 'BTC.D', f: 'current_dominance' },
+        { k: 'bitcoin', n: 'BTC', f: 'current_price', dk: 'bitcoin' },
+        { k: 'ethereum', n: 'ETH', f: 'current_price', dk: 'ethereum' },
+        { k: 'gold', n: 'GOLD', f: 'current_price', dk: 'gold' },
+        { k: 'silver', n: 'SILVER', f: 'current_price', dk: 'silver' },
+        { k: 'uranium', n: 'URA', f: 'current_price', dk: 'uranium' },
+        { k: 'dogecoin', n: 'DOGE', f: 'current_price', dk: 'dogecoin' },
+        { k: 'btc_dominance', n: 'BTC.D', f: 'current_dominance', dk: null },
     ];
     for (const a of items) {
         const d = fc[a.k]; if (!d) continue;
         const price = d[a.f] || 0;
-        const bias = d.bias || d.bias_vs_btc || '';
-        const bull = /bull|long|accum/i.test(bias);
-        const bear = /bear|cautious/i.test(bias);
+        // Pull 24h change from multiple sources
+        let change = d.change_24h || d.change_pct || 0;
+        // Fallback: compute from dashboard price_history or previous_close
+        if (!change && dash && a.dk && dash[a.dk]) {
+            const dd = dash[a.dk];
+            if (dd.change_24h) { change = dd.change_24h; }
+            else if (dd.previous_close && dd.current_price) {
+                change = ((dd.current_price / dd.previous_close) - 1) * 100;
+            } else if (dd.price_history && dd.price_history.length >= 2) {
+                const hist = dd.price_history;
+                const now = hist[hist.length - 1].price;
+                // Find price ~24h ago
+                const cutoff = Date.now() - 86400000;
+                let prev = hist[0].price;
+                for (const p of hist) { if (p.timestamp < cutoff) prev = p.price; else break; }
+                change = ((now / prev) - 1) * 100;
+            }
+        }
+        const hasChange = change !== 0 && a.k !== 'btc_dominance';
+        const changeColor = change >= 0 ? '#00c805' : '#ff5000';
+        const changeText = hasChange ? `${change >= 0 ? '+' : ''}${change.toFixed(1)}%` : '';
 
         const div = document.createElement('div');
         div.className = 'tick';
         div.innerHTML = `
             <div class="tick-name">${a.n}</div>
             <div class="tick-price">${a.k === 'btc_dominance' ? price.toFixed(1) + '%' : fp(price)}</div>
-            <div class="tick-bias ${bull ? 'up' : bear ? 'down' : 'flat'}">${(bias.split(' - ')[0] || '').substring(0, 15)}</div>
+            ${hasChange ? `<div style="font-size:11px;font-weight:700;color:${changeColor}">${changeText}</div>` : `<div class="tick-bias">${a.k === 'btc_dominance' ? '' : (d.bias || '').split(' - ')[0].substring(0,15)}</div>`}
         `;
+        // Navigate to relevant page on tap
+        const pageMap = { bitcoin: 'bitcoin', ethereum: 'assets', gold: 'assets', silver: 'assets', uranium: 'assets', dogecoin: 'assets', btc_dominance: 'home' };
+        div.onclick = () => switchPage(pageMap[a.k] || 'home');
         strip.appendChild(div);
     }
 }
@@ -1364,8 +1398,10 @@ function changeEconTimeframe(days) {
 // Actions
 async function refreshAll() {
     const btn = $('refreshBtn');
-    if (btn) btn.style.opacity = '0.3';
-    try { await init(); } finally { if (btn) btn.style.opacity = '1'; }
+    if (btn) { btn.classList.add('spinning'); btn.style.opacity = '0.5'; }
+    try { await init(); } finally {
+        if (btn) { btn.classList.remove('spinning'); btn.style.opacity = '1'; }
+    }
 }
 
 async function checkNewVideos() {

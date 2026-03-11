@@ -50,9 +50,9 @@
         <section class="hero-section">
             <div class="hero-label">Market Score <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
             <div class="info-desc" style="text-align:left;margin:0 16px 8px">A composite score from -100 to +100 that combines Bitcoin's risk level, cycle position, macro conditions, and Cowen's thesis. Positive = bullish conditions for crypto. Negative = caution. It's a quick snapshot of whether the overall environment favors buying or waiting.</div>
-            <div class="hero-number" id="heroNum">-</div>
-            <div class="hero-badge" id="heroBadge">Loading</div>
-            <div class="hero-sub" id="heroSub"></div>
+            <div class="hero-number loading-pulse" id="heroNum">-</div>
+            <div class="hero-badge badge-neutral loading-pulse" id="heroBadge">Loading</div>
+            <div class="hero-sub" id="heroSub">Fetching live market data...</div>
         </section>
 
         <section class="card">
