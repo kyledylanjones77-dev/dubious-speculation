@@ -337,15 +337,21 @@ class MarketDataAPI:
         if global_data and "data" in global_data:
             gd = global_data["data"]
             mcap_pct = gd.get("market_cap_percentage", {})
-            return {
-                "btc_dominance": mcap_pct.get("btc", 0),
-                "eth_dominance": mcap_pct.get("eth", 0),
-                "total_market_cap": gd.get("total_market_cap", {}).get("usd", 0),
-                "total_volume": gd.get("total_volume", {}).get("usd", 0),
-                "market_cap_change_24h": gd.get("market_cap_change_percentage_24h_usd", 0),
-            }
+            btc_pct = mcap_pct.get("btc", 0)
 
-        # Fallback: calculate dominance from simple/price market caps
+            # Sanity check: BTC dominance should be 20-80%. CoinGecko's /global
+            # now includes tokenized RWAs in total market cap, making BTC appear ~6%.
+            # If value seems unrealistic, use fallback calculation instead.
+            if 20 <= btc_pct <= 80:
+                return {
+                    "btc_dominance": btc_pct,
+                    "eth_dominance": mcap_pct.get("eth", 0),
+                    "total_market_cap": gd.get("total_market_cap", {}).get("usd", 0),
+                    "total_volume": gd.get("total_volume", {}).get("usd", 0),
+                    "market_cap_change_24h": gd.get("market_cap_change_percentage_24h_usd", 0),
+                }
+
+        # Fallback: calculate dominance from BTC/ETH market caps
         return self._btc_dominance_fallback()
 
     def _btc_dominance_fallback(self):
