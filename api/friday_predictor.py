@@ -18,7 +18,7 @@ DATA_DIR = "data"
 PREDICTIONS_FILE = os.path.join(DATA_DIR, "friday_predictions.json")
 
 # Assets we predict
-ASSETS = ["bitcoin", "ethereum", "gold", "silver", "uranium", "sp500"]
+ASSETS = ["bitcoin", "ethereum", "gold", "silver", "uranium", "dogecoin", "sp500"]
 
 # Initial indicator weights (sum to 1.0) — adjusted over time by learning
 DEFAULT_WEIGHTS = {
@@ -142,6 +142,11 @@ class FridayPredictor:
             current = data.get("current_price", 0)
             history = data.get("price_history", [])
             prices = [h["price"] for h in history] if history else []
+        elif asset == "dogecoin":
+            data = market_api.get_dogecoin_data()
+            current = data.get("current_price", 0)
+            history = data.get("price_history", [])
+            prices = [h["price"] for h in history] if history else []
         else:
             return {"error": f"Unknown asset: {asset}"}
 
@@ -159,7 +164,7 @@ class FridayPredictor:
                 if fair > 0:
                     # Price tends to move toward fair value
                     gap_pct = (fair - current) / current
-                    regression_signal = gap_pct * 0.05  # 5% of the gap per week
+                    regression_signal = gap_pct * 0.025  # 2.5% of the gap per week (tighter)
             except Exception:
                 pass
 
@@ -171,7 +176,7 @@ class FridayPredictor:
             weekly_mom = (current - week_ago) / week_ago if week_ago else 0
             monthly_mom = (current - month_ago) / month_ago if month_ago else 0
             # Blend: momentum continues but with dampening
-            momentum_signal = weekly_mom * 0.4 + monthly_mom * 0.1
+            momentum_signal = weekly_mom * 0.2 + monthly_mom * 0.05  # Halved for tighter predictions
 
         # 3. Macro influence
         macro_signal = 0
@@ -180,7 +185,7 @@ class FridayPredictor:
             assessment = econ_data.get("assessment", {})
             macro_score = assessment.get("score", 0)
             # Macro score (-100 to +100) → small weekly influence
-            macro_signal = macro_score / 100 * 0.01  # ±1% max
+            macro_signal = macro_score / 100 * 0.005  # ±0.5% max (tighter)
         except Exception:
             pass
 
@@ -191,11 +196,11 @@ class FridayPredictor:
             if thesis:
                 outlook = thesis.get("market_outlook", "").lower()
                 if "bear" in outlook:
-                    thesis_signal = -0.015  # -1.5% weekly drag
+                    thesis_signal = -0.008  # -0.8% weekly drag (tighter)
                 elif "bull" in outlook:
-                    thesis_signal = 0.015
+                    thesis_signal = 0.008
                 elif "cautious" in outlook or "neutral" in outlook:
-                    thesis_signal = -0.005
+                    thesis_signal = -0.003
         except Exception:
             pass
 
@@ -205,7 +210,7 @@ class FridayPredictor:
             sma_20 = sum(prices[-20:]) / 20
             deviation = (current - sma_20) / sma_20
             # Pull back toward SMA
-            mean_rev_signal = -deviation * 0.15  # 15% reversion per week
+            mean_rev_signal = -deviation * 0.075  # 7.5% reversion per week (tighter)
 
         # ── Combine signals with learned weights ──
         signals = {
@@ -218,8 +223,8 @@ class FridayPredictor:
 
         weighted_change = sum(weights.get(k, 0) * v for k, v in signals.items())
 
-        # Clamp to reasonable weekly range (-10% to +10%)
-        weighted_change = max(-0.10, min(0.10, weighted_change))
+        # Clamp to tight weekly range (-5% to +5%) for faster learning
+        weighted_change = max(-0.05, min(0.05, weighted_change))
 
         predicted_price = current * (1 + weighted_change)
 
@@ -321,6 +326,9 @@ class FridayPredictor:
 
             ura = market_api.get_uranium_data()
             prices["uranium"] = ura.get("current_price", 0)
+
+            doge = market_api.get_dogecoin_data()
+            prices["dogecoin"] = doge.get("current_price", 0)
 
             econ = market_api.get_macro_economy()
             sp = econ.get("sp500", {})

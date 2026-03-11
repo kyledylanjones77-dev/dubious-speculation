@@ -466,6 +466,8 @@ class CowenAnalysisEngine:
             return self._silver_forecast()
         elif asset == "uranium":
             return self._uranium_forecast()
+        elif asset == "dogecoin":
+            return self._dogecoin_forecast()
         elif asset == "btc_dominance":
             return self._dominance_forecast()
         return {"error": "Unknown asset"}
@@ -870,6 +872,47 @@ class CowenAnalysisEngine:
             "bias": "LONG-TERM BULLISH - Supply deficit thesis, expect volatility",
             "forecasts": forecasts,
             "cowen_context": self._get_relevant_insights("uranium"),
+        }
+
+    def _dogecoin_forecast(self):
+        """Dogecoin forecast - meme coin, high volatility, follows BTC with amplification."""
+        doge = self.market_api.get_dogecoin_data()
+        current_price = doge.get("current_price", 0)
+
+        if current_price > 0:
+            def doge_estimate(days):
+                # DOGE is highly volatile - wider bands than BTC
+                vol = 0.30 * (days / 30) ** 0.5
+                # Slight mean-reversion tendency
+                center = current_price * (1 + 0.005 * days / 30)
+                return {
+                    "low_estimate": round(current_price * (1 - vol * 1.2), 4),
+                    "mid_estimate": round(center, 4),
+                    "high_estimate": round(current_price * (1 + vol * 1.3), 4),
+                }
+            forecasts = {
+                "30_day": doge_estimate(30),
+                "60_day": doge_estimate(60),
+                "180_day": doge_estimate(180),
+            }
+        else:
+            forecasts = {
+                "30_day": {"note": "No price data"},
+                "60_day": {"note": "No price data"},
+                "180_day": {"note": "No price data"},
+            }
+
+        # DOGE tracks BTC sentiment but amplified
+        bias = "SPECULATIVE - Follows BTC direction with higher volatility, meme-driven momentum"
+
+        return {
+            "asset": "Dogecoin (DOGE)",
+            "current_price": current_price,
+            "change_24h": doge.get("change_24h", 0),
+            "market_cap": doge.get("market_cap", 0),
+            "bias": bias,
+            "forecasts": forecasts,
+            "cowen_context": ["Meme coins amplify BTC moves — higher upside in bulls, deeper drawdowns in bears"],
         }
 
     def _dominance_forecast(self):

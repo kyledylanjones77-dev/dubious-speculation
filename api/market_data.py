@@ -90,18 +90,29 @@ class MarketDataAPI:
 
         if data:
             self._set_cache(cache_key, data)
-        return data or {}
+            return data
+
+        # Fallback to stale cache if API fails
+        if cached:
+            return cached
+        return {}
 
     def _coingecko_global(self):
-        """Get global crypto market data."""
+        """Get global crypto market data. Uses longer cache (30 min) since dominance changes slowly."""
         cached = self._get_cached("cg_global")
-        if cached:
+        # Use 30-min cache for global data (dominance doesn't change fast)
+        if cached and time.time() - cached.get("_ts", 0) < 1800:
             return cached
 
         data = self._cg_get("/global")
         if data:
             self._set_cache("cg_global", data)
-        return data or {}
+            return data
+
+        # If API fails, return stale cache rather than empty
+        if cached:
+            return cached
+        return {}
 
     # ========================
     # YAHOO FINANCE
@@ -284,6 +295,35 @@ class MarketDataAPI:
 
         if result["current_price"] > 0:
             self._set_cache("uranium_combined", result)
+
+        return result
+
+    def get_dogecoin_data(self):
+        """Get Dogecoin price and history."""
+        prices = self._coingecko_simple_price(["dogecoin"])
+        chart = self._coingecko_market_chart("dogecoin", 1825)
+
+        doge = prices.get("dogecoin", {})
+        result = {
+            "current_price": doge.get("usd", 0),
+            "change_24h": doge.get("usd_24h_change", 0),
+            "market_cap": doge.get("usd_market_cap", 0),
+            "volume_24h": doge.get("usd_24h_vol", 0),
+        }
+
+        if result["current_price"] == 0:
+            yf_data = self._yahoo_chart("DOGE-USD", "5y")
+            meta, history = self._parse_yahoo(yf_data)
+            if meta:
+                result["current_price"] = meta.get("regularMarketPrice", 0)
+                result["price_history"] = history
+                return result
+
+        if chart and "prices" in chart:
+            result["price_history"] = [
+                {"timestamp": p[0], "price": p[1]}
+                for p in chart["prices"]
+            ]
 
         return result
 

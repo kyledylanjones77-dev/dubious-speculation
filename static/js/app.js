@@ -22,24 +22,31 @@ function switchPage(name) {
 
 // Init
 async function init() {
-    const [comp, risk, fc, bands, macro, insights, cycle, accuracy, history, econ, friday] = await Promise.all([
+    const [comp, risk, fc, bands, macro, insights, accuracy, history, econ, friday, dash] = await Promise.all([
         api('/api/composite-score'),
         api('/api/risk-metric'),
         api('/api/forecasts'),
         api('/api/regression-bands/bitcoin'),
         api('/api/macro'),
         api('/api/cowen-insights'),
-        api('/api/cycle-analysis'),
         api('/api/accuracy'),
         api('/api/btc-history'),
         api('/api/macro-economy'),
         api('/api/friday-predictions'),
+        api('/api/dashboard'),
     ]);
 
     if (comp) renderComposite(comp);
     if (risk) renderRisk(risk);
-    if (cycle) renderCycle(cycle);
-    if (fc) { renderTicker(fc); renderBtcPage(fc.bitcoin); renderAssets(fc); renderDom(fc.btc_dominance); }
+    if (fc) { renderTicker(fc); renderBtcPage(fc.bitcoin); renderAssets(fc); }
+    // BTC Dominance from faster dashboard endpoint, fallback to forecasts
+    const domData = fc?.btc_dominance || {};
+    if (dash?.btc_dominance) {
+        domData.current_dominance = domData.current_dominance || dash.btc_dominance.btc_dominance;
+        domData.eth_dominance = domData.eth_dominance || dash.btc_dominance.eth_dominance;
+    }
+    if (domData.current_dominance) renderDom(domData);
+
     if (bands) renderBands(bands);
     if (macro) renderMacro(macro);
     if (insights) renderLearn(insights);
@@ -100,6 +107,7 @@ function renderTicker(fc) {
         { k: 'gold', n: 'GOLD', f: 'current_price' },
         { k: 'silver', n: 'SILVER', f: 'current_price' },
         { k: 'uranium', n: 'URA', f: 'current_price' },
+        { k: 'dogecoin', n: 'DOGE', f: 'current_price' },
         { k: 'btc_dominance', n: 'BTC.D', f: 'current_dominance' },
     ];
     for (const a of items) {
@@ -370,6 +378,7 @@ function renderAssets(fc) {
         { k: 'gold', n: 'Gold (XAU)' },
         { k: 'silver', n: 'Silver (XAG)' },
         { k: 'uranium', n: 'Uranium (URA)' },
+        { k: 'dogecoin', n: 'Dogecoin (DOGE)' },
         { k: 'btc_dominance', n: 'BTC Dominance' },
     ];
 
@@ -895,7 +904,7 @@ function renderFridayPredictions(d) {
     const predEl = $('fridayPredictions');
     if (predEl && d.predictions) {
         predEl.innerHTML = '';
-        const names = { bitcoin: 'BTC', ethereum: 'ETH', gold: 'Gold', silver: 'Silver', uranium: 'URA', sp500: 'S&P 500' };
+        const names = { bitcoin: 'BTC', ethereum: 'ETH', gold: 'Gold', silver: 'Silver', uranium: 'URA', dogecoin: 'DOGE', sp500: 'S&P 500' };
         for (const [asset, pred] of Object.entries(d.predictions)) {
             if (pred.error) continue;
             const dirClass = pred.direction === 'UP' ? 'up' : pred.direction === 'DOWN' ? 'down' : 'flat';
@@ -985,8 +994,8 @@ async function checkNewVideos() {
 
 // Helpers
 function $(id) { return document.getElementById(id); }
-function fp(p) { if (!p) return '-'; return p >= 1000 ? '$' + p.toLocaleString('en-US', {maximumFractionDigits:0}) : '$' + p.toFixed(2); }
-function fcp(p) { if (!p) return '-'; return p >= 1e6 ? '$' + (p/1e6).toFixed(1)+'M' : p >= 1e3 ? '$' + (p/1e3).toFixed(1)+'K' : '$' + p.toFixed(0); }
+function fp(p) { if (!p) return '-'; if (p < 0.01) return '$' + p.toFixed(6); if (p < 1) return '$' + p.toFixed(4); return p >= 1000 ? '$' + p.toLocaleString('en-US', {maximumFractionDigits:0}) : '$' + p.toFixed(2); }
+function fcp(p) { if (!p) return '-'; if (p < 0.01) return '$' + p.toFixed(4); if (p < 1) return '$' + p.toFixed(3); return p >= 1e6 ? '$' + (p/1e6).toFixed(1)+'M' : p >= 1e3 ? '$' + (p/1e3).toFixed(1)+'K' : '$' + p.toFixed(2); }
 function fn(n) { return n ? n.toLocaleString('en-US') : '0'; }
 function fmtName(s) { return s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()); }
 

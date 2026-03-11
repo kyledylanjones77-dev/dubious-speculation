@@ -47,6 +47,7 @@ def dashboard_data():
         "gold": market_api.get_gold_data(),
         "silver": market_api.get_silver_data(),
         "uranium": market_api.get_uranium_data(),
+        "dogecoin": market_api.get_dogecoin_data(),
         "btc_dominance": market_api.get_btc_dominance(),
     }
     return jsonify(data)
@@ -54,7 +55,7 @@ def dashboard_data():
 @app.route("/api/analysis/<asset>")
 def asset_analysis(asset):
     """Get Cowen-style analysis for a specific asset."""
-    valid = ["bitcoin", "ethereum", "gold", "silver", "uranium", "btc_dominance"]
+    valid = ["bitcoin", "ethereum", "gold", "silver", "uranium", "dogecoin", "btc_dominance"]
     if asset not in valid:
         return jsonify({"error": f"Invalid asset. Choose from: {valid}"}), 400
     return jsonify(cowen_engine.analyze(asset))
@@ -63,7 +64,7 @@ def asset_analysis(asset):
 def forecasts():
     """Get 30/60/180 day forecasts for all tracked assets."""
     results = {}
-    for asset in ["bitcoin", "ethereum", "gold", "silver", "uranium", "btc_dominance"]:
+    for asset in ["bitcoin", "ethereum", "gold", "silver", "uranium", "dogecoin", "btc_dominance"]:
         results[asset] = cowen_engine.get_forecasts(asset)
     return jsonify(results)
 
@@ -171,7 +172,7 @@ def background_tasks():
                 # Record daily forecast snapshot for adaptive learning
                 forecasts = {}
                 prices = {}
-                for asset in ["bitcoin", "ethereum", "gold", "silver", "uranium", "btc_dominance"]:
+                for asset in ["bitcoin", "ethereum", "gold", "silver", "uranium", "dogecoin", "btc_dominance"]:
                     forecasts[asset] = cowen_engine.get_forecasts(asset)
                     if asset == "btc_dominance":
                         dom = market_api.get_btc_dominance()
