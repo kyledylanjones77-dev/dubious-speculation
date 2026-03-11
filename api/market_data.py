@@ -17,7 +17,7 @@ class MarketDataAPI:
         os.makedirs(CACHE_DIR, exist_ok=True)
         self.session = requests.Session()
         self.session.headers.update({
-            "User-Agent": "CowenTradingApp/1.0",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
             "Accept": "application/json",
         })
 
@@ -29,6 +29,17 @@ class MarketDataAPI:
                     data = json.load(f)
                 if time.time() - data.get("_ts", 0) < CACHE_TTL:
                     return data
+            except:
+                pass
+        return None
+
+    def _get_stale_cache(self, key):
+        """Return cached data even if expired — better than no data."""
+        path = os.path.join(CACHE_DIR, f"{key}.json")
+        if os.path.exists(path):
+            try:
+                with open(path, "r") as f:
+                    return json.load(f)
             except:
                 pass
         return None
@@ -71,7 +82,8 @@ class MarketDataAPI:
 
         if data:
             self._set_cache(cache_key, data)
-        return data
+            return data
+        return self._get_stale_cache(cache_key)
 
     def _coingecko_simple_price(self, coin_ids):
         """Get current prices from CoinGecko."""
@@ -93,16 +105,18 @@ class MarketDataAPI:
             return data
 
         # Fallback to stale cache if API fails
-        if cached:
-            return cached
+        stale = self._get_stale_cache(cache_key)
+        if stale:
+            print(f"Using stale cache for {cache_key}")
+            return stale
         return {}
 
     def _coingecko_global(self):
         """Get global crypto market data. Uses longer cache (30 min) since dominance changes slowly."""
-        cached = self._get_cached("cg_global")
+        stale = self._get_stale_cache("cg_global")
         # Use 30-min cache for global data (dominance doesn't change fast)
-        if cached and time.time() - cached.get("_ts", 0) < 1800:
-            return cached
+        if stale and time.time() - stale.get("_ts", 0) < 1800:
+            return stale
 
         data = self._cg_get("/global")
         if data:
@@ -110,8 +124,8 @@ class MarketDataAPI:
             return data
 
         # If API fails, return stale cache rather than empty
-        if cached:
-            return cached
+        if stale:
+            return stale
         return {}
 
     # ========================
@@ -136,10 +150,13 @@ class MarketDataAPI:
                 data = resp.json()
                 self._set_cache(cache_key, data)
                 return data
+            else:
+                print(f"Yahoo Finance {symbol}: HTTP {resp.status_code}")
         except Exception as e:
             print(f"Yahoo Finance error for {symbol}: {e}")
 
-        return None
+        # Fallback to stale cache
+        return self._get_stale_cache(cache_key)
 
     def _parse_yahoo(self, data):
         """Parse Yahoo Finance chart response."""
