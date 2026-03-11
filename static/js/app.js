@@ -265,11 +265,14 @@ function renderBtcChart(data, days) {
     let prices = data.price_history;
     const bands = data.regression_bands || {};
 
-    // Filter by timeframe
+    // Filter by timeframe (ensure minimum 3 data points for a visible line)
     if (days && days < 9999) {
         const cutoff = Date.now() - days * 86400000;
         const startIdx = prices.findIndex(p => p.timestamp >= cutoff);
-        if (startIdx > 0) prices = prices.slice(startIdx);
+        if (startIdx > 0) {
+            prices = prices.slice(startIdx);
+            if (prices.length < 3) prices = data.price_history.slice(-Math.max(3, prices.length));
+        }
     }
 
     // Downsample for performance
