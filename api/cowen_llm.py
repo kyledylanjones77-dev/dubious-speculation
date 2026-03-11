@@ -14,7 +14,10 @@ import os
 import time
 import hashlib
 import numpy as np
-import tiktoken
+try:
+    import tiktoken
+except ImportError:
+    tiktoken = None
 from datetime import datetime
 from pathlib import Path
 
@@ -64,7 +67,7 @@ class CowenLLM:
     def __init__(self, openai_api_key=None):
         self.openai_api_key = openai_api_key or os.environ.get("OPENAI_API_KEY", "")
         self._client = None
-        self.tokenizer = tiktoken.get_encoding("cl100k_base")
+        self.tokenizer = tiktoken.get_encoding("cl100k_base") if tiktoken else None
 
         # Vector store state
         self.embeddings = None       # numpy array (N, 1536)
