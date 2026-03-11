@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#06080d">
+    <title>Dubious Speculation</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Bottom Nav (Robinhood-style) -->
+    <nav class="bottom-nav">
+        <button class="bnav active" data-page="home" onclick="switchPage('home')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            <span>Home</span>
+        </button>
+        <button class="bnav" data-page="bitcoin" onclick="switchPage('bitcoin')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            <span>BTC</span>
+        </button>
+        <button class="bnav" data-page="assets" onclick="switchPage('assets')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Assets</span>
+        </button>
+        <button class="bnav" data-page="macro" onclick="switchPage('macro')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Macro</span>
+        </button>
+        <button class="bnav" data-page="fun" onclick="switchPage('fun')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Fun</span>
+        </button>
+    </nav>
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <h1 class="logo">DUBIOUS<span>SPECULATION</span></h1>
+        <button class="refresh-btn" onclick="refreshAll()" id="refreshBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        </button>
+    </header>
+
+    <!-- ===== HOME ===== -->
+    <main class="page active" id="page-home">
+        <section class="hero-section">
+            <div class="hero-label">Market Score <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc" style="text-align:left;margin:0 16px 8px">A composite score from -100 to +100 that combines Bitcoin's risk level, cycle position, macro conditions, and Cowen's thesis. Positive = bullish conditions for crypto. Negative = caution. It's a quick snapshot of whether the overall environment favors buying or waiting.</div>
+            <div class="hero-number" id="heroNum">-</div>
+            <div class="hero-badge" id="heroBadge">Loading</div>
+            <div class="hero-sub" id="heroSub"></div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Risk Metric <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">Bitcoin's position on a 0-to-1 scale based on logarithmic regression. Below 0.3 historically signals accumulation zones (good buying). Above 0.7 signals overheated territory. "Fair Value" is where the model says BTC should be priced based on its age and growth curve.</div>
+            <div class="risk-row">
+                <div class="risk-num" id="riskNum">-</div>
+                <div class="risk-bar-container">
+                    <div class="risk-bar"></div>
+                    <div class="risk-dot" id="riskDot"></div>
+                </div>
+            </div>
+            <div class="risk-zone" id="riskZone">-</div>
+            <div class="row-3">
+                <div class="cell"><div class="cell-label">Price</div><div class="cell-val" id="cPrice">-</div></div>
+                <div class="cell"><div class="cell-label">Fair Value</div><div class="cell-val" id="cFair">-</div></div>
+                <div class="cell"><div class="cell-label">vs Fair</div><div class="cell-val" id="cDist">-</div></div>
+            </div>
+            <div class="action-bar" id="actionBar">-</div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">4-Year Cycle <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">Bitcoin follows a roughly 4-year cycle tied to its "halving" events (when new BTC supply gets cut in half). H = Halving, Y1 = Year 1 recovery, MT = Mid-term consolidation, PH = Peak/euphoria phase. Knowing where we are helps set expectations for what typically comes next.</div>
+            <div class="cycle-row">
+                <div class="cycle-num" id="cycleNum">-</div>
+                <div class="cycle-bar-wrap">
+                    <div class="cycle-bar"><div class="cycle-fill" id="cycleFill"></div></div>
+                    <div class="cycle-ticks"><span>H</span><span>Y1</span><span>MT</span><span>PH</span><span>H</span></div>
+                </div>
+            </div>
+            <div class="cycle-desc" id="cycleDesc">-</div>
+        </section>
+
+        <div class="ticker-strip" id="tickerStrip"></div>
+
+        <section class="card">
+            <div class="card-label">BTC Dominance <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">The percentage of total crypto market cap that belongs to Bitcoin. When dominance rises, money is flowing into BTC and away from altcoins. When it drops, altcoins are outperforming ("alt season"). Cowen watches this closely — high dominance often means BTC is the safer bet.</div>
+            <div class="dom-row">
+                <div class="dom-num" id="domNum">-</div>
+                <div class="dom-info">
+                    <div><span class="dim">ETH: </span><span id="eDom">-</span></div>
+                    <div><span class="dim">Alt Season: </span><span id="aSeason">-</span></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== BTC ===== -->
+    <main class="page" id="page-bitcoin">
+        <section class="hero-section">
+            <div class="hero-label">Bitcoin</div>
+            <div class="hero-number" id="btcHeroPrice">-</div>
+            <div class="hero-badge" id="btcHeroBias">-</div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Price &amp; Regression Bands <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">Logarithmic regression fits a growth curve to Bitcoin's entire price history. The bands show where price "should" be (fair value) plus upper and lower boundaries. When price touches the low band, it has historically been a strong buy. Near the top band, it's historically been time to take profits.</div>
+            <div class="chart-wrap"><canvas id="btcChart"></canvas></div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Forecast Ranges</div>
+            <div class="fc-grid" id="btcFcGrid"></div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Score Breakdown</div>
+            <div class="chart-wrap chart-sm"><canvas id="scoreChart"></canvas></div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Regression Bands</div>
+            <div id="btcBands" class="bands-list"></div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Indicators</div>
+            <div id="btcIndicators" class="kv-list"></div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Framework Context</div>
+            <div id="btcContext" class="context-list"></div>
+        </section>
+    </main>
+
+    <!-- ===== ASSETS ===== -->
+    <main class="page" id="page-assets">
+        <div class="swipe-container" id="assetSwipe"></div>
+    </main>
+
+    <!-- ===== MACRO ===== -->
+    <main class="page" id="page-macro">
+        <section class="hero-section">
+            <div class="hero-label">Economy Health <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc" style="text-align:left;margin:0 16px 8px">A score from -100 to +100 combining unemployment, jobless claims, VIX fear index, S&P 500 trend, and housing health. Positive means the economy is supportive of risk assets like crypto and stocks. Negative means headwinds — tighten up and be cautious.</div>
+            <div class="hero-number" id="macroScore">-</div>
+            <div class="hero-badge" id="macroOutlook">Loading</div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Unemployment &amp; Jobless Claims <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">Unemployment rate is the percentage of people actively looking for work but can't find it. Initial claims are how many people filed for unemployment benefits that week — a spike means sudden layoffs. These are the earliest warning signs of economic trouble and directly impact markets.</div>
+            <div class="chart-wrap"><canvas id="econChart"></canvas></div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">S&amp;P 500</div>
+            <div class="chart-wrap"><canvas id="spChart"></canvas></div>
+        </section>
+
+        <div id="econCards"></div>
+
+        <section class="card">
+            <div class="card-label">Housing Market <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">Housing is a major economic driver. Mortgage rates control affordability — higher rates mean fewer buyers and slower growth. Housing starts show builder confidence, months of supply indicates buyer vs. seller advantage (6 months = balanced), and the Case-Shiller index tracks actual home price trends nationwide.</div>
+            <div class="housing-header">
+                <div class="housing-score" id="housingScore">-</div>
+                <div class="housing-outlook" id="housingOutlook">Loading</div>
+            </div>
+            <div class="chart-wrap"><canvas id="mortgageChart"></canvas></div>
+            <div id="housingSignals" class="context-list"></div>
+            <div id="housingCards"></div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Macro Signals</div>
+            <div id="macroSignals" class="context-list"></div>
+        </section>
+
+        <div id="macroList"></div>
+        <section class="card">
+            <div class="card-label">Cowen's Macro Rules</div>
+            <div class="rules">
+                <div class="rule"><b>DXY:</b> Strong dollar = headwind for BTC. Weak dollar = tailwind.</div>
+                <div class="rule"><b>Fed:</b> Rate cuts = bullish (with lag). Rate hikes = headwinds.</div>
+                <div class="rule"><b>Oil:</b> Oil spikes end business cycles. Sharp rally = bearish signal.</div>
+                <div class="rule"><b>Yield Curve:</b> Inversion = recession warning. Un-inversion = imminent.</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== JUST FOR FUN ===== -->
+    <main class="page" id="page-fun">
+        <section class="hero-section">
+            <div class="hero-label">Friday Predictions</div>
+            <div class="hero-number" id="funTarget">-</div>
+            <div class="hero-badge badge-neutral" id="funStreak">Loading</div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">This Week's Predictions</div>
+            <div id="fridayPredictions"></div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">My Track Record</div>
+            <div class="row-3">
+                <div class="cell"><div class="cell-val stat-val" id="funTotal">0</div><div class="cell-label">Predictions</div></div>
+                <div class="cell"><div class="cell-val stat-val" id="funCorrect">-</div><div class="cell-label">Direction %</div></div>
+                <div class="cell"><div class="cell-val stat-val" id="funError">-</div><div class="cell-label">Avg Error</div></div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Indicator Weights (Self-Learning) <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">These weights control how much each signal influences the Friday predictions. The system automatically adjusts them over time — if momentum signals keep being right, momentum gets more weight. If macro signals are consistently wrong, they get less. The weights always add up to 100%.</div>
+            <div id="funWeights" class="kv-list"></div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Past Results</div>
+            <div id="funHistory"></div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Knowledge Base</div>
+            <div class="row-3">
+                <div class="cell"><div class="cell-val stat-val" id="kVideos">-</div><div class="cell-label">Videos</div></div>
+                <div class="cell"><div class="cell-val stat-val" id="kWords">-</div><div class="cell-label">Words</div></div>
+                <div class="cell"><div class="cell-val stat-val" id="kHours">-</div><div class="cell-label">Hours</div></div>
+            </div>
+            <button class="btn" onclick="checkNewVideos()" id="newVidBtn">Check New Videos</button>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Adaptive Intelligence</div>
+            <div class="row-3">
+                <div class="cell"><div class="cell-val stat-val" id="accTotal">0</div><div class="cell-label">Predictions</div></div>
+                <div class="cell"><div class="cell-val stat-val" id="accPct">-</div><div class="cell-label">Accuracy</div></div>
+                <div class="cell"><div class="cell-val stat-val" id="accErr">-</div><div class="cell-label">Avg Error</div></div>
+            </div>
+            <div id="confidenceList" class="kv-list" style="margin-top:8px"></div>
+        </section>
+
+        <section class="card">
+            <div class="card-label">Core Principles</div>
+            <div id="principles" class="principles-list"></div>
+        </section>
+    </main>
+
+    <div class="footer-disc">Dubious Speculation - Based on Benjamin Cowen's frameworks. Not financial advice.</div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

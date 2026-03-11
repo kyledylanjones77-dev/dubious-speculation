@@ -1,0 +1,56 @@
+{
+  "last_updated": "2026-03-10T19:59:36.162891",
+  "transcripts_analyzed": 23,
+  "total_words_processed": 66109,
+  "indicator_frequency": {
+    "oil": 241,
+    "recession": 125,
+    "gold": 118,
+    "four_year_cycle": 117,
+    "fed_rates": 97,
+    "btc_dominance": 95,
+    "alt_season": 71,
+    "macro": 54,
+    "silver": 41,
+    "bull_market_support": 40,
+    "roi": 30,
+    "logarithmic_regression": 27,
+    "bear_market_resistance": 22,
+    "yield_curve": 13,
+    "total_crypto_market": 6,
+    "risk_metric": 6,
+    "200_week_sma": 2,
+    "dxy": 2
+  },
+  "asset_focus": {
+    "bitcoin": 551,
+    "ethereum": 239,
+    "stocks": 154,
+    "gold": 118,
+    "altcoins": 68,
+    "silver": 41,
+    "uranium": 26
+  },
+  "key_phrases": {
+    "business cycle": 182,
+    "midterm year": 117,
+    "bitcoin dominance": 38,
+    "bull market support band": 13,
+    "market cap": 10,
+    "fair value": 10,
+    "quantitative tightening": 9,
+    "alt season": 7,
+    "dubious speculation": 7,
+    "quantitative easing": 2,
+    "200 week": 2,
+    "rate cuts": 2,
+    "beauty of mathematics": 2,
+    "risk metric": 1
+  },
+  "sentiment_summary": {
+    "bullish": 100,
+    "bearish": 170,
+    "neutral": 36,
+    "cautious": 117
+  }
+}

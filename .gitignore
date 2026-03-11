@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.claude/
+data/cache/
+data/transcripts/
+data/snapshots/
+data/predictions_history.json
+data/accuracy_metrics.json
+data/all_transcripts_combined.txt
+data/chunk_*.txt
+data/yt_initial_data.json
+*.egg-info/
+.env
+venv/

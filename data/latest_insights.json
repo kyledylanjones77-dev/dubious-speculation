@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-03-10",
+  "transcript_stats": {
+    "total_transcripts": 23,
+    "total_words": 66109,
+    "estimated_hours": 7.3
+  },
+  "current_market_thesis": {
+    "overall": "Bear market state of mind since Q4 2025. Operating under assumption that lower highs will continue through midterm year 2026.",
+    "btc_cycle_view": "We are in a midterm year (Year 2 post-halving). Bitcoin is tracking the average of prior midterm years (2014, 2018, 2022). Bearish first half of 2026 due to macro headwinds and 4-year cycle.",
+    "btc_bottom_base_case": "October 2026 - based on 4-year cycle, prior midterm year bottoms, and S&P correlation",
+    "btc_bottom_alternative": "May 2026 - if capitulation happens faster and BTC drops below realized price",
+    "btc_near_term": "March rally likely a lower high, then weakness into April-May",
+    "gold_view": "Sizable correction expected for metals in 2026. Bull market support band needs to catch up.",
+    "eth_view": "ETH will spend more time in regression band in 2026. ETH/BTC ratio continues bleeding.",
+    "business_cycle": "Business cycle has max 2-3 years left. Could end 2026-2028."
+  },
+  "key_themes": [
+    "Bear market state of mind: assume lower highs are lower highs in midterm years",
+    "October 2026 most likely BTC bottom based on 4-year cycle",
+    "May 2026 second most likely window if capitulation accelerates",
+    "BTC tracking average of prior midterm years (2014, 2018, 2022)",
+    "March rallies form lower highs, then April-May weakness follows",
+    "Logarithmic regression provides fair value anchor for BTC",
+    "Below lower regression band = extreme accumulation zone",
+    "200-week SMA crossing prior ATH = cycle top signal",
+    "Oil spikes end business cycles - watch crude closely",
+    "Business cycle has 2-3 years left, recession probability rising",
+    "BTC dominance 58% (incl stables), 67% (excl) - BTC-dominant",
+    "Gold correction expected in 2026 after secular bull",
+    "S&P weakest in midterm years: late Q3 to early Q4",
+    "DCA into fear, not euphoria"
+  ],
+  "most_discussed_indicators": [
+    "oil",
+    "recession",
+    "gold",
+    "four_year_cycle",
+    "fed_rates",
+    "btc_dominance",
+    "alt_season",
+    "macro",
+    "silver",
+    "bull_market_support"
+  ],
+  "midterm_year_pattern": {
+    "typical_flow": "Early strength -> March lower high -> April-June weakness -> possible bottom May or October",
+    "2026_tracking": "Bitcoin underperforming average of prior midterm years as of March 2026"
+  },
+  "latest_video": "Bitcoin: The Structure of a Bear Market"
+}
