@@ -6,6 +6,13 @@ let econChartInstance = null;
 let spChartInstance = null;
 let mortgageChartInstance = null;
 
+// Store raw data for timeframe switching
+let _btcHistoryData = null;
+let _econData = null;
+let _currentBtcDays = 365;
+let _currentEconDays = 365;
+let _currentSpDays = 365;
+
 async function api(path) {
     try { const r = await fetch(path); return r.ok ? await r.json() : null; }
     catch(e) { console.error(path, e); return null; }
@@ -22,11 +29,10 @@ function switchPage(name) {
 
 // Init
 async function init() {
-    const [comp, risk, fc, bands, macro, insights, accuracy, history, econ, friday, dash, dpred, bensig] = await Promise.all([
+    const [comp, risk, fc, macro, insights, accuracy, history, econ, friday, dash, dpred, bensig] = await Promise.all([
         api('/api/composite-score'),
         api('/api/risk-metric'),
         api('/api/forecasts'),
-        api('/api/regression-bands/bitcoin'),
         api('/api/macro'),
         api('/api/cowen-insights'),
         api('/api/accuracy'),
@@ -37,6 +43,11 @@ async function init() {
         api('/api/daily-predictions'),
         api('/api/ben-signal'),
     ]);
+
+    // Show current date
+    const now = new Date();
+    const dateEl = $('topDate');
+    if (dateEl) dateEl.textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
 
     if (comp) renderComposite(comp);
     if (risk) renderRisk(risk);
@@ -49,16 +60,15 @@ async function init() {
     }
     if (domData.current_dominance) renderDom(domData);
 
-    if (bands) renderBands(bands);
     if (macro) renderMacro(macro);
     if (insights) renderLearn(insights);
     if (accuracy) renderAccuracy(accuracy);
     if (friday) renderFridayPredictions(friday);
     if (dpred) renderDailyPredictions(dpred);
     if (bensig) renderBenSignal(bensig);
-    if (history) renderBtcChart(history);
+    if (history) { _btcHistoryData = history; renderBtcChart(history, _currentBtcDays); }
     if (fc && fc.bitcoin && fc.bitcoin.score_components) renderScoreChart(fc.bitcoin.score_components);
-    if (econ) renderMacroEconomy(econ);
+    if (econ) { _econData = econ; renderMacroEconomy(econ); }
 }
 
 // Composite
@@ -213,77 +223,104 @@ function renderBtcPage(d) {
     }
 }
 
-// BTC Price Chart with Regression Bands
-function renderBtcChart(data) {
+// BTC Price Chart with Regression Bands — supports timeframe filtering
+function renderBtcChart(data, days) {
     const canvas = $('btcChart');
     if (!canvas || !data.price_history) return;
 
-    const prices = data.price_history;
+    let prices = data.price_history;
     const bands = data.regression_bands || {};
 
-    // Downsample for performance (every 7th point)
-    const step = Math.max(1, Math.floor(prices.length / 100));
+    // Filter by timeframe
+    if (days && days < 9999) {
+        const cutoff = Date.now() - days * 86400000;
+        const startIdx = prices.findIndex(p => p.timestamp >= cutoff);
+        if (startIdx > 0) prices = prices.slice(startIdx);
+    }
+
+    // Downsample for performance
+    const maxPts = days <= 7 ? prices.length : days <= 30 ? 100 : days <= 90 ? 120 : 100;
+    const step = Math.max(1, Math.floor(prices.length / maxPts));
     const labels = [];
     const priceData = [];
     const fairData = [];
     const lowData = [];
     const highData = [];
 
+    // Date format based on timeframe
+    const dateFmt = days <= 1 ? { hour: 'numeric', minute: '2-digit' }
+        : days <= 7 ? { weekday: 'short', month: 'short', day: 'numeric' }
+        : days <= 90 ? { month: 'short', day: 'numeric' }
+        : { month: 'short', year: '2-digit' };
+
     for (let i = 0; i < prices.length; i += step) {
         const p = prices[i];
-        labels.push(new Date(p.timestamp).toLocaleDateString('en-US', { month: 'short', year: '2-digit' }));
+        labels.push(new Date(p.timestamp).toLocaleDateString('en-US', dateFmt));
         priceData.push(p.price);
 
-        if (bands.fair && bands.fair[i]) fairData.push(bands.fair[i].price);
-        if (bands.low && bands.low[i]) lowData.push(bands.low[i].price);
-        if (bands.high && bands.high[i]) highData.push(bands.high[i].price);
+        // Only show bands for longer timeframes
+        if (days > 90 && bands.fair) {
+            const origIdx = data.price_history.indexOf(p);
+            if (bands.fair[origIdx]) fairData.push(bands.fair[origIdx].price);
+            else fairData.push(null);
+            if (bands.low && bands.low[origIdx]) lowData.push(bands.low[origIdx].price);
+            else lowData.push(null);
+            if (bands.high && bands.high[origIdx]) highData.push(bands.high[origIdx].price);
+            else highData.push(null);
+        }
     }
 
     if (btcChartInstance) btcChartInstance.destroy();
+
+    const datasets = [
+        {
+            label: 'BTC Price',
+            data: priceData,
+            borderColor: '#ffffff',
+            borderWidth: 2,
+            pointRadius: 0,
+            tension: 0.3,
+            fill: false,
+        },
+    ];
+
+    // Only show regression bands on longer timeframes
+    if (fairData.length > 0 && days > 90) {
+        datasets.push({
+            label: 'Fair Value',
+            data: fairData,
+            borderColor: '#5ac8fa',
+            borderWidth: 1.5,
+            borderDash: [5, 3],
+            pointRadius: 0,
+            tension: 0.3,
+            fill: false,
+        });
+        if (lowData.length > 0) datasets.push({
+            label: 'Low Band',
+            data: lowData,
+            borderColor: '#00c805',
+            borderWidth: 1,
+            pointRadius: 0,
+            tension: 0.3,
+            fill: false,
+        });
+        if (highData.length > 0) datasets.push({
+            label: 'High Band',
+            data: highData,
+            borderColor: '#ff5000',
+            borderWidth: 1,
+            pointRadius: 0,
+            tension: 0.3,
+            fill: false,
+        });
+    }
 
     btcChartInstance = new Chart(canvas, {
         type: 'line',
         data: {
             labels,
-            datasets: [
-                {
-                    label: 'BTC Price',
-                    data: priceData,
-                    borderColor: '#ffffff',
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    tension: 0.3,
-                    fill: false,
-                },
-                {
-                    label: 'Fair Value',
-                    data: fairData,
-                    borderColor: '#5ac8fa',
-                    borderWidth: 1.5,
-                    borderDash: [5, 3],
-                    pointRadius: 0,
-                    tension: 0.3,
-                    fill: false,
-                },
-                {
-                    label: 'Low Band',
-                    data: lowData,
-                    borderColor: '#00c805',
-                    borderWidth: 1,
-                    pointRadius: 0,
-                    tension: 0.3,
-                    fill: false,
-                },
-                {
-                    label: 'High Band',
-                    data: highData,
-                    borderColor: '#ff5000',
-                    borderWidth: 1,
-                    pointRadius: 0,
-                    tension: 0.3,
-                    fill: false,
-                },
-            ],
+            datasets,
         },
         options: {
             responsive: true,
@@ -508,10 +545,10 @@ function renderMacroEconomy(d) {
     renderEconCards(d);
 
     // Unemployment + Claims chart
-    renderEconChart(d);
+    renderEconChart(d, _currentEconDays);
 
     // S&P 500 chart
-    renderSpChart(d);
+    renderSpChart(d, _currentSpDays);
 
     // Housing market
     if (d.housing) renderHousing(d.housing);
@@ -566,31 +603,41 @@ function renderEconCards(d) {
     }
 }
 
-function renderEconChart(d) {
+function renderEconChart(d, days) {
     const canvas = $('econChart');
     if (!canvas) return;
+
+    days = days || _currentEconDays;
 
     // Build dual-axis chart: Unemployment Rate (left) + Initial Claims (right)
     const unemp = d.unemployment_rate;
     const claims = d.initial_claims;
     if ((!unemp || !unemp.history) && (!claims || !claims.history)) return;
 
-    // Use unemployment history as primary timeline
-    const unempData = unemp && unemp.history ? unemp.history : [];
-    const claimsData = claims && claims.history ? claims.history : [];
+    let unempData = unemp && unemp.history ? unemp.history : [];
+    let claimsData = claims && claims.history ? claims.history : [];
 
-    // Downsample claims to ~60 points for readability
+    // Filter by timeframe
+    if (days < 9999) {
+        const cutoffDate = new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
+        unempData = unempData.filter(p => p.date >= cutoffDate);
+        claimsData = claimsData.filter(p => p.date >= cutoffDate);
+    }
+
+    const dateFmt = days <= 90 ? (d => d.substring(5)) : (d => d.substring(0, 7));
+
+    // Downsample claims for readability
     const clStep = Math.max(1, Math.floor(claimsData.length / 60));
     const clLabels = [];
     const clValues = [];
     for (let i = 0; i < claimsData.length; i += clStep) {
-        clLabels.push(claimsData[i].date.substring(5)); // MM-DD
+        clLabels.push(dateFmt(claimsData[i].date));
         clValues.push(claimsData[i].value);
     }
 
     // Unemployment is monthly — use all points
-    const uLabels = unempData.map(d => d.date.substring(0, 7)); // YYYY-MM
-    const uValues = unempData.map(d => d.value);
+    const uLabels = unempData.map(p => dateFmt(p.date));
+    const uValues = unempData.map(p => p.value);
 
     // Use claims timeline if more points, else unemployment
     const primaryLabels = clLabels.length > uLabels.length ? clLabels : uLabels;
@@ -671,21 +718,35 @@ function renderEconChart(d) {
     });
 }
 
-function renderSpChart(d) {
+function renderSpChart(d, days) {
     const canvas = $('spChart');
     if (!canvas) return;
 
     const sp = d.sp500;
     if (!sp || !sp.history || sp.history.length === 0) return;
 
-    const history = sp.history;
-    const step = Math.max(1, Math.floor(history.length / 80));
+    days = days || _currentSpDays;
+    let history = sp.history;
+
+    // Filter by timeframe
+    if (days < 9999) {
+        const cutoff = Date.now() - days * 86400000;
+        const startIdx = history.findIndex(p => p.timestamp >= cutoff);
+        if (startIdx > 0) history = history.slice(startIdx);
+    }
+
+    const maxPts = days <= 30 ? history.length : 80;
+    const step = Math.max(1, Math.floor(history.length / maxPts));
     const labels = [];
     const prices = [];
 
+    const dateFmt = days <= 7 ? { weekday: 'short', month: 'short', day: 'numeric' }
+        : days <= 90 ? { month: 'short', day: 'numeric' }
+        : { month: 'short', year: '2-digit' };
+
     for (let i = 0; i < history.length; i += step) {
         const p = history[i];
-        labels.push(new Date(p.timestamp).toLocaleDateString('en-US', { month: 'short', year: '2-digit' }));
+        labels.push(new Date(p.timestamp).toLocaleDateString('en-US', dateFmt));
         prices.push(p.price);
     }
 
@@ -1216,6 +1277,27 @@ function renderDailyPredictions(d) {
         heroBadge.textContent = 'Self-Learning';
         heroBadge.className = 'hero-badge badge-neutral';
     }
+}
+
+// Timeframe switching
+function changeBtcTimeframe(days) {
+    _currentBtcDays = days;
+    document.querySelectorAll('#btcTfBar .tf-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.days) === days));
+    if (_btcHistoryData) renderBtcChart(_btcHistoryData, days);
+}
+
+function changeSpTimeframe(days) {
+    _currentSpDays = days;
+    const bar = document.querySelector('#page-macro .card:nth-child(3) .tf-bar');
+    if (bar) bar.querySelectorAll('.tf-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.days) === days));
+    if (_econData) renderSpChart(_econData, days);
+}
+
+function changeEconTimeframe(days) {
+    _currentEconDays = days;
+    const bar = document.querySelector('#page-macro .card:nth-child(2) .tf-bar');
+    if (bar) bar.querySelectorAll('.tf-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.days) === days));
+    if (_econData) renderEconChart(_econData, days);
 }
 
 // Actions

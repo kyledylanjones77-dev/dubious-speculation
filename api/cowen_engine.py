@@ -1334,7 +1334,7 @@ class CowenAnalysisEngine:
 
         # 7. BTC Dominance
         dom = self.market_api.get_btc_dominance()
-        btc_dom = dom.get("btc_dominance", 0)
+        btc_dom = round(dom.get("btc_dominance", 0), 1)
         if btc_dom > 60:
             signals.append(("BTC Dominance", -0.3, f"Dominance at {btc_dom}% — very high. Capital hiding in BTC, alt season far away. Bear market behavior."))
         elif btc_dom > 50:

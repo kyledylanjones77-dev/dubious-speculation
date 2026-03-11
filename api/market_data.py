@@ -166,7 +166,6 @@ class MarketDataAPI:
     def get_bitcoin_data(self):
         """Get Bitcoin price, history, and key metrics."""
         prices = self._coingecko_simple_price(["bitcoin"])
-        chart = self._coingecko_market_chart("bitcoin", 1825)
 
         btc = prices.get("bitcoin", {})
         result = {
@@ -176,27 +175,28 @@ class MarketDataAPI:
             "volume_24h": btc.get("usd_24h_vol", 0),
         }
 
-        # If CoinGecko fails, try Yahoo Finance
-        if result["current_price"] == 0:
-            yf_data = self._yahoo_chart("BTC-USD", "5y")
-            meta, history = self._parse_yahoo(yf_data)
-            if meta:
-                result["current_price"] = meta.get("regularMarketPrice", 0)
-                result["price_history"] = history
-                return result
+        # Always use Yahoo Finance for history (reliable, free, 5yr range)
+        yf_data = self._yahoo_chart("BTC-USD", "5y")
+        meta, history = self._parse_yahoo(yf_data)
+        if history:
+            result["price_history"] = history
+        if result["current_price"] == 0 and meta:
+            result["current_price"] = meta.get("regularMarketPrice", 0)
 
-        if chart and "prices" in chart:
-            result["price_history"] = [
-                {"timestamp": p[0], "price": p[1]}
-                for p in chart["prices"]
-            ]
+        # Fallback: try CoinGecko chart if Yahoo had no history
+        if not result.get("price_history"):
+            chart = self._coingecko_market_chart("bitcoin", 365)
+            if chart and "prices" in chart:
+                result["price_history"] = [
+                    {"timestamp": p[0], "price": p[1]}
+                    for p in chart["prices"]
+                ]
 
         return result
 
     def get_ethereum_data(self):
         """Get Ethereum price and history."""
         prices = self._coingecko_simple_price(["ethereum"])
-        chart = self._coingecko_market_chart("ethereum", 1825)
 
         eth = prices.get("ethereum", {})
         result = {
@@ -206,19 +206,21 @@ class MarketDataAPI:
             "volume_24h": eth.get("usd_24h_vol", 0),
         }
 
-        if result["current_price"] == 0:
-            yf_data = self._yahoo_chart("ETH-USD", "5y")
-            meta, history = self._parse_yahoo(yf_data)
-            if meta:
-                result["current_price"] = meta.get("regularMarketPrice", 0)
-                result["price_history"] = history
-                return result
+        # Always use Yahoo Finance for history
+        yf_data = self._yahoo_chart("ETH-USD", "5y")
+        meta, history = self._parse_yahoo(yf_data)
+        if history:
+            result["price_history"] = history
+        if result["current_price"] == 0 and meta:
+            result["current_price"] = meta.get("regularMarketPrice", 0)
 
-        if chart and "prices" in chart:
-            result["price_history"] = [
-                {"timestamp": p[0], "price": p[1]}
-                for p in chart["prices"]
-            ]
+        if not result.get("price_history"):
+            chart = self._coingecko_market_chart("ethereum", 365)
+            if chart and "prices" in chart:
+                result["price_history"] = [
+                    {"timestamp": p[0], "price": p[1]}
+                    for p in chart["prices"]
+                ]
 
         return result
 
@@ -301,7 +303,6 @@ class MarketDataAPI:
     def get_dogecoin_data(self):
         """Get Dogecoin price and history."""
         prices = self._coingecko_simple_price(["dogecoin"])
-        chart = self._coingecko_market_chart("dogecoin", 1825)
 
         doge = prices.get("dogecoin", {})
         result = {
@@ -311,19 +312,21 @@ class MarketDataAPI:
             "volume_24h": doge.get("usd_24h_vol", 0),
         }
 
-        if result["current_price"] == 0:
-            yf_data = self._yahoo_chart("DOGE-USD", "5y")
-            meta, history = self._parse_yahoo(yf_data)
-            if meta:
-                result["current_price"] = meta.get("regularMarketPrice", 0)
-                result["price_history"] = history
-                return result
+        # Always use Yahoo Finance for history
+        yf_data = self._yahoo_chart("DOGE-USD", "5y")
+        meta, history = self._parse_yahoo(yf_data)
+        if history:
+            result["price_history"] = history
+        if result["current_price"] == 0 and meta:
+            result["current_price"] = meta.get("regularMarketPrice", 0)
 
-        if chart and "prices" in chart:
-            result["price_history"] = [
-                {"timestamp": p[0], "price": p[1]}
-                for p in chart["prices"]
-            ]
+        if not result.get("price_history"):
+            chart = self._coingecko_market_chart("dogecoin", 365)
+            if chart and "prices" in chart:
+                result["price_history"] = [
+                    {"timestamp": p[0], "price": p[1]}
+                    for p in chart["prices"]
+                ]
 
         return result
 

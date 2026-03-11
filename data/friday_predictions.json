@@ -1,0 +1,131 @@
+{
+  "predictions": [
+    {
+      "target_date": "2026-03-13",
+      "generated_at": "2026-03-10T21:43:37.624322",
+      "predictions": {
+        "bitcoin": {
+          "current_price": 69929.63,
+          "predicted_price": 69922.17,
+          "predicted_change_pct": -0.01,
+          "direction": "FLAT",
+          "confidence": 30,
+          "signals": {
+            "regression": 0.86,
+            "momentum": -0.779,
+            "macro": 0.125,
+            "cowen_thesis": 0,
+            "mean_reversion": -0.249
+          }
+        },
+        "ethereum": {
+          "current_price": 2030.81,
+          "predicted_price": 2024.95,
+          "predicted_change_pct": -0.29,
+          "direction": "DOWN",
+          "confidence": 40,
+          "signals": {
+            "regression": 0,
+            "momentum": -1.073,
+            "macro": 0.125,
+            "cowen_thesis": 0,
+            "mean_reversion": -0.194
+          }
+        },
+        "gold": {
+          "current_price": 5222.1,
+          "predicted_price": 5226.22,
+          "predicted_change_pct": 0.08,
+          "direction": "FLAT",
+          "confidence": 40,
+          "signals": {
+            "regression": 0,
+            "momentum": 0.374,
+            "macro": 0.125,
+            "cowen_thesis": 0,
+            "mean_reversion": -0.167
+          }
+        },
+        "silver": {
+          "current_price": 89.03,
+          "predicted_price": 89.05,
+          "predicted_change_pct": 0.03,
+          "direction": "FLAT",
+          "confidence": 40,
+          "signals": {
+            "regression": 0,
+            "momentum": 0.407,
+            "macro": 0.125,
+            "cowen_thesis": 0,
+            "mean_reversion": -0.477
+          }
+        },
+        "uranium": {
+          "current_price": 52.31,
+          "predicted_price": 52.08,
+          "predicted_change_pct": -0.45,
+          "direction": "DOWN",
+          "confidence": 40,
+          "signals": {
+            "regression": 0,
+            "momentum": -1.946,
+            "macro": 0.125,
+            "cowen_thesis": 0,
+            "mean_reversion": 0.095
+          }
+        },
+        "dogecoin": {
+          "current_price": 0.09,
+          "predicted_price": 0.09,
+          "predicted_change_pct": -0.28,
+          "direction": "DOWN",
+          "confidence": 40,
+          "signals": {
+            "regression": 0,
+            "momentum": -1.256,
+            "macro": 0.125,
+            "cowen_thesis": 0,
+            "mean_reversion": 0.058
+          }
+        },
+        "sp500": {
+          "current_price": 6781.48,
+          "predicted_price": 6776.61,
+          "predicted_change_pct": -0.07,
+          "direction": "FLAT",
+          "confidence": 40,
+          "signals": {
+            "regression": 0,
+            "momentum": -0.432,
+            "macro": 0.125,
+            "cowen_thesis": 0,
+            "mean_reversion": 0.087
+          }
+        }
+      },
+      "weights_used": {
+        "regression": 0.25,
+        "momentum": 0.25,
+        "macro": 0.15,
+        "cowen_thesis": 0.15,
+        "mean_reversion": 0.2
+      },
+      "evaluated": false
+    }
+  ],
+  "weights": {
+    "regression": 0.25,
+    "momentum": 0.25,
+    "macro": 0.15,
+    "cowen_thesis": 0.15,
+    "mean_reversion": 0.2
+  },
+  "learning_stats": {
+    "total_predictions": 7,
+    "evaluated": 0,
+    "correct_direction": 0,
+    "avg_error_pct": 0,
+    "best_streak": 0,
+    "current_streak": 0
+  }
+}
