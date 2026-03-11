@@ -644,8 +644,6 @@ class CowenAnalysisEngine:
                 "bull_band_support": bull_band["sma_20w"] if bull_band else None,
                 "200w_sma": sma_200w["sma_200w"] if sma_200w else None,
                 "fair_value": risk["fair_value"],
-                "prior_ath_zone": 69000,
-                "realized_price_est": 30000,
             },
             "cowen_context": thesis_context[:8],
         }

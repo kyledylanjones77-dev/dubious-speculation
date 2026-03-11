@@ -12,3 +12,10 @@ data/yt_initial_data.json
 *.egg-info/
 .env
 venv/
+data/vector_store.npz
+data/chunk_index.json
+data/chat_history.json
+data/transcript_progress.json
+fetch_transcripts_v2.py
+fetch_via_innertube.py
+fetch_with_proxies.py

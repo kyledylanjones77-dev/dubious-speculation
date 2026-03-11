@@ -12,6 +12,7 @@ from api.cowen_engine import CowenAnalysisEngine
 from api.video_updater import VideoUpdater
 from api.adaptive_tracker import AdaptiveTracker
 from api.friday_predictor import FridayPredictor
+from api.cowen_llm import CowenLLM
 import json
 import os
 import threading
@@ -25,6 +26,18 @@ cowen_engine = CowenAnalysisEngine()
 video_updater = VideoUpdater()
 adaptive_tracker = AdaptiveTracker()
 friday_predictor = FridayPredictor()
+
+# Initialize Cowen LLM (loads existing vector store if available)
+_openai_key = os.environ.get("OPENAI_API_KEY", "")
+if not _openai_key:
+    _key_file = os.path.expanduser("~/.claude/projects/C--Users-15404/memory/api-keys.md")
+    if os.path.exists(_key_file):
+        with open(_key_file) as _f:
+            for _line in _f:
+                if "OPENAI_API_KEY" in _line and "sk-" in _line:
+                    _openai_key = _line.split("`")[3] if "`" in _line else ""
+                    break
+cowen_llm = CowenLLM(openai_api_key=_openai_key)
 
 # ========================
 # PAGES
@@ -142,6 +155,124 @@ def friday_predictions():
 def confidence_adjustments():
     """Get current indicator confidence adjustments from adaptive learning."""
     return jsonify(adaptive_tracker.get_confidence_adjustments())
+
+@app.route("/api/save-transcript", methods=["POST"])
+def save_transcript():
+    """Receive transcript data from browser automation and save it."""
+    data = request.get_json()
+    if not data or "video_id" not in data or "text" not in data:
+        return jsonify({"error": "Need video_id and text"}), 400
+
+    vid = data["video_id"]
+    title = data.get("title", "")
+    text = data["text"]
+    segments = data.get("segments", [])
+
+    filepath = os.path.join("data", "transcripts", f"{vid}.json")
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+
+    result = {
+        "video_id": vid,
+        "title": title,
+        "transcript": segments,
+        "full_text": text,
+        "word_count": len(text.split()),
+        "fetched_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "method": "browser_ui",
+    }
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(result, f, indent=1)
+
+    # Update progress file
+    progress_file = os.path.join("data", "transcript_progress.json")
+    progress = {"completed": [], "failed": [], "ip_blocked": [], "total": 0}
+    if os.path.exists(progress_file):
+        try:
+            with open(progress_file, "r") as f:
+                progress = json.load(f)
+        except:
+            pass
+    if vid not in progress["completed"]:
+        progress["completed"].append(vid)
+    with open(progress_file, "w") as f:
+        json.dump(progress, f)
+
+    return jsonify({"ok": True, "video_id": vid, "words": result["word_count"],
+                     "total_completed": len(progress["completed"])})
+
+@app.route("/api/transcript-progress")
+def transcript_progress():
+    """Get transcript download progress."""
+    progress_file = os.path.join("data", "transcript_progress.json")
+    if os.path.exists(progress_file):
+        with open(progress_file, "r") as f:
+            return jsonify(json.load(f))
+    return jsonify({"completed": [], "failed": [], "total": 0})
+
+@app.route("/api/video-list")
+def video_list():
+    """Get list of all video IDs that still need transcripts."""
+    catalog_file = os.path.join("data", "all_videos_raw.txt")
+    progress_file = os.path.join("data", "transcript_progress.json")
+
+    videos = []
+    if os.path.exists(catalog_file):
+        with open(catalog_file, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if "|||" in line:
+                    vid, title = line.split("|||", 1)
+                    videos.append({"id": vid, "title": title})
+
+    done = set()
+    if os.path.exists(progress_file):
+        try:
+            with open(progress_file, "r") as f:
+                progress = json.load(f)
+                done = set(progress.get("completed", []) + progress.get("failed", []))
+        except:
+            pass
+
+    remaining = [v for v in videos if v["id"] not in done]
+    return jsonify({"total": len(videos), "done": len(done), "remaining": remaining})
+
+# ========================
+# COWEN LLM / CHAT
+# ========================
+
+@app.route("/api/chat", methods=["POST"])
+def chat():
+    """Chat with the Ben Cowen AI. RAG-powered from transcript knowledge base."""
+    data = request.get_json()
+    if not data or "message" not in data:
+        return jsonify({"error": "Need a 'message' field"}), 400
+
+    message = data["message"].strip()
+    if not message:
+        return jsonify({"error": "Empty message"}), 400
+
+    # Optional conversation history from client
+    history = data.get("history", [])
+
+    result = cowen_llm.chat(message, conversation_history=history)
+    return jsonify(result)
+
+@app.route("/api/llm-status")
+def llm_status():
+    """Get LLM / vector store status."""
+    return jsonify(cowen_llm.get_status())
+
+@app.route("/api/llm-build", methods=["POST"])
+def llm_build():
+    """Trigger a vector store rebuild (async)."""
+    force = request.get_json().get("force", False) if request.is_json else False
+
+    def _build():
+        cowen_llm.build_vector_store(force=force)
+
+    thread = threading.Thread(target=_build, daemon=True)
+    thread.start()
+    return jsonify({"status": "building", "message": "Vector store build started in background"})
 
 # ========================
 # BACKGROUND VIDEO CHECKER

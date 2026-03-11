@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-03-10",
+  "generated_at": "2026-03-10T23:41:26.119096",
   "transcript_stats": {
-    "total_transcripts": 23,
-    "total_words": 66109,
-    "estimated_hours": 7.3
+    "total_transcripts": 151,
+    "total_words": 492605,
+    "estimated_hours": 54.7
   },
   "current_market_thesis": {
     "overall": "Bear market state of mind since Q4 2025. Operating under assumption that lower highs will continue through midterm year 2026.",
@@ -32,20 +32,41 @@
     "DCA into fear, not euphoria"
   ],
   "most_discussed_indicators": [
-    "oil",
-    "recession",
-    "gold",
-    "four_year_cycle",
     "fed_rates",
     "btc_dominance",
+    "bull_market_support",
     "alt_season",
-    "macro",
-    "silver",
-    "bull_market_support"
+    "recession",
+    "logarithmic_regression",
+    "oil",
+    "gold",
+    "roi",
+    "macro"
   ],
   "midterm_year_pattern": {
     "typical_flow": "Early strength -> March lower high -> April-June weakness -> possible bottom May or October",
     "2026_tracking": "Bitcoin underperforming average of prior midterm years as of March 2026"
   },
-  "latest_video": "Bitcoin: The Structure of a Bear Market"
+  "sentiment_from_transcripts": {
+    "bullish_mentions": 1239,
+    "bearish_mentions": 962,
+    "cautious_mentions": 879,
+    "neutral_mentions": 271,
+    "overall_lean": "Cautiously bearish — Cowen mentions bullish setups but with significant bearish and cautious qualifiers"
+  },
+  "asset_focus_from_transcripts": {
+    "ethereum": 4558,
+    "bitcoin": 4142,
+    "altcoins": 431,
+    "stocks": 350,
+    "gold": 255,
+    "uranium": 156,
+    "silver": 43
+  },
+  "latest_video": "Bitcoin: The Structure of a Bear Market",
+  "knowledge_base": {
+    "videos_analyzed": 151,
+    "total_words": 492605,
+    "hours_content": 54.7
+  }
 }

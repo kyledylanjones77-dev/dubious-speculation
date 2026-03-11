@@ -1,35 +1,49 @@
 {
-  "analyzed_at": "2026-03-10T19:59:36.061277",
-  "total_transcripts": 23,
-  "total_words": 66109,
+  "analyzed_at": "2026-03-10T23:41:25.260055",
+  "total_transcripts": 151,
+  "total_words": 492605,
   "indicator_frequency": {
-    "oil": 241,
-    "recession": 125,
-    "gold": 118,
-    "four_year_cycle": 117,
-    "fed_rates": 97,
-    "btc_dominance": 95,
-    "alt_season": 71,
-    "macro": 54,
-    "silver": 41,
-    "bull_market_support": 40,
-    "roi": 30,
-    "logarithmic_regression": 27,
-    "bear_market_resistance": 22,
-    "yield_curve": 13,
-    "total_crypto_market": 6,
-    "risk_metric": 6,
-    "200_week_sma": 2,
-    "dxy": 2
+    "fed_rates": 652,
+    "btc_dominance": 632,
+    "bull_market_support": 602,
+    "alt_season": 430,
+    "recession": 426,
+    "logarithmic_regression": 272,
+    "oil": 267,
+    "gold": 255,
+    "roi": 189,
+    "macro": 179,
+    "four_year_cycle": 141,
+    "risk_metric": 135,
+    "yield_curve": 108,
+    "200_week_sma": 87,
+    "total_crypto_market": 62,
+    "dxy": 60,
+    "eth_btc": 58,
+    "lengthening_cycles": 52,
+    "silver": 43,
+    "bear_market_resistance": 42,
+    "pi_cycle": 7,
+    "stock_to_flow": 5
   },
   "sentiment_analysis": {
     "overall": {
-      "bullish": 100,
-      "bearish": 170,
-      "neutral": 36,
-      "cautious": 117
+      "bullish": 1239,
+      "bearish": 962,
+      "neutral": 271,
+      "cautious": 879
     },
     "per_transcript": [
+      {
+        "title": "Bitcoin: The US Dollar strikes back!",
+        "dominant_sentiment": "bearish",
+        "scores": {
+          "bullish": 1,
+          "bearish": 2,
+          "neutral": 2,
+          "cautious": 0
+        }
+      },
       {
         "title": "Bitcoin Bear Market Resistance Band",
         "dominant_sentiment": "bearish",
@@ -38,6 +52,76 @@
           "bearish": 10,
           "neutral": 0,
           "cautious": 3
+        }
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "dominant_sentiment": "bullish",
+        "scores": {
+          "bullish": 17,
+          "bearish": 6,
+          "neutral": 0,
+          "cautious": 0
+        }
+      },
+      {
+        "title": "Bitcoin Bears In Disbelief",
+        "dominant_sentiment": "bullish",
+        "scores": {
+          "bullish": 10,
+          "bearish": 2,
+          "neutral": 0,
+          "cautious": 2
+        }
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "dominant_sentiment": "bullish",
+        "scores": {
+          "bullish": 37,
+          "bearish": 30,
+          "neutral": 0,
+          "cautious": 7
+        }
+      },
+      {
+        "title": "A Bitcoin Correction",
+        "dominant_sentiment": "bullish",
+        "scores": {
+          "bullish": 26,
+          "bearish": 3,
+          "neutral": 3,
+          "cautious": 5
+        }
+      },
+      {
+        "title": "Bitcoin and Altcoins: Time is on Our Side!",
+        "dominant_sentiment": "bearish",
+        "scores": {
+          "bullish": 2,
+          "bearish": 23,
+          "neutral": 2,
+          "cautious": 14
+        }
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "dominant_sentiment": "bullish",
+        "scores": {
+          "bullish": 13,
+          "bearish": 0,
+          "neutral": 0,
+          "cautious": 1
+        }
+      },
+      {
+        "title": "XRP: Will price ever recover?",
+        "dominant_sentiment": "cautious",
+        "scores": {
+          "bullish": 4,
+          "bearish": 3,
+          "neutral": 1,
+          "cautious": 6
         }
       },
       {
@@ -51,6 +135,16 @@
         }
       },
       {
+        "title": "Bitcoin: Will the sideways movement end?",
+        "dominant_sentiment": "bullish",
+        "scores": {
+          "bullish": 8,
+          "bearish": 7,
+          "neutral": 1,
+          "cautious": 1
+        }
+      },
+      {
         "title": "Bitcoin Dominance",
         "dominant_sentiment": "bullish",
         "scores": {
@@ -61,6 +155,46 @@
         }
       },
       {
+        "title": "Real Estate: Outlook for 2023",
+        "dominant_sentiment": "cautious",
+        "scores": {
+          "bullish": 3,
+          "bearish": 3,
+          "neutral": 0,
+          "cautious": 7
+        }
+      },
+      {
+        "title": "Bitcoin Relative Strength Index",
+        "dominant_sentiment": "bearish",
+        "scores": {
+          "bullish": 2,
+          "bearish": 5,
+          "neutral": 1,
+          "cautious": 3
+        }
+      },
+      {
+        "title": "FOMC",
+        "dominant_sentiment": "bearish",
+        "scores": {
+          "bullish": 4,
+          "bearish": 19,
+          "neutral": 0,
+          "cautious": 19
+        }
+      },
+      {
+        "title": "Bitcoin: Price Risk",
+        "dominant_sentiment": "cautious",
+        "scores": {
+          "bullish": 3,
+          "bearish": 2,
+          "neutral": 0,
+          "cautious": 44
+        }
+      },
+      {
         "title": "Bitcoin: Dubious Speculation",
         "dominant_sentiment": "bearish",
         "scores": {
@@ -68,6 +202,16 @@
           "bearish": 8,
           "neutral": 0,
           "cautious": 0
+        }
+      },
+      {
+        "title": "Chainlink: Time To Shine?",
+        "dominant_sentiment": "bearish",
+        "scores": {
+          "bullish": 3,
+          "bearish": 5,
+          "neutral": 1,
+          "cautious": 2
         }
       },
       {
@@ -81,183 +225,263 @@
         }
       },
       {
-        "title": "Bitcoin: Simulation Confirmed",
-        "dominant_sentiment": "neutral",
-        "scores": {
-          "bullish": 0,
-          "bearish": 1,
-          "neutral": 2,
-          "cautious": 0
-        }
-      },
-      {
-        "title": "Business Cycles Ends With Recessions",
-        "dominant_sentiment": "bearish",
-        "scores": {
-          "bullish": 6,
-          "bearish": 10,
-          "neutral": 0,
-          "cautious": 8
-        }
-      },
-      {
-        "title": "Bitcoin: Dubious Speculation",
+        "title": "Polkadot: A Ticket to Ride",
         "dominant_sentiment": "bullish",
         "scores": {
-          "bullish": 7,
-          "bearish": 6,
-          "neutral": 2,
-          "cautious": 4
-        }
-      },
-      {
-        "title": "Check",
-        "dominant_sentiment": "bullish",
-        "scores": {
-          "bullish": 7,
-          "bearish": 6,
-          "neutral": 0,
-          "cautious": 5
-        }
-      },
-      {
-        "title": "The Dow Jones Hits 50,000 - Time for a Correction?",
-        "dominant_sentiment": "bearish",
-        "scores": {
-          "bullish": 4,
-          "bearish": 7,
-          "neutral": 0,
-          "cautious": 0
-        }
-      },
-      {
-        "title": "Bitcoin: The Early March Rally",
-        "dominant_sentiment": "bearish",
-        "scores": {
-          "bullish": 5,
-          "bearish": 9,
-          "neutral": 0,
-          "cautious": 0
-        }
-      },
-      {
-        "title": "Bitcoin: A Bear Market State of Mind",
-        "dominant_sentiment": "bearish",
-        "scores": {
-          "bullish": 0,
-          "bearish": 7,
-          "neutral": 3,
-          "cautious": 5
-        }
-      },
-      {
-        "title": "How low will Bitcoin go?",
-        "dominant_sentiment": "bearish",
-        "scores": {
-          "bullish": 8,
-          "bearish": 13,
-          "neutral": 4,
-          "cautious": 3
-        }
-      },
-      {
-        "title": "Bitcoin: The Bear Market Blues",
-        "dominant_sentiment": "bearish",
-        "scores": {
-          "bullish": 6,
-          "bearish": 12,
-          "neutral": 1,
-          "cautious": 5
-        }
-      },
-      {
-        "title": "Welcome Back Home, Ethereum!",
-        "dominant_sentiment": "neutral",
-        "scores": {
-          "bullish": 4,
+          "bullish": 9,
           "bearish": 0,
-          "neutral": 6,
-          "cautious": 2
-        }
-      },
-      {
-        "title": "The Mechanism That Ends Business Cycles",
-        "dominant_sentiment": "cautious",
-        "scores": {
-          "bullish": 0,
-          "bearish": 2,
           "neutral": 0,
-          "cautious": 7
-        }
-      },
-      {
-        "title": "Bitcoin: Midterm Year Returns",
-        "dominant_sentiment": "bullish",
-        "scores": {
-          "bullish": 4,
-          "bearish": 4,
-          "neutral": 0,
-          "cautious": 0
-        }
-      },
-      {
-        "title": "Bitcoin: The Beauty of Mathematics (Part 68)",
-        "dominant_sentiment": "neutral",
-        "scores": {
-          "bullish": 3,
-          "bearish": 5,
-          "neutral": 6,
-          "cautious": 2
-        }
-      },
-      {
-        "title": "Bitcoin: We Really Do Live in a Simulation",
-        "dominant_sentiment": "bearish",
-        "scores": {
-          "bullish": 1,
-          "bearish": 8,
-          "neutral": 0,
-          "cautious": 0
-        }
-      },
-      {
-        "title": "Oil Spikes 35%",
-        "dominant_sentiment": "cautious",
-        "scores": {
-          "bullish": 5,
-          "bearish": 9,
-          "neutral": 0,
-          "cautious": 21
+          "cautious": 1
         }
       }
     ]
   },
   "asset_focus": {
-    "bitcoin": 551,
-    "ethereum": 239,
-    "stocks": 154,
-    "gold": 118,
-    "altcoins": 68,
-    "silver": 41,
-    "uranium": 26
+    "ethereum": 4558,
+    "bitcoin": 4142,
+    "altcoins": 431,
+    "stocks": 350,
+    "gold": 255,
+    "uranium": 156,
+    "silver": 43
   },
   "key_phrases": {
-    "business cycle": 182,
-    "midterm year": 117,
-    "bitcoin dominance": 38,
-    "bull market support band": 13,
-    "market cap": 10,
-    "fair value": 10,
-    "quantitative tightening": 9,
-    "alt season": 7,
-    "dubious speculation": 7,
-    "quantitative easing": 2,
-    "200 week": 2,
-    "rate cuts": 2,
-    "beauty of mathematics": 2,
-    "risk metric": 1
+    "business cycle": 202,
+    "bitcoin dominance": 166,
+    "market cap": 137,
+    "midterm year": 120,
+    "fair value": 92,
+    "bull market support band": 70,
+    "logarithmic regression": 59,
+    "risk metric": 59,
+    "rate cuts": 48,
+    "200 week": 46,
+    "quantitative tightening": 36,
+    "diminishing returns": 30,
+    "dubious speculation": 24,
+    "alt season": 20,
+    "quantitative easing": 14,
+    "lengthening cycles": 13,
+    "beauty of mathematics": 10
   },
   "framework_details": {
+    "dxy": [
+      {
+        "title": "Bitcoin: The US Dollar strikes back!",
+        "context": "and then from here the dollar gained value and we know that during that same time period crypto was going through a bear market in the same manner during the time when when bitcoin was doing very well",
+        "numbers": [
+          "2016",
+          "2017",
+          "14",
+          "13",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin: The US Dollar strikes back!",
+        "context": "and then from here the dollar gained value and we know that during that same time period crypto was going through a bear market in the same manner during the time when when bitcoin was doing very well",
+        "numbers": [
+          "2016",
+          "2017",
+          "14",
+          "13",
+          "20"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "and so when you talk about affordability i mean we've seen price appreciation such to a substantial degree that you're right a lot of people have been priced out of the market and a lot of millennials",
+        "numbers": [
+          "2022",
+          "2022",
+          "20",
+          "10",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin and Altcoins: Time is on Our Side!",
+        "context": "5 trillion before i would start to get somewhat worried in the short term of us or of a more say sustained correction that could last more than a year um so i think time is on our side um of course we",
+        "numbers": [
+          "5",
+          "1",
+          "1",
+          "155",
+          "2013"
+        ]
+      },
+      {
+        "title": "Chainlink: Time To Shine?",
+        "context": "i mean it came onto the scene and and actually when bitcoin was going crazy in october and november link in december link was actually going down this is what we've seen before right with if bitcoin v",
+        "numbers": [
+          "20",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Chainlink: Time To Shine?",
+        "context": "so the question now and it's too early to say because we don't know if bitcoin's gonna hold here or not but if bitcoin is just chilling right here for a while could it be similar to say this move coul",
+        "numbers": [
+          "20",
+          "539",
+          "420",
+          "273",
+          "300"
+        ]
+      },
+      {
+        "title": "Chainlink: A run for the ages!",
+        "context": "hey everyone and thanks for jumping back into the cryptoverse today we're going to talk about chain link and looking at its valuation against usd and bitcoin we're going to be looking at a comprehensi",
+        "numbers": [
+          "10",
+          "11",
+          "1100",
+          "1200",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin breaks $50k!",
+        "context": "hey everyone and thanks for jumping back into the crypto verse for the first time in history bitcoin breaks 50 000 us dollars if you guys like the content make sure you subscribe to the channel give t",
+        "numbers": [
+          "50",
+          "000",
+          "50",
+          "50",
+          "100"
+        ]
+      },
+      {
+        "title": "The Yield Curve & Bitcoin",
+        "context": "5% next week then i don't think anyone's going to be able to fault the fed for their for the rate cut right you could argue that they're just trying to get ahead of what they see coming over the next ",
+        "numbers": [
+          "5%",
+          "20",
+          "30%",
+          "50",
+          "2022"
+        ]
+      },
+      {
+        "title": "Cardano Outlook",
+        "context": "0 or 379 this wick went up to 0379 so it i mean it just legitimately retraced this entire drop only to then completely fade back down to the range lows so the issue now that ada is facing is it's gett",
+        "numbers": [
+          "0",
+          "379",
+          "0379",
+          "24",
+          "2023"
+        ]
+      }
+    ],
+    "macro": [
+      {
+        "title": "Bitcoin: The US Dollar strikes back!",
+        "context": "and then from here the dollar gained value and we know that during that same time period crypto was going through a bear market in the same manner during the time when when bitcoin was doing very well",
+        "numbers": [
+          "2016",
+          "2017",
+          "14",
+          "13",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin Bear Market Resistance Band",
+        "context": "so, the last one we published was a crypto macro risk memo and it was in january of 2026 and bitcoin was trading at 97k on that day and we talked in this memo about how we were looking into uh this cy",
+        "numbers": [
+          "2026",
+          "97"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "hey everyone and thanks for jumping back into the real estate verse today we're going to continue our collaboration series with jordan weirs however rather than spending most of our time talking about",
+        "numbers": [
+          "2008",
+          "2008",
+          "20",
+          "25",
+          "30"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "s dollars in existence printed in the last 24 months and so we saw the real estate market just take off we saw um really just about every asset class uh crypto included just absolutely go to the moon ",
+        "numbers": [
+          "24",
+          "2020",
+          "2022",
+          "20",
+          "2020"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "um but also this is a not a price chart as you know as you say it's a it's an activity chart do you for investors that are always looking for a good deal um what do you think how long do you think we ",
+        "numbers": [
+          "12",
+          "18",
+          "12",
+          "18",
+          "10"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "and so when you talk about affordability i mean we've seen price appreciation such to a substantial degree that you're right a lot of people have been priced out of the market and a lot of millennials",
+        "numbers": [
+          "2022",
+          "2022",
+          "20",
+          "10",
+          "20"
+        ]
+      },
+      {
+        "title": "A Bitcoin Correction",
+        "context": "so from the macro perspective bitcoin is still on course if anything it was ahead of schedule right if we just look at say drawing a line from our low to where we would theoretically project us gettin",
+        "numbers": [
+          "16",
+          "2021",
+          "2022",
+          "20",
+          "000"
+        ]
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "hey everyone and thanks for jumping back into the co2 verse today we're gonna be looking at bitcoin and also the dominance of bitcoin with respect to the total cryptocurrency market cap so if you guys",
+        "numbers": [
+          "2",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "XRP: Will price ever recover?",
+        "context": "hey everyone and thanks for jumping back into the crypto verse today we're gonna talk about xrp if you guys like the content please go ahead and subscribe to the channel give the video a thumbs up we'",
+        "numbers": [
+          "20",
+          "20",
+          "5",
+          "10",
+          "4"
+        ]
+      },
+      {
+        "title": "Bitcoin Dominance",
+        "context": "when bitcoin rallied back up to 97k, i put out a report, a macro crypto memo saying, \"look guys, this is not the signs of a healthy market",
+        "numbers": [
+          "97"
+        ]
+      }
+    ],
     "bear_market_resistance": [
       {
         "title": "Bitcoin Bear Market Resistance Band",
@@ -265,6 +489,28 @@
         "numbers": [
           "97",
           "98"
+        ]
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "4 k is more or less the line in the sand now what you notice is that bitcoin you know the bulls every every few weeks maybe every month or so they take a they take a a run at it right they make a run ",
+        "numbers": [
+          "4",
+          "21",
+          "2019",
+          "2018",
+          "4"
+        ]
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "4 k is more or less the line in the sand now what you notice is that bitcoin you know the bulls every every few weeks maybe every month or so they take a they take a a run at it right they make a run ",
+        "numbers": [
+          "4",
+          "21",
+          "2019",
+          "2018",
+          "4"
         ]
       },
       {
@@ -283,20 +529,55 @@
         ]
       },
       {
-        "title": "Bitcoin: The Early March Rally",
-        "context": "the the bare market resistance band right now is around 85k, but it's moving lower and who knows where it'll be by the time we get to it",
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "com today is the last day to sign up for if you want to lock in low rate so in a few hours um maybe in about 12 hours or so we'll go ahead and end that sale so so now's the time to sign up if you've b",
         "numbers": [
-          "85"
+          "12",
+          "200",
+          "20",
+          "42"
         ]
       },
       {
-        "title": "Bitcoin: We Really Do Live in a Simulation",
-        "context": "i mean you could have thought we were going to go to the bare market resistance band back in may of 2022 when it was at you know 35,000 but then bitcoin it started to go and then it just capitulated a",
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "com today is the last day to sign up for if you want to lock in low rate so in a few hours um maybe in about 12 hours or so we'll go ahead and end that sale so so now's the time to sign up if you've b",
         "numbers": [
-          "2022",
-          "35",
+          "12",
+          "200",
+          "20",
+          "42"
+        ]
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "yeah we had a couple couple phases where we had four reds in a row and then what i thought was interesting was that in 2018 even though it was a barrier year we did not we never even had four weekly r",
+        "numbers": [
+          "2018",
+          "43",
           "000",
+          "43",
+          "000"
+        ]
+      },
+      {
+        "title": "Ethereum After The Merge",
+        "context": "com put out a video yesterday talking about the price analysis of ethereum going into the merge and while i said from a fundamental perspective on the macro scale i think the proof of stake model with",
+        "numbers": [
+          "200",
+          "20",
+          "20",
+          "21",
           "20"
+        ]
+      },
+      {
+        "title": "Ethereum After The Merge",
+        "context": "4 right it could have been at parity with bitcoin and and people would still call for it to go 2x so it doesn't really matter what it is it's all it's just a relative number that's mostly based on pur",
+        "numbers": [
+          "4",
+          "2",
+          "2023",
+          "2019"
         ]
       }
     ],
@@ -318,6 +599,28 @@
         ]
       },
       {
+        "title": "A Bitcoin Correction",
+        "context": "you know one of the one of the common questions i get is you know why why why would we not see a hundred thousand dollars in in 2021 for bitcoin and i feel like all the data again suggests that it is ",
+        "numbers": [
+          "2021",
+          "2021",
+          "2021",
+          "10",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "hey everyone and thanks for jumping back into the co2 verse today we're gonna be looking at bitcoin and also the dominance of bitcoin with respect to the total cryptocurrency market cap so if you guys",
+        "numbers": [
+          "2",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
         "title": "Visualizing the Business Cycle",
         "context": "if you look at the year-to- date roi of stocks, if we look at say the s&p 500, if we look at what's going on here so far in 2026 and add the average of prior midterm years, the weakest point is late q",
         "numbers": [
@@ -336,6 +639,27 @@
         ]
       },
       {
+        "title": "Bitcoin: Price Risk",
+        "context": "1 wristband i'm still of the opinion that we will see something like that as the pre-halving years we do tend to get ahead of ourselves we see some type of rally only for it to generally get faded in ",
+        "numbers": [
+          "1",
+          "2019",
+          "300",
+          "0"
+        ]
+      },
+      {
+        "title": "Bitcoin: Price Risk",
+        "context": "65 risk on on sort of an hourly time frame in 2015 we didn't go up nearly as high so it's probably going to be somewhere in between these two right where it's not i mean obviously we've already gone h",
+        "numbers": [
+          "65",
+          "2015",
+          "3",
+          "4",
+          "2019"
+        ]
+      },
+      {
         "title": "Bitcoin: Dubious Speculation",
         "context": "in fact, if you look at the year-to-ate roi of bitcoin in midterm years, so we're looking at the art the the year-to- date roi of bitcoin in midterm years, and we're going to add on the standard devia",
         "numbers": [
@@ -351,6 +675,685 @@
         "numbers": [
           "1"
         ]
+      }
+    ],
+    "bull_market_support": [
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "com let's go ahead and jump in so you know one of the things we like to do on this channel every single week no matter what is provide an update to the bull market support band and as the you know as ",
+        "numbers": [
+          "20",
+          "21",
+          "39",
+          "000",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "4 k is more or less the line in the sand now what you notice is that bitcoin you know the bulls every every few weeks maybe every month or so they take a they take a a run at it right they make a run ",
+        "numbers": [
+          "4",
+          "21",
+          "2019",
+          "2018",
+          "4"
+        ]
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "com let's go ahead and jump in so you know one of the things we like to do on this channel every single week no matter what is provide an update to the bull market support band and as the you know as ",
+        "numbers": [
+          "20",
+          "21",
+          "39",
+          "000",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "4 thousand dollars the 21-week ema is at 44k so more or less the bull market support banned now ranges from 44k to around 47k 47",
+        "numbers": [
+          "4",
+          "21",
+          "44",
+          "44",
+          "47"
+        ]
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "4 k is more or less the line in the sand now what you notice is that bitcoin you know the bulls every every few weeks maybe every month or so they take a they take a a run at it right they make a run ",
+        "numbers": [
+          "4",
+          "21",
+          "2019",
+          "2018",
+          "4"
+        ]
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "com let's go ahead and jump in so you know one of the things we like to do on this channel every single week no matter what is provide an update to the bull market support band and as the you know as ",
+        "numbers": [
+          "20",
+          "21",
+          "39",
+          "000",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "com let's go ahead and jump in so you know one of the things we like to do on this channel every single week no matter what is provide an update to the bull market support band and as the you know as ",
+        "numbers": [
+          "20",
+          "21",
+          "39",
+          "000",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "4 k is more or less the line in the sand now what you notice is that bitcoin you know the bulls every every few weeks maybe every month or so they take a they take a a run at it right they make a run ",
+        "numbers": [
+          "4",
+          "21",
+          "2019",
+          "2018",
+          "4"
+        ]
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "com let's go ahead and jump in so you know one of the things we like to do on this channel every single week no matter what is provide an update to the bull market support band and as the you know as ",
+        "numbers": [
+          "20",
+          "21",
+          "39",
+          "000",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin Bull Market Support Band",
+        "context": "4 k is more or less the line in the sand now what you notice is that bitcoin you know the bulls every every few weeks maybe every month or so they take a they take a a run at it right they make a run ",
+        "numbers": [
+          "4",
+          "21",
+          "2019",
+          "2018",
+          "4"
+        ]
+      }
+    ],
+    "btc_dominance": [
+      {
+        "title": "Bitcoin Bears In Disbelief",
+        "context": "com the prices are going to be going up in about seven to eight days so make sure you guys sign up before then if you want to lock in the lower rate let's go ahead and jump in so as far as i'm concern",
+        "numbers": [
+          "20",
+          "20",
+          "20",
+          "64",
+          "14"
+        ]
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "hey everyone and thanks for jumping back into the co2 verse today we're gonna be looking at bitcoin and also the dominance of bitcoin with respect to the total cryptocurrency market cap so if you guys",
+        "numbers": [
+          "2",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "com/scishow ders and sign up for the $50 tier but anyways i hope you guys enjoyed the content basically just a simple video looking at bitcoin price and bitcoin dominance hopefully that gives you an i",
+        "numbers": [
+          "50",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "hey everyone and thanks for jumping back into the co2 verse today we're gonna be looking at bitcoin and also the dominance of bitcoin with respect to the total cryptocurrency market cap so if you guys",
+        "numbers": [
+          "2",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "com/scishow ders and sign up for the $50 tier but anyways i hope you guys enjoyed the content basically just a simple video looking at bitcoin price and bitcoin dominance hopefully that gives you an i",
+        "numbers": [
+          "50",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin Dominance",
+        "context": "and so one of the things that we did on the website and we've showed this chart before including stable coins, bitcoin dominance is around 58% which is in agreement with what you see on trading view m",
+        "numbers": [
+          "58%"
+        ]
+      },
+      {
+        "title": "Bitcoin Dominance",
+        "context": "in fact, excluding stable coins, bitcoin dominance is actually at 67%",
+        "numbers": [
+          "67%"
+        ]
+      },
+      {
+        "title": "Bitcoin Dominance",
+        "context": "and so one of the things that we did on the website and we've showed this chart before including stable coins, bitcoin dominance is around 58% which is in agreement with what you see on trading view m",
+        "numbers": [
+          "58%"
+        ]
+      },
+      {
+        "title": "Bitcoin Dominance",
+        "context": "in fact, excluding stable coins, bitcoin dominance is actually at 67%",
+        "numbers": [
+          "67%"
+        ]
+      },
+      {
+        "title": "Bitcoin: Price Risk",
+        "context": "2 risk by the end of the year but really the actual massive capitulation occurred in early 2020 just before in fact the the bitcoin having so about two months before the bitcoin having is when this ca",
+        "numbers": [
+          "2",
+          "2020",
+          "2019",
+          "2015",
+          "0"
+        ]
+      }
+    ],
+    "gold": [
+      {
+        "title": "Bitcoin Bears In Disbelief",
+        "context": "com the prices are going to be going up in about seven to eight days so make sure you guys sign up before then if you want to lock in the lower rate let's go ahead and jump in so as far as i'm concern",
+        "numbers": [
+          "20",
+          "20",
+          "20",
+          "64",
+          "14"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "and normally we see a bull market after after bitcoins having um and usually the bottom for bitcoin occurs before the having but it begs the question what happens to risk assets like bitcoin if they'r",
+        "numbers": [
+          "3",
+          "3",
+          "10",
+          "15",
+          "17"
+        ]
+      },
+      {
+        "title": "A Bitcoin Correction",
+        "context": "45 okay so if bitcoin were to drop to the 20 week if bitcoin uh you know says you know what we've this has been fun but we're gonna have to pull back and confirm the 20 week if bitcoin decides to do t",
+        "numbers": [
+          "45",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "hey everyone and thanks for jumping back into the co2 verse today we're gonna be looking at bitcoin and also the dominance of bitcoin with respect to the total cryptocurrency market cap so if you guys",
+        "numbers": [
+          "2",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Visualizing the Business Cycle",
+        "context": "i think a better way to look at this chart is to look at the s&p divided by gold because in that case, it makes it look more like 2008 or 1973 when the stock market broke down against gold",
+        "numbers": [
+          "2008",
+          "1973"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "so, gold is trading back below 5,000",
+        "numbers": [
+          "5",
+          "000"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "and a lot of times what happens in, you know, midterm years with gold, especially after a kind of a low local top here that we got in early q1, i'm still expecting a longer consolidation phase here at",
+        "numbers": [
+          "1"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "and so when you look at prior gold uptrends, you'll notice that two of the last secular bull markets in gold, the one over here in the ' 60s, '7s, and 80s and the one that started over here in um you ",
+        "numbers": [
+          "60",
+          "7",
+          "80",
+          "1999",
+          "2011"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "gold found a top in 1975 or 1974 somewhere over here",
+        "numbers": [
+          "1975",
+          "1974"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "and then if you look at the 2000s, you'll see that gold topped in march and was back at new all-time highs by september of09, october of '09",
+        "numbers": [
+          "2000",
+          "09",
+          "09"
+        ]
+      }
+    ],
+    "fed_rates": [
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "hey everyone and thanks for jumping back into the real estate verse today we're going to continue our collaboration series with jordan weirs however rather than spending most of our time talking about",
+        "numbers": [
+          "2008",
+          "2008",
+          "20",
+          "25",
+          "30"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "s dollars in existence printed in the last 24 months and so we saw the real estate market just take off we saw um really just about every asset class uh crypto included just absolutely go to the moon ",
+        "numbers": [
+          "24",
+          "2020",
+          "2022",
+          "20",
+          "2020"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "um but also this is a not a price chart as you know as you say it's a it's an activity chart do you for investors that are always looking for a good deal um what do you think how long do you think we ",
+        "numbers": [
+          "12",
+          "18",
+          "12",
+          "18",
+          "10"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "and so uh we're up you know percent of active uh listings with price drops is up four and a half percent and when you compare that number to the other lines which is 2019 2020 and 2021 you can see tha",
+        "numbers": [
+          "2019",
+          "2020",
+          "2021",
+          "2017",
+          "2018"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "hey everyone and thanks for jumping back into the real estate verse today we're going to continue our collaboration series with jordan weirs however rather than spending most of our time talking about",
+        "numbers": [
+          "2008",
+          "2008",
+          "20",
+          "25",
+          "30"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "s dollars in existence printed in the last 24 months and so we saw the real estate market just take off we saw um really just about every asset class uh crypto included just absolutely go to the moon ",
+        "numbers": [
+          "24",
+          "2020",
+          "2022",
+          "20",
+          "2020"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "and so uh we're up you know percent of active uh listings with price drops is up four and a half percent and when you compare that number to the other lines which is 2019 2020 and 2021 you can see tha",
+        "numbers": [
+          "2019",
+          "2020",
+          "2021",
+          "2017",
+          "2018"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "so this rate of change has the potential to scare buyers out of the market as well but you know let's suppose that i i'm a home a homeowner and i i decided to sell my home and because i want to take a",
+        "numbers": [
+          "2007",
+          "184",
+          "2021",
+          "249"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "and so when you talk about affordability i mean we've seen price appreciation such to a substantial degree that you're right a lot of people have been priced out of the market and a lot of millennials",
+        "numbers": [
+          "2022",
+          "2022",
+          "20",
+          "10",
+          "20"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "and normally we see a bull market after after bitcoins having um and usually the bottom for bitcoin occurs before the having but it begs the question what happens to risk assets like bitcoin if they'r",
+        "numbers": [
+          "3",
+          "3",
+          "10",
+          "15",
+          "17"
+        ]
+      }
+    ],
+    "silver": [
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "and normally we see a bull market after after bitcoins having um and usually the bottom for bitcoin occurs before the having but it begs the question what happens to risk assets like bitcoin if they'r",
+        "numbers": [
+          "3",
+          "3",
+          "10",
+          "15",
+          "17"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "um even if you know, even if we're in something like 06 where you have this big drop, you'll see back then silver also had a nice rally up and then it had a a pretty big drop down about 40%",
+        "numbers": [
+          "06",
+          "40%"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "silver didn't go put in a new all-time high until 2007",
+        "numbers": [
+          "2007"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "and and that's why we talk a lot about silver's valuation against the s&p 500, right",
+        "numbers": [
+          "500"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "i mean, if you look at this, you know, sort of this level, uh, the s&p valuation that it just hit against silver, you can see that we also broke, we were at this level in 2009",
+        "numbers": [
+          "2009"
+        ]
+      },
+      {
+        "title": "Gold Logarithmic Regression",
+        "context": "com let's go ahead and jump in so we spoke about gold you know just yesterday um and i mean the price is actually moving somewhat quickly here uh just yesterday it was actually less than two thousand ",
+        "numbers": [
+          "2040",
+          "26",
+          "2020",
+          "1400",
+          "2020"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "now, if silver has topped for the year, i do not i do not look at this chart and believe that it's like a top that will last for say 20 years",
+        "numbers": [
+          "20"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "i would say for silver, if this is the top for the year, i might envision us sort of in in a top like this where we had in in 1974 where it might fall off for a while, but i would expect it to come ba",
+        "numbers": [
+          "1974"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "and if you look at what silver did in 1973 or sorry 1974, you can see that it dropped about 43% and kind of consolidated with some lower highs for a while, but then eventually it built back up into an",
+        "numbers": [
+          "1973",
+          "1974",
+          "43%"
+        ]
+      },
+      {
+        "title": "Gold: Dubious Speculation",
+        "context": "and when you look at gold or sorry when you look at silver in this move you can see that the correction that it just had was around 47%",
+        "numbers": [
+          "47%"
+        ]
+      }
+    ],
+    "recession": [
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "hey everyone and thanks for jumping back into the real estate verse today we're going to continue our collaboration series with jordan weirs however rather than spending most of our time talking about",
+        "numbers": [
+          "2008",
+          "2008",
+          "20",
+          "25",
+          "30"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "s dollars in existence printed in the last 24 months and so we saw the real estate market just take off we saw um really just about every asset class uh crypto included just absolutely go to the moon ",
+        "numbers": [
+          "24",
+          "2020",
+          "2022",
+          "20",
+          "2020"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "3 percent in all of redfin's metro uh areas where they collect data for and what's uh again what's fascinating but very ominous is that this black line is is approaching um and converging and very lik",
+        "numbers": [
+          "3",
+          "2019",
+          "2021",
+          "2020",
+          "2019"
+        ]
+      },
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "and so when you talk about affordability i mean we've seen price appreciation such to a substantial degree that you're right a lot of people have been priced out of the market and a lot of millennials",
+        "numbers": [
+          "2022",
+          "2022",
+          "20",
+          "10",
+          "20"
+        ]
+      },
+      {
+        "title": "Visualizing the Business Cycle",
+        "context": "you can see back in the 1880s and 1890s, basically just the 1800s, recessions were really common, you know, to to to pretend like they could never happen would have seen would have been so far-fetched",
+        "numbers": [
+          "1880",
+          "1890",
+          "1800"
+        ]
+      },
+      {
+        "title": "Visualizing the Business Cycle",
+        "context": "but when you look at the way this has gone, recession recessions used to be a lot more frequent back over in the 1800s and going into the early 1900s, but then you can see they started to become less ",
+        "numbers": [
+          "1800",
+          "1900"
+        ]
+      },
+      {
+        "title": "Visualizing the Business Cycle",
+        "context": "and then we had another business cycle here going into the 80s and then ultimately we had one recession",
+        "numbers": [
+          "80"
+        ]
+      },
+      {
+        "title": "Visualizing the Business Cycle",
+        "context": "that ended with a 1990 recession",
+        "numbers": [
+          "1990"
+        ]
+      },
+      {
+        "title": "Visualizing the Business Cycle",
+        "context": "xle continued to go up into may of 2008 until it was clear we were in a recession",
+        "numbers": [
+          "2008"
+        ]
+      },
+      {
+        "title": "Real Estate: Outlook for 2023",
+        "context": "so the question is is right what comes next what comes next in this metric now something else that i want to look at and we're going to go through you know through through a lot of different things an",
+        "numbers": [
+          "1980",
+          "14",
+          "15",
+          "81",
+          "18"
+        ]
+      }
+    ],
+    "roi": [
+      {
+        "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+        "context": "and normally we see a bull market after after bitcoins having um and usually the bottom for bitcoin occurs before the having but it begs the question what happens to risk assets like bitcoin if they'r",
+        "numbers": [
+          "3",
+          "3",
+          "10",
+          "15",
+          "17"
+        ]
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "hey everyone and thanks for jumping back into the co2 verse today we're gonna be looking at bitcoin and also the dominance of bitcoin with respect to the total cryptocurrency market cap so if you guys",
+        "numbers": [
+          "2",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "XRP: Will price ever recover?",
+        "context": "hey everyone and thanks for jumping back into the crypto verse today we're gonna talk about xrp if you guys like the content please go ahead and subscribe to the channel give the video a thumbs up we'",
+        "numbers": [
+          "20",
+          "20",
+          "5",
+          "10",
+          "4"
+        ]
+      },
+      {
+        "title": "XRP: Will price ever recover?",
+        "context": "hey everyone and thanks for jumping back into the crypto verse today we're gonna talk about xrp if you guys like the content please go ahead and subscribe to the channel give the video a thumbs up we'",
+        "numbers": [
+          "20",
+          "20",
+          "5",
+          "10",
+          "4"
+        ]
+      },
+      {
+        "title": "Visualizing the Business Cycle",
+        "context": "if you look at the year-to- date roi of stocks, if we look at say the s&p 500, if we look at what's going on here so far in 2026 and add the average of prior midterm years, the weakest point is late q",
+        "numbers": [
+          "500",
+          "2026",
+          "3",
+          "4",
+          "4"
+        ]
+      },
+      {
+        "title": "Bitcoin: Will the sideways movement end?",
+        "context": "hey everyone and thanks should jump back into the kip divers today we're gonna talk about bitcoin we're gonna be looking at the move that we've seen to the downside over the last several days we don't",
+        "numbers": [
+          "59",
+          "59",
+          "20",
+          "40",
+          "50"
+        ]
+      },
+      {
+        "title": "Bitcoin: Price Risk",
+        "context": "com that is going to end at the end of the month make sure you check that out lock in lower rate let's go ahead and jump in so yesterday we spoke about the on chain risk the day before that we spoke a",
+        "numbers": [
+          "2019",
+          "2019",
+          "2019",
+          "2019",
+          "0"
+        ]
+      },
+      {
+        "title": "Bitcoin: Dubious Speculation",
+        "context": "in fact, if you look at the year-to-ate roi of bitcoin in midterm years, so we're looking at the art the the year-to- date roi of bitcoin in midterm years, and we're going to add on the standard devia",
+        "numbers": [
+          "2014",
+          "2018",
+          "2022",
+          "2026"
+        ]
       },
       {
         "title": "Gold: Dubious Speculation",
@@ -362,172 +1365,669 @@
         ]
       },
       {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "we're going to look at all prior midterm years going back to the 1920s",
+        "title": "Bitcoin pep talk",
+        "context": "com you can find a link to that in the description below so check it out but even if you're not even if you're if you're not on the premium list you'll you'll see me talk about the risk levels uh occa",
         "numbers": [
-          "1920"
-        ]
-      },
-      {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "so we're going to look at 2026 and compare that to the average of prior midterm years",
-        "numbers": [
-          "2026"
-        ]
-      },
-      {
-        "title": "The Dow Jones Hits 50,000 - Time for a Correction?",
-        "context": "what you'll notice is that in the last midterm year the dow jones actually topped out in early 2022",
-        "numbers": [
-          "2022"
+          "20",
+          "20",
+          "11",
+          "5",
+          "20"
         ]
       }
     ],
-    "macro": [
+    "risk_metric": [
       {
-        "title": "Bitcoin Bear Market Resistance Band",
-        "context": "so, the last one we published was a crypto macro risk memo and it was in january of 2026 and bitcoin was trading at 97k on that day and we talked in this memo about how we were looking into uh this cy",
+        "title": "A Bitcoin Correction",
+        "context": "13 which by the way is basically where the 200 week moving average is so if you look at the 200 week moving average if we were to fall down to the 200 week moving average it more or less corresponds t",
         "numbers": [
-          "2026",
-          "97"
+          "13",
+          "200",
+          "200",
+          "200",
+          "200"
         ]
       },
       {
-        "title": "Bitcoin Dominance",
-        "context": "when bitcoin rallied back up to 97k, i put out a report, a macro crypto memo saying, \"look guys, this is not the signs of a healthy market",
+        "title": "A Bitcoin Correction",
+        "context": "com you'll get access to the premium telegram alerts channel where i'll basically give you a play by play a lot of times daily updates um there's a chat room private chat room the weekly reports the w",
         "numbers": [
-          "97"
+          "10",
+          "5",
+          "10",
+          "5",
+          "2020"
         ]
       },
       {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "now, some of the evidence for that is looking at the s&p 500 when valuated against a lot of the macro metrics that influence the federal reserve and also interest rates which the federal reserve sets ",
+        "title": "Bitcoin and Altcoins: Time is on Our Side!",
+        "context": "5 trillion before i would start to get somewhat worried in the short term of us or of a more say sustained correction that could last more than a year um so i think time is on our side um of course we",
         "numbers": [
-          "500"
+          "5",
+          "1",
+          "1",
+          "155",
+          "2013"
         ]
       },
       {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "and recently we published a macro risk memo on february 15th",
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "hey everyone and thanks for jumping back into the co2 verse today we're gonna be looking at bitcoin and also the dominance of bitcoin with respect to the total cryptocurrency market cap so if you guys",
         "numbers": [
-          "15"
+          "2",
+          "20",
+          "20",
+          "20",
+          "20"
         ]
       },
       {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "we also have a crypto macro risk memo on january 15th",
+        "title": "XRP: Will price ever recover?",
+        "context": "hey everyone and thanks for jumping back into the crypto verse today we're gonna talk about xrp if you guys like the content please go ahead and subscribe to the channel give the video a thumbs up we'",
         "numbers": [
-          "15"
+          "20",
+          "20",
+          "5",
+          "10",
+          "4"
         ]
       },
       {
-        "title": "Bitcoin: Dubious Speculation",
-        "context": "i told you guys last year to expect bitcoin to stay bearish for the first half of 2026 primarily due to a lot of macro headwinds and also of course the four-year cycle, right",
+        "title": "XRP: Will price ever recover?",
+        "context": "hey everyone and thanks for jumping back into the crypto verse today we're gonna talk about xrp if you guys like the content please go ahead and subscribe to the channel give the video a thumbs up we'",
         "numbers": [
-          "2026"
+          "20",
+          "20",
+          "5",
+          "10",
+          "4"
         ]
       },
       {
-        "title": "Welcome Back Home, Ethereum!",
-        "context": "imagine if it hits it goes to the basement and when that happens eth bottoms against bitcoin and we start looking up in 2027 2028 i think we look back and be like yeah that's a pretty bullish setup pr",
+        "title": "Bitcoin: Price Risk",
+        "context": "com that is going to end at the end of the month make sure you check that out lock in lower rate let's go ahead and jump in so yesterday we spoke about the on chain risk the day before that we spoke a",
         "numbers": [
-          "2027",
-          "2028"
+          "2019",
+          "2019",
+          "2019",
+          "2019",
+          "0"
         ]
       },
       {
-        "title": "Bitcoin: The Beauty of Mathematics (Part 68)",
-        "context": "um it's just a you know i think a lot of people think that crypto is different in in the sense that it will only ever go up and to the right but in reality eventually a lot of markets tend to behave i",
+        "title": "Bitcoin: Price Risk",
+        "context": "6 wristband and and then we came all the way back down to the lowest wristband again and then back all the way up i think that there's a good chance that something like this is going to happen again w",
         "numbers": [
-          "70",
+          "6",
+          "2019",
+          "2019",
+          "2019",
+          "2015"
+        ]
+      },
+      {
+        "title": "Bitcoin: Price Risk",
+        "context": "1 wristband i'm still of the opinion that we will see something like that as the pre-halving years we do tend to get ahead of ourselves we see some type of rally only for it to generally get faded in ",
+        "numbers": [
+          "1",
+          "2019",
+          "300",
+          "0"
+        ]
+      },
+      {
+        "title": "Bitcoin: Price Risk",
+        "context": "1 wristband i'm still of the opinion that we will see something like that as the pre-halving years we do tend to get ahead of ourselves we see some type of rally only for it to generally get faded in ",
+        "numbers": [
+          "1",
+          "2019",
+          "300",
+          "0"
+        ]
+      }
+    ],
+    "logarithmic_regression": [
+      {
+        "title": "A Bitcoin Correction",
+        "context": "so from the macro perspective bitcoin is still on course if anything it was ahead of schedule right if we just look at say drawing a line from our low to where we would theoretically project us gettin",
+        "numbers": [
+          "16",
+          "2021",
+          "2022",
+          "20",
+          "000"
+        ]
+      },
+      {
+        "title": "A Bitcoin Correction",
+        "context": "so from the macro perspective bitcoin is still on course if anything it was ahead of schedule right if we just look at say drawing a line from our low to where we would theoretically project us gettin",
+        "numbers": [
+          "16",
+          "2021",
+          "2022",
+          "20",
+          "000"
+        ]
+      },
+      {
+        "title": "A Bitcoin Correction",
+        "context": "13 which by the way is basically where the 200 week moving average is so if you look at the 200 week moving average if we were to fall down to the 200 week moving average it more or less corresponds t",
+        "numbers": [
+          "13",
+          "200",
+          "200",
+          "200",
+          "200"
+        ]
+      },
+      {
+        "title": "A Bitcoin Correction",
+        "context": "so from the macro perspective bitcoin is still on course if anything it was ahead of schedule right if we just look at say drawing a line from our low to where we would theoretically project us gettin",
+        "numbers": [
+          "16",
+          "2021",
+          "2022",
+          "20",
+          "000"
+        ]
+      },
+      {
+        "title": "A Bitcoin Correction",
+        "context": "13 which by the way is basically where the 200 week moving average is so if you look at the 200 week moving average if we were to fall down to the 200 week moving average it more or less corresponds t",
+        "numbers": [
+          "13",
+          "200",
+          "200",
+          "200",
+          "200"
+        ]
+      },
+      {
+        "title": "Bitcoin and Altcoins: Time is on Our Side!",
+        "context": "5 trillion before i would start to get somewhat worried in the short term of us or of a more say sustained correction that could last more than a year um so i think time is on our side um of course we",
+        "numbers": [
+          "5",
+          "1",
+          "1",
+          "155",
+          "2013"
+        ]
+      },
+      {
+        "title": "Bitcoin and Altcoins: Time is on Our Side!",
+        "context": "5 trillion right somewhere around that um what's a few hundred billion among friends somewhere around that area and the trend line the fair value was at 560 billion which again represented a 155 perce",
+        "numbers": [
+          "5",
+          "560",
+          "155",
+          "80",
           "80"
         ]
       },
       {
-        "title": "Bitcoin: We Really Do Live in a Simulation",
-        "context": "we'll put out another macro memo report uh here in in just about 11 days or so",
+        "title": "Bitcoin and Altcoins: Time is on Our Side!",
+        "context": "5 trillion before i would start to get somewhat worried in the short term of us or of a more say sustained correction that could last more than a year um so i think time is on our side um of course we",
         "numbers": [
-          "11"
+          "5",
+          "1",
+          "1",
+          "155",
+          "2013"
         ]
       },
       {
-        "title": "Why Alt Season Never Happened",
-        "context": "so, this entire cycle, people were hoping for a rotation into altcoins like they saw in 2020 and 2021, but we've been in a very different macro regime",
+        "title": "XRP: Will price ever recover?",
+        "context": "hey everyone and thanks for jumping back into the crypto verse today we're gonna talk about xrp if you guys like the content please go ahead and subscribe to the channel give the video a thumbs up we'",
         "numbers": [
-          "2020",
-          "2021"
+          "20",
+          "20",
+          "5",
+          "10",
+          "4"
+        ]
+      },
+      {
+        "title": "XRP: Will price ever recover?",
+        "context": "hey everyone and thanks for jumping back into the crypto verse today we're gonna talk about xrp if you guys like the content please go ahead and subscribe to the channel give the video a thumbs up we'",
+        "numbers": [
+          "20",
+          "20",
+          "5",
+          "10",
+          "4"
         ]
       }
     ],
-    "fed_rates": [
+    "200_week_sma": [
       {
-        "title": "Visualizing the Business Cycle",
-        "context": "to be completely honest, i i think the federal reserve could lower interest rates by 50 basis points and not really have any severe consequences for doing so",
+        "title": "A Bitcoin Correction",
+        "context": "13 which by the way is basically where the 200 week moving average is so if you look at the 200 week moving average if we were to fall down to the 200 week moving average it more or less corresponds t",
         "numbers": [
+          "13",
+          "200",
+          "200",
+          "200",
+          "200"
+        ]
+      },
+      {
+        "title": "A Bitcoin Correction",
+        "context": "13 which by the way is basically where the 200 week moving average is so if you look at the 200 week moving average if we were to fall down to the 200 week moving average it more or less corresponds t",
+        "numbers": [
+          "13",
+          "200",
+          "200",
+          "200",
+          "200"
+        ]
+      },
+      {
+        "title": "A Bitcoin Correction",
+        "context": "13 which by the way is basically where the 200 week moving average is so if you look at the 200 week moving average if we were to fall down to the 200 week moving average it more or less corresponds t",
+        "numbers": [
+          "13",
+          "200",
+          "200",
+          "200",
+          "200"
+        ]
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "hey everyone and thanks for jumping back into the co2 verse today we're gonna be looking at bitcoin and also the dominance of bitcoin with respect to the total cryptocurrency market cap so if you guys",
+        "numbers": [
+          "2",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "hey everyone and thanks for jumping back into the co2 verse today we're gonna be looking at bitcoin and also the dominance of bitcoin with respect to the total cryptocurrency market cap so if you guys",
+        "numbers": [
+          "2",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin: Will the sideways movement end?",
+        "context": "hey everyone and thanks should jump back into the kip divers today we're gonna talk about bitcoin we're gonna be looking at the move that we've seen to the downside over the last several days we don't",
+        "numbers": [
+          "59",
+          "59",
+          "20",
+          "40",
           "50"
         ]
       },
       {
-        "title": "Visualizing the Business Cycle",
-        "context": "to be completely honest, i i think the federal reserve could lower interest rates by 50 basis points and not really have any severe consequences for doing so",
+        "title": "Bitcoin: Will the sideways movement end?",
+        "context": "hey everyone and thanks should jump back into the kip divers today we're gonna talk about bitcoin we're gonna be looking at the move that we've seen to the downside over the last several days we don't",
         "numbers": [
+          "59",
+          "59",
+          "20",
+          "40",
           "50"
         ]
       },
       {
-        "title": "Visualizing the Business Cycle",
-        "context": "and when you look at the s&p 500 divided by the unemployment rate squared times the inflation rate year-over-year and times interest rates, what you'll notice is that we have a pretty good way to visu",
+        "title": "Bitcoin: Dubious Speculation",
+        "context": "but with it being only february, with it being that we haven't even hit the 200 week, we haven't hit the realized price, we haven't hit the balance price, we haven't seen the supply and profit and los",
         "numbers": [
+          "200"
+        ]
+      },
+      {
+        "title": "Where Is The Crypto Bottom? (Worst Case Scenario)",
+        "context": "3 from the top to go down 70 it would put bitcoin at approximately 20 000 so i do think you need to understand that a 20 000 bitcoin is certainly possible considering that it would be relatively in li",
+        "numbers": [
+          "3",
+          "70",
+          "20",
+          "000",
+          "20"
+        ]
+      },
+      {
+        "title": "Where Is The Crypto Bottom? (Worst Case Scenario)",
+        "context": "3 from the top to go down 70 it would put bitcoin at approximately 20 000 so i do think you need to understand that a 20 000 bitcoin is certainly possible considering that it would be relatively in li",
+        "numbers": [
+          "3",
+          "70",
+          "20",
+          "000",
+          "20"
+        ]
+      }
+    ],
+    "lengthening_cycles": [
+      {
+        "title": "A Bitcoin Correction",
+        "context": "you know one of the one of the common questions i get is you know why why why would we not see a hundred thousand dollars in in 2021 for bitcoin and i feel like all the data again suggests that it is ",
+        "numbers": [
+          "2021",
+          "2021",
+          "2021",
+          "10",
+          "20"
+        ]
+      },
+      {
+        "title": "XRP: Will price ever recover?",
+        "context": "hey everyone and thanks for jumping back into the crypto verse today we're gonna talk about xrp if you guys like the content please go ahead and subscribe to the channel give the video a thumbs up we'",
+        "numbers": [
+          "20",
+          "20",
+          "5",
+          "10",
+          "4"
+        ]
+      },
+      {
+        "title": "Bitcoin: Will the sideways movement end?",
+        "context": "hey everyone and thanks should jump back into the kip divers today we're gonna talk about bitcoin we're gonna be looking at the move that we've seen to the downside over the last several days we don't",
+        "numbers": [
+          "59",
+          "59",
+          "20",
+          "40",
+          "50"
+        ]
+      },
+      {
+        "title": "Bitcoin: Price Risk",
+        "context": "94 risk and we're you know we're at 60k how can we possibly go to 300k when we're at the highest wristband when you account for diminishing returns right i think the biggest misconception is that peop",
+        "numbers": [
+          "94",
+          "60",
+          "300",
+          "0"
+        ]
+      },
+      {
+        "title": "Chainlink: Time To Shine?",
+        "context": "well that was where it was up here about the 20 week and going sideways and again bitcoin was above the 20 week link went crazy put in new all-time highs and then the fourth one may of 2021 early may ",
+        "numbers": [
+          "20",
+          "20",
+          "2021",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin: The path to $1M using logarithmic regression",
+        "context": "hey everyone and thanks for driving back into the crypt overs today we're gonna be talking about bitcoin and we're actually gonna be looking at the path to $100,000 and 1 million dollars so if you guy",
+        "numbers": [
+          "100",
+          "000",
+          "1",
+          "10",
+          "1"
+        ]
+      },
+      {
+        "title": "Bitcoin: The path to $1M using logarithmic regression",
+        "context": "00 $10 $100 $1000 and so on and so forth these logarithmic regression lines are just made in an optimization package to try to to try to show you know the the overarching trend of price on the macro s",
+        "numbers": [
+          "00",
+          "10",
+          "100",
+          "1000",
+          "50%"
+        ]
+      },
+      {
+        "title": "Bitcoin Logarithmic Regression",
+        "context": "during this year or this market cycle i've often said that 2019 2020 and at least part of 2021 if not all of it but at least part of it will be the accumulation phase for bitcoin now with that said yo",
+        "numbers": [
+          "2019",
+          "2020",
+          "2021",
+          "2019",
+          "100"
+        ]
+      },
+      {
+        "title": "Bitcoin Logarithmic Regression",
+        "context": "it was the yellow one and then in 2018 it was the orange one and in each one after we found support at that regression band we ended up moving sideways at some point into the following into one regres",
+        "numbers": [
+          "2018",
+          "2022",
+          "2024"
+        ]
+      },
+      {
+        "title": "Bitcoin Logarithmic Regression",
+        "context": "some of you might think that's a cop-out right like i'll just pick a pick up a specific time this is not the point right the point is not to sp to pick a very specific time and say it has to happen th",
+        "numbers": [
+          "2023",
+          "100",
+          "200",
+          "000",
+          "30"
+        ]
+      }
+    ],
+    "total_crypto_market": [
+      {
+        "title": "A Bitcoin Correction",
+        "context": "13 which by the way is basically where the 200 week moving average is so if you look at the 200 week moving average if we were to fall down to the 200 week moving average it more or less corresponds t",
+        "numbers": [
+          "13",
+          "200",
+          "200",
+          "200",
+          "200"
+        ]
+      },
+      {
+        "title": "Bitcoin and Altcoins: Time is on Our Side!",
+        "context": "hey everyone and thanks for jumping back into the cryptoverse today we're going to talk about the total cryptocurrency market capitalization and discuss again how time is ultimately on our side if you",
+        "numbers": [
+          "31",
+          "42",
+          "29",
+          "10",
           "500"
         ]
       },
       {
-        "title": "Visualizing the Business Cycle",
-        "context": "and in the 1990s, if you were to overlay interest rates onto this chart, they were lowering rates and then they ended up having to raise rates and then that is ultimately what ended the business cycle",
+        "title": "Bitcoin and Altcoins: Time is on Our Side!",
+        "context": "5 trillion before i would start to get somewhat worried in the short term of us or of a more say sustained correction that could last more than a year um so i think time is on our side um of course we",
         "numbers": [
-          "1990"
+          "5",
+          "1",
+          "1",
+          "155",
+          "2013"
         ]
       },
       {
-        "title": "Visualizing the Business Cycle",
-        "context": "to be completely honest, i i think the federal reserve could lower interest rates by 50 basis points and not really have any severe consequences for doing so",
+        "title": "Bitcoin and Altcoins: Time is on Our Side!",
+        "context": "hey everyone and thanks for jumping back into the cryptoverse today we're going to talk about the total cryptocurrency market capitalization and discuss again how time is ultimately on our side if you",
         "numbers": [
+          "31",
+          "42",
+          "29",
+          "10",
+          "500"
+        ]
+      },
+      {
+        "title": "Bitcoin and Altcoins: Time is on Our Side!",
+        "context": "5 trillion right somewhere around that um what's a few hundred billion among friends somewhere around that area and the trend line the fair value was at 560 billion which again represented a 155 perce",
+        "numbers": [
+          "5",
+          "560",
+          "155",
+          "80",
+          "80"
+        ]
+      },
+      {
+        "title": "Bitcoin and Altcoins: Time is on Our Side!",
+        "context": "5 trillion before i would start to get somewhat worried in the short term of us or of a more say sustained correction that could last more than a year um so i think time is on our side um of course we",
+        "numbers": [
+          "5",
+          "1",
+          "1",
+          "155",
+          "2013"
+        ]
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "hey everyone and thanks for jumping back into the co2 verse today we're gonna be looking at bitcoin and also the dominance of bitcoin with respect to the total cryptocurrency market cap so if you guys",
+        "numbers": [
+          "2",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin approaches the halving as dominance rises",
+        "context": "hey everyone and thanks for jumping back into the co2 verse today we're gonna be looking at bitcoin and also the dominance of bitcoin with respect to the total cryptocurrency market cap so if you guys",
+        "numbers": [
+          "2",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Bitcoin: Price Risk",
+        "context": "com that is going to end at the end of the month make sure you check that out lock in lower rate let's go ahead and jump in so yesterday we spoke about the on chain risk the day before that we spoke a",
+        "numbers": [
+          "2019",
+          "2019",
+          "2019",
+          "2019",
+          "0"
+        ]
+      },
+      {
+        "title": "Bitcoin: The Beauty of Mathematics (Part 39)",
+        "context": "so remember that undervaluation is not just about the the the the price or the market cap it's also about the reference point if if you look at this today you'll notice that the total market cap is ac",
+        "numbers": [
+          "2020",
+          "2015",
+          "2020",
+          "50",
+          "65"
+        ]
+      }
+    ],
+    "alt_season": [
+      {
+        "title": "Bitcoin and Altcoins: Time is on Our Side!",
+        "context": "5 trillion right somewhere around that um what's a few hundred billion among friends somewhere around that area and the trend line the fair value was at 560 billion which again represented a 155 perce",
+        "numbers": [
+          "5",
+          "560",
+          "155",
+          "80",
+          "80"
+        ]
+      },
+      {
+        "title": "Bitcoin: Will the sideways movement end?",
+        "context": "hey everyone and thanks should jump back into the kip divers today we're gonna talk about bitcoin we're gonna be looking at the move that we've seen to the downside over the last several days we don't",
+        "numbers": [
+          "59",
+          "59",
+          "20",
+          "40",
           "50"
         ]
       },
       {
         "title": "Bitcoin Dominance",
-        "context": "but i think one of the reasons it hasn't as much yet is because, as i said earlier, is because, you know, the fed funds rate is still relatively high with respect to the 2-year yield, which i'm approx",
+        "context": "a lot of altcoins that were, you know, some major players in a prior cycle, they're already at their 2022 lows",
         "numbers": [
-          "2"
+          "2022"
         ]
       },
       {
         "title": "Bitcoin Dominance",
-        "context": "we could overlay us interest rates minus the 2-year yield, and you'll sort of see what i'm talking about",
+        "context": "but the reason it's so far down again, it's not because of altcoins doing well against bitcoin because total 2 minus usdt minus usdt divided by bitcoin shows that they've been bleeding since september",
         "numbers": [
           "2"
         ]
       },
       {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "now, some of the evidence for that is looking at the s&p 500 when valuated against a lot of the macro metrics that influence the federal reserve and also interest rates which the federal reserve sets ",
+        "title": "FOMC",
+        "context": "25 right they held steady and then they got two more cuts in in 2019 right so they cut in july in september and october july september and october and now this cycle they've basically taken march off ",
         "numbers": [
-          "500"
+          "25",
+          "2019",
+          "10",
+          "10",
+          "1"
         ]
       },
       {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "well, one way that it drops, if you look at the formula, the s&p 500 divided by the unemployment rate squared times the fed funds rate times the inflation rate",
+        "title": "Bitcoin: Price Risk",
+        "context": "2 risk by the end of the year but really the actual massive capitulation occurred in early 2020 just before in fact the the bitcoin having so about two months before the bitcoin having is when this ca",
         "numbers": [
-          "500"
+          "2",
+          "2020",
+          "2019",
+          "2015",
+          "0"
         ]
       },
       {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "now, some of the evidence for that is looking at the s&p 500 when valuated against a lot of the macro metrics that influence the federal reserve and also interest rates which the federal reserve sets ",
+        "title": "Bitcoin: The Beauty of Mathematics (Part 39)",
+        "context": "and if you look at it you know arguably from this perspective it it looks a lot more similar to this over here than perhaps this one over here where we went overvalued for a couple of months remember ",
         "numbers": [
-          "500"
+          "2019",
+          "4",
+          "2018",
+          "2",
+          "2015"
+        ]
+      },
+      {
+        "title": "Ethereum breaks $1900!",
+        "context": "5 k is the local top for bitcoin okay that's what it likely implies so if it does continue down which is the direction that's headed right now and as we said over here right the direction is is it wil",
+        "numbers": [
+          "5",
+          "53",
+          "54",
+          "1900",
+          "1690"
+        ]
+      },
+      {
+        "title": "Ethereum breaks $1900!",
+        "context": "5 k is the local top for bitcoin okay that's what it likely implies so if it does continue down which is the direction that's headed right now and as we said over here right the direction is is it wil",
+        "numbers": [
+          "5",
+          "53",
+          "54",
+          "1900",
+          "1690"
+        ]
+      },
+      {
+        "title": "Chainlink: A run for the ages!",
+        "context": "com you know i was taking profits on the way up and the last profit area i took was at 1850 and it was published um on on the premium list and and now it gave us the ability to to invest now that it c",
+        "numbers": [
+          "1850",
+          "20",
+          "20",
+          "5",
+          "2"
         ]
       }
     ],
@@ -608,641 +2108,371 @@
         ]
       }
     ],
-    "gold": [
-      {
-        "title": "Visualizing the Business Cycle",
-        "context": "i think a better way to look at this chart is to look at the s&p divided by gold because in that case, it makes it look more like 2008 or 1973 when the stock market broke down against gold",
-        "numbers": [
-          "2008",
-          "1973"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "so, gold is trading back below 5,000",
-        "numbers": [
-          "5",
-          "000"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "and a lot of times what happens in, you know, midterm years with gold, especially after a kind of a low local top here that we got in early q1, i'm still expecting a longer consolidation phase here at",
-        "numbers": [
-          "1"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "and so when you look at prior gold uptrends, you'll notice that two of the last secular bull markets in gold, the one over here in the ' 60s, '7s, and 80s and the one that started over here in um you ",
-        "numbers": [
-          "60",
-          "7",
-          "80",
-          "1999",
-          "2011"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "gold found a top in 1975 or 1974 somewhere over here",
-        "numbers": [
-          "1975",
-          "1974"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "and then if you look at the 2000s, you'll see that gold topped in march and was back at new all-time highs by september of09, october of '09",
-        "numbers": [
-          "2000",
-          "09",
-          "09"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "they topped before gold, but they still didn't reach all-time highs for like six years, 2013",
-        "numbers": [
-          "2013"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "now, is there a chance that we're looking at a more secular top by gold like 2011 or 1980",
-        "numbers": [
-          "2011",
-          "1980"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "um and yes, i mean, we can we can look at the rsi and and see how overbought things are, but the reality is is people have been screaming it's overbought since, you know, may of 2024 when s when gold ",
-        "numbers": [
-          "2024",
-          "2",
-          "300"
-        ]
-      },
-      {
-        "title": "How low will Bitcoin go?",
-        "context": "especially when you consider that over over the yearly time frame, bitcoin bleeds to gold every midterm year, 2014, 2018, 2022, 2026",
-        "numbers": [
-          "2014",
-          "2018",
-          "2022",
-          "2026"
-        ]
-      }
-    ],
-    "recession": [
-      {
-        "title": "Visualizing the Business Cycle",
-        "context": "you can see back in the 1880s and 1890s, basically just the 1800s, recessions were really common, you know, to to to pretend like they could never happen would have seen would have been so far-fetched",
-        "numbers": [
-          "1880",
-          "1890",
-          "1800"
-        ]
-      },
-      {
-        "title": "Visualizing the Business Cycle",
-        "context": "but when you look at the way this has gone, recession recessions used to be a lot more frequent back over in the 1800s and going into the early 1900s, but then you can see they started to become less ",
-        "numbers": [
-          "1800",
-          "1900"
-        ]
-      },
-      {
-        "title": "Visualizing the Business Cycle",
-        "context": "and then we had another business cycle here going into the 80s and then ultimately we had one recession",
-        "numbers": [
-          "80"
-        ]
-      },
-      {
-        "title": "Visualizing the Business Cycle",
-        "context": "that ended with a 1990 recession",
-        "numbers": [
-          "1990"
-        ]
-      },
-      {
-        "title": "Visualizing the Business Cycle",
-        "context": "xle continued to go up into may of 2008 until it was clear we were in a recession",
-        "numbers": [
-          "2008"
-        ]
-      },
-      {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "but the recession did not occur until 2008",
-        "numbers": [
-          "2008"
-        ]
-      },
-      {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "and in it, you can see all these prior recessions going back to the 1850s",
-        "numbers": [
-          "1850"
-        ]
-      },
-      {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "in this case, you can see out of the recessions going back just the last few decades, the number of days on average where the s&p 500 bottoms with respect to when the recession is declared is -15 days",
-        "numbers": [
-          "500",
-          "15"
-        ]
-      },
-      {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "initial claims, and i've said as long as they're below 300,000, it's not recession territory, and they are currently at around 206,000",
-        "numbers": [
-          "300",
-          "000",
-          "206",
-          "000"
-        ]
-      },
-      {
-        "title": "Business Cycles Ends With Recessions",
-        "context": "so, i want to i want people to think about this because if later this year people are talking about recessions or if it happens in 2027 2028, whenever it happens, there's a good chance the markets wil",
-        "numbers": [
-          "2027",
-          "2028"
-        ]
-      }
-    ],
-    "roi": [
-      {
-        "title": "Visualizing the Business Cycle",
-        "context": "if you look at the year-to- date roi of stocks, if we look at say the s&p 500, if we look at what's going on here so far in 2026 and add the average of prior midterm years, the weakest point is late q",
-        "numbers": [
-          "500",
-          "2026",
-          "3",
-          "4",
-          "4"
-        ]
-      },
-      {
-        "title": "Bitcoin: Dubious Speculation",
-        "context": "in fact, if you look at the year-to-ate roi of bitcoin in midterm years, so we're looking at the art the the year-to- date roi of bitcoin in midterm years, and we're going to add on the standard devia",
-        "numbers": [
-          "2014",
-          "2018",
-          "2022",
-          "2026"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "and when you look at the year-to- date roi of the s&p 500, if you look at say the average um in midterm years and then compare it to 2026, i mean, you know, there can be resilience into march, but usu",
-        "numbers": [
-          "500",
-          "2026",
-          "3"
-        ]
-      },
-      {
-        "title": "The Dow Jones Hits 50,000 - Time for a Correction?",
-        "context": "what you'll notice, this is the roi of the dow in every prior year going back to 1951",
-        "numbers": [
-          "1951"
-        ]
-      },
-      {
-        "title": "The Mechanism That Ends Business Cycles",
-        "context": "now again, when you look at the year-to-ate roi of the s&p and you look at 2026 and then you look at the average of prior midterm years, normally the weakness really starts to present itself like by t",
-        "numbers": [
-          "2026"
-        ]
-      },
-      {
-        "title": "Bitcoin: Midterm Year Returns",
-        "context": "and so when you look at 2026 and compare it to the average of prior midterm years and you put on one standard deviation from that average, you can see that bitcoin has spent a lot of the year just tra",
-        "numbers": [
-          "2026"
-        ]
-      },
-      {
-        "title": "Bitcoin: We Really Do Live in a Simulation",
-        "context": "and one of the reasons we've been talking about it is if you just look at the year-to- date roi of bitcoin and look at 2026 and you compare that to the average of prior midterm years and you add on on",
-        "numbers": [
-          "2026"
-        ]
-      },
-      {
-        "title": "Bitcoin: We Really Do Live in a Simulation",
-        "context": "in 2018, this is basically exactly the year-to- date roi of bitcoin",
-        "numbers": [
-          "2018"
-        ]
-      }
-    ],
-    "btc_dominance": [
-      {
-        "title": "Bitcoin Dominance",
-        "context": "and so one of the things that we did on the website and we've showed this chart before including stable coins, bitcoin dominance is around 58% which is in agreement with what you see on trading view m",
-        "numbers": [
-          "58%"
-        ]
-      },
-      {
-        "title": "Bitcoin Dominance",
-        "context": "in fact, excluding stable coins, bitcoin dominance is actually at 67%",
-        "numbers": [
-          "67%"
-        ]
-      },
-      {
-        "title": "Bitcoin Dominance",
-        "context": "and so one of the things that we did on the website and we've showed this chart before including stable coins, bitcoin dominance is around 58% which is in agreement with what you see on trading view m",
-        "numbers": [
-          "58%"
-        ]
-      },
-      {
-        "title": "Bitcoin Dominance",
-        "context": "in fact, excluding stable coins, bitcoin dominance is actually at 67%",
-        "numbers": [
-          "67%"
-        ]
-      },
-      {
-        "title": "Why Alt Season Never Happened",
-        "context": "eventually, you reach a point like you did in 2019 at essentially nearly the same dominance levels where dominance starts to fade a little bit as bitcoin goes into a bare market",
-        "numbers": [
-          "2019"
-        ]
-      }
-    ],
-    "alt_season": [
-      {
-        "title": "Bitcoin Dominance",
-        "context": "a lot of altcoins that were, you know, some major players in a prior cycle, they're already at their 2022 lows",
-        "numbers": [
-          "2022"
-        ]
-      },
-      {
-        "title": "Bitcoin Dominance",
-        "context": "but the reason it's so far down again, it's not because of altcoins doing well against bitcoin because total 2 minus usdt minus usdt divided by bitcoin shows that they've been bleeding since september",
-        "numbers": [
-          "2"
-        ]
-      },
-      {
-        "title": "Bitcoin: Dubious Speculation",
-        "context": "think back to the ico boom um in 2021, we had uh a pretty big a pretty long season where altcoins were outperforming bitcoin and and you could so you could justify that one of the reasons for the bare",
-        "numbers": [
-          "2021"
-        ]
-      },
-      {
-        "title": "Bitcoin: Dubious Speculation",
-        "context": "and then in 2025, right, the narrative is completely different because it's not like it's not like there was a massive rotation into altcoins",
-        "numbers": [
-          "2025"
-        ]
-      },
-      {
-        "title": "Bitcoin: The Beauty of Mathematics (Part 68)",
-        "context": "very similar to what happened in the 2019 bull market where we never had more of a we never really had a durable overvaluation because altcoins never really joined in on on the fund",
-        "numbers": [
-          "2019"
-        ]
-      },
-      {
-        "title": "Bitcoin: The Beauty of Mathematics (Part 68)",
-        "context": "but you also have to keep in mind where the total three and let's say total two, there's 940 billion in the altcoin market, right",
-        "numbers": [
-          "940"
-        ]
-      },
-      {
-        "title": "Bitcoin: The Beauty of Mathematics (Part 68)",
-        "context": "so you have 940 billion in the altcoin market",
-        "numbers": [
-          "940"
-        ]
-      },
-      {
-        "title": "Why Alt Season Never Happened",
-        "context": "but what's happened is a lot of people this cycle tried to manufacture an alt season by talking about liquidity and talking about things like m2 and other things and those things are not a good indica",
-        "numbers": [
-          "2"
-        ]
-      },
-      {
-        "title": "Why Alt Season Never Happened",
-        "context": "it's easy to talk about m2 and scream alt season and all that stuff, but it does not it it does not really show a fundamental understanding in my opinion of what's actually going on under the surface ",
-        "numbers": [
-          "2"
-        ]
-      },
-      {
-        "title": "Why Alt Season Never Happened",
-        "context": "and then once october 10th happened, once that happened, it when bitcoin rolled over and the bull market was over, it then exposed how weak the altcoin market in fact was",
-        "numbers": [
-          "10"
-        ]
-      }
-    ],
-    "200_week_sma": [
-      {
-        "title": "Bitcoin: Dubious Speculation",
-        "context": "but with it being only february, with it being that we haven't even hit the 200 week, we haven't hit the realized price, we haven't hit the balance price, we haven't seen the supply and profit and los",
-        "numbers": [
-          "200"
-        ]
-      },
-      {
-        "title": "Bitcoin: The Bear Market Blues",
-        "context": "let's say bitcoin drops maybe even to the 200 week",
-        "numbers": [
-          "200"
-        ]
-      }
-    ],
-    "silver": [
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "um even if you know, even if we're in something like 06 where you have this big drop, you'll see back then silver also had a nice rally up and then it had a a pretty big drop down about 40%",
-        "numbers": [
-          "06",
-          "40%"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "silver didn't go put in a new all-time high until 2007",
-        "numbers": [
-          "2007"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "and and that's why we talk a lot about silver's valuation against the s&p 500, right",
-        "numbers": [
-          "500"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "i mean, if you look at this, you know, sort of this level, uh, the s&p valuation that it just hit against silver, you can see that we also broke, we were at this level in 2009",
-        "numbers": [
-          "2009"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "now, if silver has topped for the year, i do not i do not look at this chart and believe that it's like a top that will last for say 20 years",
-        "numbers": [
-          "20"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "i would say for silver, if this is the top for the year, i might envision us sort of in in a top like this where we had in in 1974 where it might fall off for a while, but i would expect it to come ba",
-        "numbers": [
-          "1974"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "and if you look at what silver did in 1973 or sorry 1974, you can see that it dropped about 43% and kind of consolidated with some lower highs for a while, but then eventually it built back up into an",
-        "numbers": [
-          "1973",
-          "1974",
-          "43%"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "and when you look at gold or sorry when you look at silver in this move you can see that the correction that it just had was around 47%",
-        "numbers": [
-          "47%"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "what you'll notice is that in 2011, you'll see that silver topped in april approximately, but gold did not top until later that year, like august, september time frame",
-        "numbers": [
-          "2011"
-        ]
-      },
-      {
-        "title": "Gold: Dubious Speculation",
-        "context": "another example is in 1973 where once again you will notice that silver topped out in february but gold did not top out until december later that year",
-        "numbers": [
-          "1973"
-        ]
-      }
-    ],
-    "bull_market_support": [
-      {
-        "title": "Bitcoin: Dubious Speculation",
-        "context": "in fact, in 2018, after bitcoin had that february low, bitcoin then just kind of bounced back and forth between the bull market support band until the bull market support band squeezed bitcoin into ma",
-        "numbers": [
-          "2018",
-          "6"
-        ]
-      },
-      {
-        "title": "Bitcoin: Dubious Speculation",
-        "context": "in fact, in 2018, after bitcoin had that february low, bitcoin then just kind of bounced back and forth between the bull market support band until the bull market support band squeezed bitcoin into ma",
-        "numbers": [
-          "2018",
-          "6"
-        ]
-      },
-      {
-        "title": "Bitcoin: Dubious Speculation",
-        "context": "in fact, in 2018, after bitcoin had that february low, bitcoin then just kind of bounced back and forth between the bull market support band until the bull market support band squeezed bitcoin into ma",
-        "numbers": [
-          "2018",
-          "6"
-        ]
-      }
-    ],
     "yield_curve": [
       {
-        "title": "How low will Bitcoin go?",
-        "context": "what i am suggesting is that in 2019 we had an inverted yield curve that then uninverted and then we had a crash and it was because of the pandemic",
+        "title": "Bitcoin: Price Risk",
+        "context": "6 wristband and and then we came all the way back down to the lowest wristband again and then back all the way up i think that there's a good chance that something like this is going to happen again w",
         "numbers": [
-          "2019"
-        ]
-      },
-      {
-        "title": "How low will Bitcoin go?",
-        "context": "this cycle we had an inverted yield curve that recently uninverted and i can't tell you the narrative for what it will be but my guess is that it'll ultimately play out the same way in the sense that ",
-        "numbers": [
-          "55",
-          "40"
-        ]
-      },
-      {
-        "title": "How low will Bitcoin go?",
-        "context": "what i am suggesting is that in 2019 we had an inverted yield curve that then uninverted and then we had a crash and it was because of the pandemic",
-        "numbers": [
-          "2019"
-        ]
-      },
-      {
-        "title": "How low will Bitcoin go?",
-        "context": "this cycle we had an inverted yield curve that recently uninverted and i can't tell you the narrative for what it will be but my guess is that it'll ultimately play out the same way in the sense that ",
-        "numbers": [
-          "55",
-          "40"
-        ]
-      },
-      {
-        "title": "Why Alt Season Never Happened",
-        "context": "we've talked about, you know, the fed funds rate relative to the 2-year yield and and we've talked about, you know, the yield curve and and and other funding stress proxies",
-        "numbers": [
-          "2"
-        ]
-      }
-    ],
-    "logarithmic_regression": [
-      {
-        "title": "Welcome Back Home, Ethereum!",
-        "context": "and so what i think is that ethereum will spend more time in 2026 in its regression band, a lot more time than it did last cycle",
-        "numbers": [
-          "2026"
-        ]
-      },
-      {
-        "title": "Welcome Back Home, Ethereum!",
-        "context": "last cycle it only spent a small amount of time right between like say february and and uh may with coming back into it a little bit in june didn't really spend much time in it at all kind of like 201",
-        "numbers": [
-          "2016",
+          "6",
+          "2019",
+          "2019",
+          "2019",
           "2015"
         ]
       },
       {
-        "title": "Welcome Back Home, Ethereum!",
-        "context": "and then also in december of 2019 and when that happened its double bottom was at the lower part of the regression band",
+        "title": "Bitcoin: Price Risk",
+        "context": "1 wristband i'm still of the opinion that we will see something like that as the pre-halving years we do tend to get ahead of ourselves we see some type of rally only for it to generally get faded in ",
         "numbers": [
+          "1",
+          "2019",
+          "300",
+          "0"
+        ]
+      },
+      {
+        "title": "Bitcoin: Price Risk",
+        "context": "65 risk on on sort of an hourly time frame in 2015 we didn't go up nearly as high so it's probably going to be somewhere in between these two right where it's not i mean obviously we've already gone h",
+        "numbers": [
+          "65",
+          "2015",
+          "3",
+          "4",
           "2019"
         ]
       },
       {
-        "title": "Welcome Back Home, Ethereum!",
-        "context": "so 30% below the fair value puts you at the bottom part of the regression band",
+        "title": "Bitcoin: Price Risk",
+        "context": "6 wristband and and then we came all the way back down to the lowest wristband again and then back all the way up i think that there's a good chance that something like this is going to happen again w",
         "numbers": [
-          "30%"
-        ]
-      },
-      {
-        "title": "Welcome Back Home, Ethereum!",
-        "context": "we're sitting here and ethereum has spent the entire year of 2026 in the regression band",
-        "numbers": [
-          "2026"
-        ]
-      },
-      {
-        "title": "Welcome Back Home, Ethereum!",
-        "context": "\" according to the model, the quote unquote fair value is around $2,000",
-        "numbers": [
-          "2",
-          "000"
-        ]
-      },
-      {
-        "title": "Welcome Back Home, Ethereum!",
-        "context": "in fact, last in uh 2019, ethereum went 30% below it, and in the pandemic, it went 44% below the fair value",
-        "numbers": [
+          "6",
           "2019",
-          "30%",
-          "44%"
+          "2019",
+          "2019",
+          "2015"
         ]
       },
       {
-        "title": "Welcome Back Home, Ethereum!",
-        "context": "so 30% below the fair value puts you at the bottom part of the regression band",
+        "title": "Bitcoin: Price Risk",
+        "context": "1 wristband i'm still of the opinion that we will see something like that as the pre-halving years we do tend to get ahead of ourselves we see some type of rally only for it to generally get faded in ",
         "numbers": [
-          "30%"
+          "1",
+          "2019",
+          "300",
+          "0"
         ]
       },
       {
-        "title": "Welcome Back Home, Ethereum!",
-        "context": "and i told you guys many, many years ago, back in 2021, that the hardest thing for me to come to terms with back over here was looking at this regression man and seeing that it was going to take until",
+        "title": "Bitcoin: Price Risk",
+        "context": "65 risk on on sort of an hourly time frame in 2015 we didn't go up nearly as high so it's probably going to be somewhere in between these two right where it's not i mean obviously we've already gone h",
         "numbers": [
-          "2021",
-          "2026",
+          "65",
+          "2015",
+          "3",
+          "4",
+          "2019"
+        ]
+      },
+      {
+        "title": "Bitcoin: Price Risk",
+        "context": "6 wristband and and then we came all the way back down to the lowest wristband again and then back all the way up i think that there's a good chance that something like this is going to happen again w",
+        "numbers": [
+          "6",
+          "2019",
+          "2019",
+          "2019",
+          "2015"
+        ]
+      },
+      {
+        "title": "Tesla Outlook",
+        "context": "9 6% or so so what meta 76% drop so almost 77% right almost 77% drop so i was looking around i'm like well look i mean you got you got meta that's already dropped 77% you had netflix that dropped 77% ",
+        "numbers": [
+          "9",
+          "6%",
+          "76%",
+          "77%",
+          "77%"
+        ]
+      },
+      {
+        "title": "Tesla Outlook",
+        "context": "9 6% or so so what meta 76% drop so almost 77% right almost 77% drop so i was looking around i'm like well look i mean you got you got meta that's already dropped 77% you had netflix that dropped 77% ",
+        "numbers": [
+          "9",
+          "6%",
+          "76%",
+          "77%",
+          "77%"
+        ]
+      },
+      {
+        "title": "Tesla Outlook",
+        "context": "9 6% or so so what meta 76% drop so almost 77% right almost 77% drop so i was looking around i'm like well look i mean you got you got meta that's already dropped 77% you had netflix that dropped 77% ",
+        "numbers": [
+          "9",
+          "6%",
+          "76%",
+          "77%",
+          "77%"
+        ]
+      }
+    ],
+    "eth_btc": [
+      {
+        "title": "Polkadot: A Ticket to Ride",
+        "context": "hey everyone and thanks for jumping back into the cryptoverse today we're going to talk about polka dot and the dot token we're going to be looking at it's evaluation against usd and against bitcoin a",
+        "numbers": [
+          "20",
+          "000",
+          "20",
+          "20",
+          "16"
+        ]
+      },
+      {
+        "title": "Ethereum: Assessment of the Situation",
+        "context": "well it was also going up it had a pullback in march to the 20-week sma and despite the fact that that bitcoin had to pull back in march ethereum sort of just paused for a few weeks and continued on a",
+        "numbers": [
+          "20",
+          "20",
+          "20",
+          "20",
+          "20"
+        ]
+      },
+      {
+        "title": "Ethereum After The Merge",
+        "context": "com put out a video yesterday talking about the price analysis of ethereum going into the merge and while i said from a fundamental perspective on the macro scale i think the proof of stake model with",
+        "numbers": [
+          "200",
+          "20",
+          "20",
+          "21",
+          "20"
+        ]
+      },
+      {
+        "title": "Ethereum After The Merge",
+        "context": "5 you could easily see ethereum getting closer to its own low at at just under a thousand dollars which would mean the ethereum bitcoin valuation would need to drop quite considerably for something li",
+        "numbers": [
+          "5",
+          "2018",
+          "0"
+        ]
+      },
+      {
+        "title": "Ethereum breaks through $500! In other news, I found a quarter",
+        "context": "so if you guys like the content please subscribe to the channel give the video a thumbs up and also check out the telegram channel which you can find a link to in the description below let's go ahead ",
+        "numbers": [
+          "500",
+          "500",
+          "500",
+          "500",
+          "400"
+        ]
+      },
+      {
+        "title": "Ethereum breaks through $500! In other news, I found a quarter",
+        "context": "you can see that the dominance in the past when there obviously weren't as many cryptocurrencies on the market but back in say january of 2018 the dominance was 22 or 23 with a wick all the way to 26 ",
+        "numbers": [
+          "2018",
+          "22",
+          "23",
+          "26",
+          "1"
+        ]
+      },
+      {
+        "title": "Ethereum breaks through $500! In other news, I found a quarter",
+        "context": "so you can see that ethereum blood against bitcoin in q4 and maybe even a little bit earlier in q3 but mainly in q4 and then this candle here this uh this first green candle was the last week of decem",
+        "numbers": [
+          "4",
+          "3",
+          "4",
+          "28",
+          "1800"
+        ]
+      },
+      {
+        "title": "Ethereum: Comparing The Bear Markets",
+        "context": "now i know it seems like an eternity to get to 2024 but realistically the bottom tends to occur before the having right not only for bitcoin but also for ethereum and and last cycle the bottom occurre",
+        "numbers": [
+          "2024",
           "20",
           "000"
         ]
       },
       {
-        "title": "Bitcoin: The Beauty of Mathematics (Part 68)",
-        "context": "the lower part of the regression band right now is maybe a little over 1",
+        "title": "Ethereum: A Precarious Position",
+        "context": "the concerning thing the slightly concerning thing is bitcoin had a relatively good day okay bitcoin had a relatively good day you might say well then why is that concerning well in and of itself that",
         "numbers": [
-          "1"
+          "12",
+          "12",
+          "2019",
+          "20",
+          "25"
+        ]
+      },
+      {
+        "title": "ETH/BTC: The Coming Collapse?",
+        "context": "com let's go ahead and jump in before we get too far i i would like to say that this is just my opinion on the market is not meant to be financial advice while i do sometimes get things right i also s",
+        "numbers": [
+          "0"
         ]
       }
     ],
-    "total_crypto_market": [
+    "pi_cycle": [
       {
-        "title": "Bitcoin: The Beauty of Mathematics (Part 68)",
-        "context": "if you look at at bitcoin, if we look at bitcoin's total market cap, the market cap of bitcoin is around 1",
+        "title": "Bitcoin: Pi Cycle Top Indicator",
+        "context": "com the first order of business is to give credit where credit is due this indicator was created by philip swift back in 2019 to predict bitcoin's top to within 3 days okay so again it was created aft",
         "numbers": [
-          "1"
-        ]
-      },
-      {
-        "title": "Bitcoin: The Beauty of Mathematics (Part 68)",
-        "context": "and so, if you go look at the total market cap of crypto in the pandemic, it actually wicked down right here to around 100 billion",
-        "numbers": [
-          "100"
-        ]
-      },
-      {
-        "title": "Bitcoin: The Beauty of Mathematics (Part 68)",
-        "context": "so just keep that in mind later regression band if the total market cap ends up meeting that regression band later that later this year and we and it looks like the business cycle starting to potentia",
-        "numbers": [
-          "2020",
-          "2010"
-        ]
-      },
-      {
-        "title": "Bitcoin: The Beauty of Mathematics (Part 68)",
-        "context": "i mean, the total market cap of crypto was at the same valuation in in 2021",
-        "numbers": [
+          "2019",
+          "3",
+          "2019",
+          "2021",
           "2021"
         ]
       },
       {
-        "title": "Bitcoin: The Beauty of Mathematics (Part 68)",
-        "context": "so when you look at something like the total market cap of crypto and and people talk about like lost decades and how comical it is that other asset classes have had to go through it in the past, one ",
+        "title": "Bitcoin: Pi Cycle Top Indicator",
+        "context": "07 and then 1 so i i think the sort of the question here is what if we get into a situation where they're really c they're really close to crossing and everyone's waiting for it to cross and then like",
         "numbers": [
-          "5"
+          "07",
+          "1",
+          "69",
+          "7",
+          "2019"
         ]
       },
       {
-        "title": "Bitcoin: The Beauty of Mathematics (Part 68)",
-        "context": "so the cryptocurrency market cap is coming in at around 2",
+        "title": "Bitcoin: Pi Cycle Top Indicator",
+        "context": "9 but then they don't actually cross um i i do wonder about that and and again remember even if they don't cross in early 2024 like imagine like if there's not it let's say there's not a pump or somet",
         "numbers": [
-          "2"
+          "9",
+          "2024",
+          "2021",
+          "2019",
+          "2019"
+        ]
+      },
+      {
+        "title": "Bitcoin: Bulls Vs. Bears",
+        "context": "19 k so yeah i mean could we go slightly lower than 16k could we go to 14k 15k it's a possibility according to this chart right again it's not according to me it's according to this chart um so someth",
+        "numbers": [
+          "19",
+          "16",
+          "14",
+          "15",
+          "69"
         ]
       }
     ],
-    "risk_metric": [
+    "stock_to_flow": [
       {
-        "title": "Why Alt Season Never Happened",
-        "context": "if you look at 2020 and 2021 when altcoins were going up and they were durably outperforming bitcoin for a lot of that time, if you go look at the liquid the liquidity risk score, it was really low",
+        "title": "Bitcoin On-Chain (A Discussion With William Clemente)",
+        "context": "like you know 2017 it took a while it took about a year and a half for long-term holders to completely reabsorb those coins now it's taking like five months so you know that that that's completely dif",
         "numbers": [
-          "2020",
-          "2021"
+          "2017",
+          "10",
+          "80",
+          "80",
+          "2013"
         ]
       }
     ]
   },
   "price_mentions": [
+    {
+      "title": "Bitcoin approaches the halving as dominance rises",
+      "prices_mentioned": [
+        "$15,000",
+        "$20,000",
+        "$50"
+      ]
+    },
+    {
+      "title": "Bitcoin: Will the sideways movement end?",
+      "prices_mentioned": [
+        "$1,800 B"
+      ]
+    },
+    {
+      "title": "Tesla Outlook",
+      "prices_mentioned": [
+        "$100"
+      ]
+    },
+    {
+      "title": "How Many Times Has Bitcoin Crossed $100k?",
+      "prices_mentioned": [
+        "$1,000",
+        "$10,000",
+        "$100,000",
+        "$10",
+        "$100"
+      ]
+    },
+    {
+      "title": "Bitcoin: The Beauty of Mathematics (Part 66)",
+      "prices_mentioned": [
+        "$10"
+      ]
+    },
+    {
+      "title": "Bitcoin: The path to $1M using logarithmic regression",
+      "prices_mentioned": [
+        "$1000",
+        "$1500",
+        "$3,800",
+        "$100",
+        "$20,000",
+        "$14,000",
+        "$100,000",
+        "$10",
+        "$1.00"
+      ]
+    },
+    {
+      "title": "Ethereum: Dubious Speculation",
+      "prices_mentioned": [
+        "$3,000",
+        "$6"
+      ]
+    },
+    {
+      "title": "Bitcoin: Wake Me Up When September Ends",
+      "prices_mentioned": [
+        "$6,000",
+        "$24,000",
+        "$50",
+        "$225,000 b",
+        "$10",
+        "$40",
+        "$22,000"
+      ]
+    },
+    {
+      "title": "Cardano Outlook",
+      "prices_mentioned": [
+        "$3,000",
+        "$100",
+        "$4,100"
+      ]
+    },
+    {
+      "title": "Bitcoin: Market Cycles",
+      "prices_mentioned": [
+        "$6"
+      ]
+    },
+    {
+      "title": "Ethereum: Knocking On The Door",
+      "prices_mentioned": [
+        "$1,600",
+        "$1,500"
+      ]
+    },
     {
       "title": "How low will Bitcoin go?",
       "prices_mentioned": [
@@ -1253,8 +2483,36 @@
     {
       "title": "Welcome Back Home, Ethereum!",
       "prices_mentioned": [
-        "$2,000",
-        "$5,000"
+        "$5,000",
+        "$2,000"
+      ]
+    },
+    {
+      "title": "Nano: Performance compared to the top 10 by marketcap this past month",
+      "prices_mentioned": [
+        "$500",
+        "$1,000"
+      ]
+    },
+    {
+      "title": "Ethereum: An update on the ETH/BTC ratio.",
+      "prices_mentioned": [
+        "$20,000"
+      ]
+    },
+    {
+      "title": "Bitcoin: Coins traded vs. price with a color-coded time dimension",
+      "prices_mentioned": [
+        "$10,000",
+        "$1,000"
+      ]
+    },
+    {
+      "title": "Ethereum: Dubious Speculation",
+      "prices_mentioned": [
+        "$500",
+        "$400",
+        "$1,200"
       ]
     },
     {
@@ -1265,14 +2523,54 @@
       ]
     },
     {
+      "title": "Bitcoin: Holding the 20 week MA as support",
+      "prices_mentioned": [
+        "$13,000",
+        "$20,000"
+      ]
+    },
+    {
       "title": "Oil Spikes 35%",
       "prices_mentioned": [
         "$67",
         "$91"
       ]
+    },
+    {
+      "title": "Bitcoin: What is your resolve?",
+      "prices_mentioned": [
+        "$6,000",
+        "$8,200",
+        "$20,000",
+        "$49",
+        "$650",
+        "$13",
+        "$12",
+        "$12,000"
+      ]
     }
   ],
   "predictions": [
+    {
+      "title": "Bitcoin: The US Dollar strikes back!",
+      "statement": "probably will also come with a bitcoin correction okay this is exactly what we"
+    },
+    {
+      "title": "Bitcoin: The US Dollar strikes back!",
+      "statement": "probably it would probably be hard for bitcoin to continue its move up as quickly as it has been if it chops sideways then maybe bitcoin can continue doing its thing and if it goes much lower then it "
+    },
+    {
+      "title": "Bitcoin: The US Dollar strikes back!",
+      "statement": "probably do quite well during that during that period of time so what we want to keep an eye on now is will the dollar continue to rebound because if we if we zoom in you can see that it"
+    },
+    {
+      "title": "Bitcoin: The US Dollar strikes back!",
+      "statement": "based on more or less the trend line it was on it"
+    },
+    {
+      "title": "Bitcoin: The US Dollar strikes back!",
+      "statement": "based on what seemed intuitive then everyone would be an excellent trader but it"
+    },
     {
       "title": "Bitcoin Bear Market Resistance Band",
       "statement": "probably the next one will be april 15th"
@@ -1284,6 +2582,110 @@
     {
       "title": "Bitcoin Bear Market Resistance Band",
       "statement": "i think could happen where, you know, you you fade a little bit, rally a little into early march, and then sell off into april and may as i"
+    },
+    {
+      "title": "Bitcoin Bears In Disbelief",
+      "statement": "probably the really the next area that we might have to um really spend some time to get past the 60 to 65k area um it seems like it"
+    },
+    {
+      "title": "Bitcoin Bears In Disbelief",
+      "statement": "probably going to be a good pit stop for bitcoin to maybe take a breather for a few days but i"
+    },
+    {
+      "title": "Bitcoin Bears In Disbelief",
+      "statement": "expect it that in q4 the dominance of bitcoin will go up and the reason being is because bitcoin will likely be extremely volatile in q4 and all coins just simply will not keep pace with it the new pe"
+    },
+    {
+      "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+      "statement": "likely going to be in in the coming months and quarters ahead and so uh when you kind of add everything together and and i"
+    },
+    {
+      "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+      "statement": "i think will be very telling uh to your audience so this is a screen now this is a chart of a long"
+    },
+    {
+      "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+      "statement": "i think the next 12 to 18 months is going to be a period of not just the cracks showing i think we"
+    },
+    {
+      "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+      "statement": "based on you know relevant things changing like the fed"
+    },
+    {
+      "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+      "statement": "based on the data now we should be seeing in these summer months especially in areas like where i live here in coeur d"
+    },
+    {
+      "title": "Real Estate Outlook (A Discussion With Jordan Wirsz)",
+      "statement": "based on you know inflation and devaluation of the us dollar and so you want to find times where you know you not only come down to a mean line but you want to go past that that mean reversion line an"
+    },
+    {
+      "title": "A Bitcoin Correction",
+      "statement": "i think the market will will likely recover quickly and and and just continue moving on up uh back to the you know to the to the sustainable 20 000 bitcoin by the end of 2021 early 2022"
+    },
+    {
+      "title": "A Bitcoin Correction",
+      "statement": "likely you know come down to the 20 week moving average several times now the question right is are we going to do it now and and this is anyone"
+    },
+    {
+      "title": "A Bitcoin Correction",
+      "statement": "likely drop more yes you can cherry pick a few coins that might perform better but for the most part the market as a whole will drop more so this gives you continued exposure to the crypto market whil"
+    },
+    {
+      "title": "A Bitcoin Correction",
+      "statement": "historically speaking during a bull market the 20"
+    },
+    {
+      "title": "A Bitcoin Correction",
+      "statement": "historically our bull market support if we don"
+    },
+    {
+      "title": "A Bitcoin Correction",
+      "statement": "based on what the data suggests right so the data suggests uh that it"
+    },
+    {
+      "title": "Bitcoin and Altcoins: Time is on Our Side!",
+      "statement": "i believe it was it was this one and just thinking like back then okay it went up uh but then it still came back down and and just thinking like okay like how long is it going to take but when you tak"
+    },
+    {
+      "title": "Bitcoin and Altcoins: Time is on Our Side!",
+      "statement": "i think you might want to consider being a little bit more aware of sort of where things might be in terms of the grand scheme of the cycle is if we get if we approach this band up here okay in terms "
+    },
+    {
+      "title": "Bitcoin and Altcoins: Time is on Our Side!",
+      "statement": "probably but at least before we could even be flirting with these levels and the current market cap at approximately 1"
+    },
+    {
+      "title": "Bitcoin approaches the halving as dominance rises",
+      "statement": "likely you know this is this will be a key time in the kentucky market now again now that bitcoins about the 20"
+    },
+    {
+      "title": "Bitcoin approaches the halving as dominance rises",
+      "statement": "probably are going to perform better than if bitcoin was not above the 20"
+    },
+    {
+      "title": "Bitcoin approaches the halving as dominance rises",
+      "statement": "expect that after that move a bitcoin dominance will probably come back up some as bitcoin makes its run to six figures and then ultimately it"
+    },
+    {
+      "title": "XRP: Will price ever recover?",
+      "statement": "probably purchase it at some point and then you have 20 x rp stuck in some wallet somewhere but you know you have to consider the fact that while y you might not like x rp and while i personally don"
+    },
+    {
+      "title": "XRP: Will price ever recover?",
+      "statement": "anticipate that it has to continue going up like it did last time then you might see your profits just kind of come and go yes i mean that"
+    },
+    {
+      "title": "XRP: Will price ever recover?",
+      "statement": "probably happened before so another option is maybe something like seeing something like this happen and the reason why something like this could theoretically happen and i"
+    },
+    {
+      "title": "XRP: Will price ever recover?",
+      "statement": "based on historical data of 90 percent that doesn"
+    },
+    {
+      "title": "XRP: Will price ever recover?",
+      "statement": "historically make its moves well when bitcoin a lot of times we look at the 20 week moving average and bitcoin getting above the 20 week moving average and there have been a lot of coins that pump whe"
     },
     {
       "title": "Visualizing the Business Cycle",
@@ -1302,6 +2704,18 @@
       "statement": "historically when the unemployment rate starts to go up that"
     },
     {
+      "title": "Bitcoin: Will the sideways movement end?",
+      "statement": "likely start to increase the 50 week moving average is going to continue to decrease and the reason is because if you just look backward in time to 50 weeks we"
+    },
+    {
+      "title": "Bitcoin: Will the sideways movement end?",
+      "statement": "likely going to see the cross of these two moving averages sometime in the next few months so if we if you you know if you go back to the last time that we really kick"
+    },
+    {
+      "title": "Bitcoin: Will the sideways movement end?",
+      "statement": "historically been a a key level of support even if in the short term you can point to two wicks you know that temporarily go below it like these evens you know some portion of the candle it"
+    },
+    {
       "title": "Bitcoin Dominance",
       "statement": "i think people should remember is that while all bitcoin pairs bled for years, even by the time they started going up, they initially started going up because bitcoin was dropping more than the altcoi"
     },
@@ -1318,160 +2732,24 @@
       "statement": "historically bitcoin tops out in q4 of the post having year and in midterm years it"
     },
     {
-      "title": "Bitcoin: Dubious Speculation",
-      "statement": "likely that hey, yeah, we might have a little bit of a counter trend move into march, but it"
+      "title": "Real Estate: Outlook for 2023",
+      "statement": "i think is something that it should not go overlooked and this is an element that you have to take into consideration as well you know while it might seem like the real estate market has deteriorated "
     },
     {
-      "title": "Bitcoin: Dubious Speculation",
-      "statement": "expectation could also be october based on the cyclical nature of bitcoin and how often it tends to find lows approximately every four years"
+      "title": "Real Estate: Outlook for 2023",
+      "statement": "likely going to not buy as as freely as they would have when cash was cheap but there"
     },
     {
-      "title": "Bitcoin: Dubious Speculation",
-      "statement": "historically happened in midterm years, whether there"
+      "title": "Real Estate: Outlook for 2023",
+      "statement": "probably going to affect negatively affect the housing market right so i would expect this to go up but again it could it has a long way to go up before it"
     },
     {
-      "title": "Bitcoin: Dubious Speculation",
-      "statement": "historically the way it works is bitcoin first goes below the 50 then below the 100 then to the two"
+      "title": "Bitcoin Relative Strength Index",
+      "statement": "expected a brief bear market and the first thing we need to do before we have any hopes of coming out of this phase of the cycle is to actually break through this and put in a higher high now the hard"
     },
     {
-      "title": "Bitcoin: Dubious Speculation",
-      "statement": "historically when you look at where bitcoin has ultimately bottomed out, um if you look at the terminal price chart, you can see we have the realized price and balance price on this chart"
-    },
-    {
-      "title": "Gold: Dubious Speculation",
-      "statement": "likely that if gold is going to put in new all"
-    },
-    {
-      "title": "Gold: Dubious Speculation",
-      "statement": "likely to try to solve our issues by printing, which i think they will, which is probably a tailwind for gold"
-    },
-    {
-      "title": "Gold: Dubious Speculation",
-      "statement": "likely will have a a sizable correction in metals, we already have had one in silver, um that doesn"
-    },
-    {
-      "title": "Gold: Dubious Speculation",
-      "statement": "historically great things do not happen for the s"
-    },
-    {
-      "title": "Gold: Dubious Speculation",
-      "statement": "historically has presented itself when the s"
-    },
-    {
-      "title": "Bitcoin: Simulation Confirmed",
-      "statement": "expect that for the next 50 years, bitcoin will behave on a perfectly predictable four"
-    },
-    {
-      "title": "Bitcoin: Simulation Confirmed",
-      "statement": "i think it probably will break down as as time goes on"
-    },
-    {
-      "title": "Business Cycles Ends With Recessions",
-      "statement": "likely will happen by the end of this business cycle, which i do think max has two to three years left, and it could be shorter, right"
-    },
-    {
-      "title": "Business Cycles Ends With Recessions",
-      "statement": "likely happen you know within the next couple years or so and and by that point as long as you have some cash going into it you should be able to buy up some cheap assets and that"
-    },
-    {
-      "title": "Business Cycles Ends With Recessions",
-      "statement": "historically is a recession eventually"
-    },
-    {
-      "title": "Business Cycles Ends With Recessions",
-      "statement": "historically, on average, it is a mistake to wait for a recession to be announced to then decide you"
-    },
-    {
-      "title": "Business Cycles Ends With Recessions",
-      "statement": "historically when we are around these levels that"
-    },
-    {
-      "title": "Bitcoin: Dubious Speculation",
-      "statement": "probably going to take until more than likely it"
-    },
-    {
-      "title": "Bitcoin: Dubious Speculation",
-      "statement": "historically, bitcoin has topped in the fourth quarter of posth having years"
-    },
-    {
-      "title": "Check",
-      "statement": "likely will be some more rate cuts, right"
-    },
-    {
-      "title": "Check",
-      "statement": "likely going to get a correction"
-    },
-    {
-      "title": "Bitcoin: The Early March Rally",
-      "statement": "likely in a bare market, that bitcoin was going to go a lot lower as we got further into the fourth quarter last year and especially as we got into the midterm year"
-    },
-    {
-      "title": "Bitcoin: The Early March Rally",
-      "statement": "i think this is going to play out because you can see all the prior cycles where you establish your initial low in late january or early february"
-    },
-    {
-      "title": "Bitcoin: The Early March Rally",
-      "statement": "likely going to happen is bitcoin is going to get squeezed between these two levels and it"
-    },
-    {
-      "title": "Bitcoin: The Early March Rally",
-      "statement": "historically, you know, bitcoin has has done okay"
-    },
-    {
-      "title": "How low will Bitcoin go?",
-      "statement": "likely see happen is a lot of the people that were bullish early on and even over here, they will finally flip bearish"
-    },
-    {
-      "title": "How low will Bitcoin go?",
-      "statement": "probably going to have another twomonth counter trend rally"
-    },
-    {
-      "title": "How low will Bitcoin go?",
-      "statement": "historically drops below in bare markets and especially in midterm years"
-    },
-    {
-      "title": "How low will Bitcoin go?",
-      "statement": "historically drops below in bare markets"
-    },
-    {
-      "title": "How low will Bitcoin go?",
-      "statement": "historically, it pushes it down into q4"
-    },
-    {
-      "title": "Bitcoin: The Bear Market Blues",
-      "statement": "likely low for bitcoin, in my opinion, is october, but the second most likely time for a low could actually be as early as may"
-    },
-    {
-      "title": "Bitcoin: The Bear Market Blues",
-      "statement": "probably will continue for a little bit longer"
-    },
-    {
-      "title": "Bitcoin: The Bear Market Blues",
-      "statement": "the most likely time for a low, but that is subject to change"
-    },
-    {
-      "title": "Bitcoin: The Bear Market Blues",
-      "statement": "the most likely low for bitcoin, in my opinion, is october, but the second most likely time for a low could actually be as early as may"
-    },
-    {
-      "title": "Welcome Back Home, Ethereum!",
-      "statement": "i think you should go to this website is go to reports and if you want to get the risk report, risk memo we published on bitcoin on january 15th"
-    },
-    {
-      "title": "Welcome Back Home, Ethereum!",
-      "statement": "i think this is going to play out"
-    },
-    {
-      "title": "Welcome Back Home, Ethereum!",
-      "statement": "i think is that ethereum will spend more time in 2026 in its regression band, a lot more time than it did last cycle"
-    },
-    {
-      "title": "The Mechanism That Ends Business Cycles",
-      "statement": "likely will take a couple of years to play out, you know, and if you"
-    },
-    {
-      "title": "The Mechanism That Ends Business Cycles",
-      "statement": "i think a lot of people are going to blame ai, but i think that"
+      "title": "Bitcoin Relative Strength Index",
+      "statement": "i think one day you know i think one day in the not so distant future will come out the other side but there"
     }
   ]
 }

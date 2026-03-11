@@ -116,12 +116,14 @@
         </section>
 
         <section class="card">
-            <div class="card-label">Indicators</div>
+            <div class="card-label">Key Indicators <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">Risk Score (0-1) measures how far BTC is from log regression fair value — below 0.3 is historically cheap, above 0.7 is overheated. Bull Market Support Band (20W SMA + 21W EMA) — price above = bull trend, below = bear. Cycle Progress tracks position in the 4-year halving cycle.</div>
             <div id="btcIndicators" class="kv-list"></div>
         </section>
 
         <section class="card">
-            <div class="card-label">Framework Context</div>
+            <div class="card-label">Cowen's Framework Context <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">Key insights extracted from Benjamin Cowen's latest video analysis. These reflect his current market thesis, cycle outlook, and specific views on Bitcoin's trajectory based on his regression and macro frameworks.</div>
             <div id="btcContext" class="context-list"></div>
         </section>
     </main>
@@ -147,7 +149,8 @@
         </section>
 
         <section class="card">
-            <div class="card-label">S&amp;P 500</div>
+            <div class="card-label">S&amp;P 500 <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+            <div class="info-desc">The S&amp;P 500 index tracks 500 of the largest US public companies. The orange dashed line is the 200-day moving average — when price is above it, the long-term trend is bullish. When below, it signals potential bear territory. Crypto often moves in correlation with equities during macro-driven periods.</div>
             <div class="chart-wrap"><canvas id="spChart"></canvas></div>
         </section>
 

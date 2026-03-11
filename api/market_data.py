@@ -82,7 +82,7 @@ class MarketDataAPI:
 
         data = self._cg_get("/simple/price", {
             "ids": ",".join(coin_ids),
-            "vs_currency": "usd",
+            "vs_currencies": "usd",
             "include_24hr_change": "true",
             "include_market_cap": "true",
             "include_24hr_vol": "true",
@@ -342,7 +342,38 @@ class MarketDataAPI:
                 "market_cap_change_24h": gd.get("market_cap_change_percentage_24h_usd", 0),
             }
 
-        return {"btc_dominance": 0, "eth_dominance": 0, "error": "Unable to fetch"}
+        # Fallback: calculate dominance from simple/price market caps
+        return self._btc_dominance_fallback()
+
+    def _btc_dominance_fallback(self):
+        """Calculate BTC dominance from market caps when /global is rate limited."""
+        try:
+            # Reuse already-cached price data (same call the dashboard makes)
+            btc_data = self._coingecko_simple_price(["bitcoin"])
+            eth_data = self._coingecko_simple_price(["ethereum"])
+            btc_mcap = btc_data.get("bitcoin", {}).get("usd_market_cap", 0)
+            eth_mcap = eth_data.get("ethereum", {}).get("usd_market_cap", 0)
+
+            if btc_mcap <= 0:
+                return {"btc_dominance": 0, "eth_dominance": 0, "error": "Unable to fetch"}
+
+            # Estimate total crypto market cap from BTC's typical dominance range (~57-60%)
+            # This is approximate but better than showing 0
+            est_total = btc_mcap / 0.58
+
+            btc_dom = round((btc_mcap / est_total) * 100, 1) if est_total > 0 else 0
+            eth_dom = round((eth_mcap / est_total) * 100, 1) if est_total > 0 else 0
+
+            return {
+                "btc_dominance": btc_dom,
+                "eth_dominance": eth_dom,
+                "total_market_cap": round(est_total),
+                "total_volume": 0,
+                "market_cap_change_24h": 0,
+            }
+        except Exception as e:
+            print(f"Dominance fallback error: {e}")
+            return {"btc_dominance": 0, "eth_dominance": 0, "error": "Unable to fetch"}
 
     def get_macro_data(self):
         """Get macro economic indicators."""

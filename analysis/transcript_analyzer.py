@@ -316,36 +316,75 @@ class TranscriptAnalyzer:
             json.dump(kb, f, indent=2)
 
     def _save_latest_insights(self):
-        """Save insights formatted for the dashboard."""
-        insights = {
+        """Save insights formatted for the dashboard. Preserves curated fields from existing file."""
+        insights_path = os.path.join(OUTPUT_DIR, "latest_insights.json")
+
+        # Load existing insights to preserve curated thesis data
+        existing = {}
+        if os.path.exists(insights_path):
+            try:
+                with open(insights_path, "r") as f:
+                    existing = json.load(f)
+            except Exception:
+                pass
+
+        total_words = sum(t.get("word_count", 0) for t in self.transcripts)
+        hours = round(total_words / 150 / 60, 1)
+
+        sentiment = self.analysis_results.get("sentiment_analysis", {}).get("overall", {})
+        asset_focus = self.analysis_results.get("asset_focus", {})
+
+        # Update stats and auto-generated fields; preserve curated fields
+        existing.update({
             "generated_at": datetime.now().isoformat(),
             "transcript_stats": {
                 "total_transcripts": len(self.transcripts),
-                "total_words": sum(t.get("word_count", 0) for t in self.transcripts),
-                "estimated_hours": sum(t.get("word_count", 0) for t in self.transcripts) / 150 / 60,
+                "total_words": total_words,
+                "estimated_hours": hours,
             },
-            "key_themes": [
-                "Logarithmic regression provides fair value framework for Bitcoin",
-                "4-year halving cycle is the primary market driver",
-                "Bitcoin dominance rises in bear markets, falls in bull markets",
-                "Bull Market Support Band (20W SMA + 21W EMA) defines trend",
-                "200-week SMA crossing prior ATH signals cycle top",
-                "Business cycles end with oil spikes and recessions",
-                "Midterm years (2 years post-halving) historically weakest for BTC",
-                "Post-halving years historically strongest for BTC",
-                "DCA into fear, take profits into euphoria",
-                "Macro conditions (DXY, rates, oil) override short-term technicals",
-                "Gold tends to outperform BTC in midterm/risk-off years",
-                "ETH/BTC ratio tends to decline when BTC dominance rises",
-            ],
             "most_discussed_indicators": list(
                 self.analysis_results.get("indicator_frequency", {}).keys()
             )[:10],
+            "sentiment_from_transcripts": {
+                "bullish_mentions": sentiment.get("bullish", 0),
+                "bearish_mentions": sentiment.get("bearish", 0),
+                "cautious_mentions": sentiment.get("cautious", 0),
+                "neutral_mentions": sentiment.get("neutral", 0),
+                "overall_lean": self._determine_sentiment_lean(sentiment),
+            },
+            "asset_focus_from_transcripts": asset_focus,
+            "knowledge_base": {
+                "videos_analyzed": len(self.transcripts),
+                "total_words": total_words,
+                "hours_content": hours,
+            },
             "latest_video": self.transcripts[0].get("title", "") if self.transcripts else "",
-        }
+        })
 
-        with open(os.path.join(OUTPUT_DIR, "latest_insights.json"), "w") as f:
-            json.dump(insights, f, indent=2)
+        # Ensure key_themes exists (preserve curated or use defaults)
+        if "key_themes" not in existing:
+            existing["key_themes"] = [
+                "Logarithmic regression provides fair value anchor for BTC",
+                "4-year halving cycle is the primary market driver",
+                "Bitcoin dominance rises in bear markets, falls in bull markets",
+                "Bull Market Support Band (20W SMA + 21W EMA) defines trend",
+                "DCA into fear, not euphoria",
+            ]
+
+        with open(insights_path, "w") as f:
+            json.dump(existing, f, indent=2)
+
+    def _determine_sentiment_lean(self, sentiment):
+        """Determine overall sentiment lean from word counts."""
+        bull = sentiment.get("bullish", 0)
+        bear = sentiment.get("bearish", 0)
+        cautious = sentiment.get("cautious", 0)
+        if bear + cautious > bull * 1.2:
+            return "Cautiously bearish — Cowen mentions bullish setups but with significant bearish and cautious qualifiers"
+        elif bull > (bear + cautious) * 1.2:
+            return "Bullish — Cowen sees more upside setups than downside risk"
+        else:
+            return "Mixed — roughly equal bullish and bearish signals"
 
 
 def main():

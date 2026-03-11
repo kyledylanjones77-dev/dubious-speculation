@@ -160,20 +160,45 @@ function renderBtcPage(d) {
         }
     }
 
-    // Indicators
+    // Key Indicators — relevant BTC landscape data
     const ind = $('btcIndicators');
     ind.innerHTML = '';
-    if (d.key_levels) {
-        for (const [k, v] of Object.entries(d.key_levels)) {
-            if (v) ind.innerHTML += `<div class="kv-row"><span class="kv-key">${fmtName(k)}</span><span class="kv-val">${fp(v)}</span></div>`;
-        }
+
+    // Risk metric & fair value
+    const rm = d.risk_metric || {};
+    if (rm.risk_score !== undefined) {
+        const rColor = rm.risk_score < 0.3 ? '#00c805' : rm.risk_score < 0.55 ? '#ffcc00' : rm.risk_score < 0.75 ? '#ff8800' : '#ff5000';
+        ind.innerHTML += `<div class="kv-row"><span class="kv-key">Risk Score</span><span class="kv-val" style="color:${rColor}">${rm.risk_score.toFixed(3)}</span></div>`;
     }
+    if (rm.fair_value) ind.innerHTML += `<div class="kv-row"><span class="kv-key">Fair Value (Regression)</span><span class="kv-val">${fp(rm.fair_value)}</span></div>`;
+    if (rm.distance_from_fair) ind.innerHTML += `<div class="kv-row"><span class="kv-key">Distance from Fair</span><span class="kv-val">${rm.distance_from_fair}</span></div>`;
+    if (rm.zone) ind.innerHTML += `<div class="kv-row"><span class="kv-key">Zone</span><span class="kv-val" style="font-size:11px">${rm.zone}</span></div>`;
+
+    // Bull Market Support Band
     if (d.bull_market_support_band) {
         const bb = d.bull_market_support_band;
+        ind.innerHTML += `<div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border)"></div>`;
         ind.innerHTML += `<div class="kv-row"><span class="kv-key">20W SMA</span><span class="kv-val">${fp(bb.sma_20w)}</span></div>`;
         ind.innerHTML += `<div class="kv-row"><span class="kv-key">21W EMA</span><span class="kv-val">${fp(bb.ema_21w)}</span></div>`;
         const sigClass = /bull/i.test(bb.signal) ? 'sig-bull' : /bear/i.test(bb.signal) ? 'sig-bear' : 'sig-neutral';
         ind.innerHTML += `<div class="kv-signal ${sigClass}">${bb.signal}</div>`;
+    }
+
+    // Cycle Position
+    const cyc = d.cycle_position || {};
+    if (cyc.cycle_progress !== undefined) {
+        ind.innerHTML += `<div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border)"></div>`;
+        ind.innerHTML += `<div class="kv-row"><span class="kv-key">Cycle Progress</span><span class="kv-val">${(cyc.cycle_progress * 100).toFixed(1)}%</span></div>`;
+        if (cyc.days_since_halving) ind.innerHTML += `<div class="kv-row"><span class="kv-key">Days Since Halving</span><span class="kv-val">${cyc.days_since_halving}</span></div>`;
+        if (cyc.cycle_year) ind.innerHTML += `<div class="kv-row"><span class="kv-key">Cycle Phase</span><span class="kv-val" style="font-size:10px">${cyc.cycle_year.split('(')[0].trim()}</span></div>`;
+    }
+
+    // Key Levels (only meaningful ones)
+    if (d.key_levels) {
+        const kl = d.key_levels;
+        ind.innerHTML += `<div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border)"></div>`;
+        if (kl.bull_band_support) ind.innerHTML += `<div class="kv-row"><span class="kv-key">Bull Band Support</span><span class="kv-val">${fp(kl.bull_band_support)}</span></div>`;
+        if (kl['200w_sma']) ind.innerHTML += `<div class="kv-row"><span class="kv-key">200W SMA</span><span class="kv-val">${fp(kl['200w_sma'])}</span></div>`;
     }
 
     // Context
@@ -429,15 +454,22 @@ function renderMacro(d) {
     if (!el) return;
     el.innerHTML = '';
     const info = {
-        DXY: { n: 'US Dollar Index (DXY)', impact: v => v > 105 ? 'Headwind for crypto' : v < 95 ? 'Tailwind for crypto' : 'Neutral range' },
-        Oil_WTI: { n: 'Oil (WTI Crude)', impact: v => v > 100 ? 'Business cycle risk!' : v > 80 ? 'Elevated' : 'Normal range' },
-        Treasury_10Y: { n: '10Y Treasury Yield', impact: v => v > 4.5 ? 'Tight conditions' : v > 3 ? 'Moderate' : 'Loose conditions' },
+        DXY: { n: 'US Dollar Index (DXY)',
+            desc: 'Measures the dollar against a basket of major currencies. A strong dollar (above 105) is a headwind for crypto and commodities. A weak dollar (below 95) is a tailwind. Cowen considers DXY one of the most important macro indicators.',
+            impact: v => v > 105 ? 'Headwind for crypto' : v < 95 ? 'Tailwind for crypto' : 'Neutral range' },
+        Oil_WTI: { n: 'Oil (WTI Crude)',
+            desc: 'Crude oil price per barrel. Cowen notes that oil spikes historically end business cycles. Above $100 = recessionary risk. Sustained high oil prices drain consumer spending and can trigger broader market selloffs.',
+            impact: v => v > 100 ? 'Business cycle risk!' : v > 80 ? 'Elevated' : 'Normal range' },
+        Treasury_10Y: { n: '10Y Treasury Yield',
+            desc: 'The yield on 10-year US government bonds. Higher yields mean tighter financial conditions — bad for risk assets. Below 3% = loose conditions favoring stocks/crypto. Above 4.5% = tight, acting as a drag on valuations.',
+            impact: v => v > 4.5 ? 'Tight conditions' : v > 3 ? 'Moderate' : 'Loose conditions' },
     };
     for (const [k, meta] of Object.entries(info)) {
         const item = d[k]; if (!item || item.error) continue;
         el.innerHTML += `
             <div class="macro-item">
-                <div class="macro-name">${meta.n}</div>
+                <div class="macro-name">${meta.n} <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+                <div class="info-desc">${meta.desc}</div>
                 <div class="macro-val">${(item.current || 0).toFixed(2)}</div>
                 <div class="macro-impact">${meta.impact(item.current)}</div>
             </div>`;
@@ -487,12 +519,18 @@ function renderEconCards(d) {
     container.innerHTML = '';
 
     const cards = [
-        { key: 'unemployment_rate', fmt: v => v.toFixed(1) + '%', label: 'Unemployment Rate' },
-        { key: 'initial_claims', fmt: v => v.toFixed(0) + 'K', label: 'Initial Claims (Weekly)' },
-        { key: 'continuing_claims', fmt: v => (v / 1000).toFixed(2) + 'M', label: 'Continuing Claims' },
-        { key: 'nonfarm_payrolls', fmt: v => (v / 1000).toFixed(1) + 'M jobs', label: 'Total Nonfarm Employment' },
-        { key: 'vix', fmt: v => v.toFixed(1), label: 'VIX (Fear Index)' },
-        { key: 'sp500', fmt: v => v.toLocaleString('en-US', {maximumFractionDigits:0}), label: 'S&P 500' },
+        { key: 'unemployment_rate', fmt: v => v.toFixed(1) + '%', label: 'Unemployment Rate',
+          desc: 'Percentage of the labor force actively looking for work. Below 4% is strong. Rising above 4.5% signals economic weakness. The Fed watches this closely to set interest rate policy.' },
+        { key: 'initial_claims', fmt: v => v.toFixed(0) + 'K', label: 'Initial Claims (Weekly)',
+          desc: 'New unemployment filings each week. Below 250K is healthy. A spike above 300K signals sudden layoffs — one of the earliest recession warnings.' },
+        { key: 'continuing_claims', fmt: v => (v / 1000).toFixed(2) + 'M', label: 'Continuing Claims',
+          desc: 'Total people still receiving unemployment benefits. Rising continuing claims means people are struggling to find new jobs — a sign the labor market is softening.' },
+        { key: 'nonfarm_payrolls', fmt: v => (v / 1000).toFixed(1) + 'M jobs', label: 'Total Nonfarm Employment',
+          desc: 'Total number of paid workers in the economy (excluding farms). Month-over-month changes show if the economy is adding or losing jobs. Positive = growing economy.' },
+        { key: 'vix', fmt: v => v.toFixed(1), label: 'VIX (Fear Index)',
+          desc: 'Measures expected market volatility over 30 days. Below 15 = calm/complacent. 15-25 = normal. Above 30 = fear/panic. Cowen notes high VIX often creates buying opportunities for crypto.' },
+        { key: 'sp500', fmt: v => v.toLocaleString('en-US', {maximumFractionDigits:0}), label: 'S&P 500',
+          desc: 'The benchmark index of 500 largest US companies. Its trend reflects overall market health. Price above 200-day SMA = bullish trend. BTC often correlates with S&P during macro-driven markets.' },
     ];
 
     for (const c of cards) {
@@ -511,9 +549,11 @@ function renderEconCards(d) {
         if (item.signal) extra = `<div style="font-size:10px;color:var(--t3)">${item.signal}</div>`;
         if (item.above_sma_200 !== undefined) extra = `<div style="font-size:10px;color:${item.above_sma_200 ? '#00c805' : '#ff5000'}">${item.above_sma_200 ? 'Above' : 'Below'} 200-day SMA</div>`;
 
+        const descId = `info-${c.key}`;
         container.innerHTML += `
             <div class="macro-item">
-                <div class="macro-name">${c.label}</div>
+                <div class="macro-name">${c.label} <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+                <div class="info-desc">${c.desc || ''}</div>
                 <div class="macro-val">${c.fmt(val)}</div>
                 <div style="font-size:11px;color:${changeColor}">${changeStr}</div>
                 ${extra}
@@ -801,13 +841,20 @@ function renderHousing(housing) {
     container.innerHTML = '';
 
     const cards = [
-        { key: 'mortgage_rate', fmt: v => v.toFixed(2) + '%', label: '30-Year Mortgage' },
-        { key: 'median_home_price', fmt: v => '$' + (v/1000).toFixed(0) + 'K', label: 'Median Home Price' },
-        { key: 'housing_starts', fmt: v => v.toFixed(0) + 'K', label: 'Housing Starts (SAAR)' },
-        { key: 'building_permits', fmt: v => v.toFixed(0) + 'K', label: 'Building Permits (SAAR)' },
-        { key: 'existing_home_sales', fmt: v => v.toFixed(2) + 'M', label: 'Existing Home Sales' },
-        { key: 'months_supply', fmt: v => v.toFixed(1) + ' mo', label: 'Months of Supply' },
-        { key: 'home_price_index', fmt: v => v.toFixed(1), label: 'Case-Shiller Index' },
+        { key: 'mortgage_rate', fmt: v => v.toFixed(2) + '%', label: '30-Year Mortgage',
+          desc: 'Average interest rate on a 30-year fixed mortgage. Higher rates reduce affordability and slow the housing market. The Fed\'s rate policy directly impacts this — rate cuts eventually push mortgage rates down.' },
+        { key: 'median_home_price', fmt: v => '$' + (v/1000).toFixed(0) + 'K', label: 'Median Home Price',
+          desc: 'The middle price of all homes sold. Tracks whether housing is getting more or less expensive. Rising prices with falling sales can signal an unaffordable market.' },
+        { key: 'housing_starts', fmt: v => v.toFixed(0) + 'K', label: 'Housing Starts (SAAR)',
+          desc: 'Annualized rate of new residential construction. Measures builder confidence. Rising starts = builders expect demand. Falling starts = economic caution.' },
+        { key: 'building_permits', fmt: v => v.toFixed(0) + 'K', label: 'Building Permits (SAAR)',
+          desc: 'Permits issued for new construction — a leading indicator since permits come before building. Declining permits signal a housing slowdown ahead.' },
+        { key: 'existing_home_sales', fmt: v => v.toFixed(2) + 'M', label: 'Existing Home Sales',
+          desc: 'Annualized rate of previously-owned home sales. The bulk of the housing market. Low sales with high prices = frozen market where buyers can\'t afford and sellers won\'t move.' },
+        { key: 'months_supply', fmt: v => v.toFixed(1) + ' mo', label: 'Months of Supply',
+          desc: 'How many months it would take to sell all homes on the market at the current sales pace. Below 4 = seller\'s market (prices rise). Above 6 = buyer\'s market (prices may fall). Around 5-6 = balanced.' },
+        { key: 'home_price_index', fmt: v => v.toFixed(1), label: 'Case-Shiller Index',
+          desc: 'The S&P/Case-Shiller index tracks repeat home sales to measure actual price trends. It\'s the gold standard for housing price data — year-over-year changes show if the housing market is inflating or deflating.' },
     ];
 
     for (const c of cards) {
@@ -824,7 +871,8 @@ function renderHousing(housing) {
 
         container.innerHTML += `
             <div class="macro-item">
-                <div class="macro-name">${c.label}</div>
+                <div class="macro-name">${c.label} <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
+                <div class="info-desc">${c.desc || ''}</div>
                 <div class="macro-val">${c.fmt(item.current)}</div>
                 <div style="font-size:11px;color:${changeColor}">${changeStr}</div>
                 ${yoyStr ? `<div style="font-size:10px;color:var(--t3);margin-top:2px">${yoyStr}</div>` : ''}
@@ -1012,6 +1060,240 @@ function toggleInfo(el) {
     el.classList.toggle('open', open);
 }
 
+// Refresh Knowledge Base stats (hourly)
+async function refreshKnowledgeBase() {
+    const insights = await api('/api/cowen-insights');
+    if (insights) renderLearn(insights);
+}
+
+// =============================================
+// ASK BEN AI — Chat Interface
+// =============================================
+let chatHistory = [];  // {role, content} pairs for context
+let chatOpen = false;
+let chatReady = false;
+
+function toggleChat() {
+    chatOpen = !chatOpen;
+    const overlay = document.getElementById('chatOverlay');
+    const fab = document.getElementById('chatFab');
+    overlay.classList.toggle('open', chatOpen);
+    fab.classList.toggle('hidden', chatOpen);
+
+    if (chatOpen) {
+        document.getElementById('chatInput').focus();
+        // Check LLM status on first open
+        if (!chatReady) checkLLMStatus();
+    }
+}
+
+async function checkLLMStatus() {
+    const status = await api('/api/llm-status');
+    const dot = document.getElementById('chatStatus');
+    if (status && status.ready) {
+        chatReady = true;
+        dot.textContent = '●';
+        dot.className = 'chat-status';
+        dot.title = `${status.vector_store.chunks} chunks from ${status.vector_store.transcripts_embedded} videos`;
+    } else {
+        dot.className = 'chat-status offline';
+        dot.title = 'Vector store not built yet';
+        // Show build prompt
+        addBotMessage('The knowledge base needs to be indexed first. Building now — this takes a few minutes for ' +
+            (status?.transcripts_available || '?') + ' transcripts...');
+        // Auto-trigger build
+        await fetch('/api/llm-build', { method: 'POST', headers: {'Content-Type':'application/json'}, body: '{}' });
+        // Poll for readiness
+        pollLLMReady();
+    }
+    // Show suggestions if ready
+    if (chatReady) showSuggestions();
+}
+
+function pollLLMReady() {
+    const interval = setInterval(async () => {
+        const s = await api('/api/llm-status');
+        if (s && s.ready) {
+            chatReady = true;
+            clearInterval(interval);
+            document.getElementById('chatStatus').className = 'chat-status';
+            addBotMessage(`Knowledge base ready! ${s.vector_store.chunks.toLocaleString()} chunks from ${s.vector_store.transcripts_embedded} videos indexed. Ask me anything.`);
+            showSuggestions();
+        }
+    }, 5000);
+}
+
+function showSuggestions() {
+    const msgs = document.getElementById('chatMessages');
+    // Don't duplicate
+    if (msgs.querySelector('.chat-suggestions')) return;
+
+    const suggestions = [
+        "What's the current BTC risk level?",
+        "When does Ben think the cycle bottom will be?",
+        "Explain the bull market support band",
+        "What does Ben think about ETH vs BTC?",
+        "How do macro conditions affect crypto?",
+        "What's Ben's view on the 4-year cycle?",
+    ];
+
+    const div = document.createElement('div');
+    div.className = 'chat-suggestions';
+    suggestions.forEach(s => {
+        const chip = document.createElement('button');
+        chip.className = 'chat-chip';
+        chip.textContent = s;
+        chip.onclick = () => {
+            document.getElementById('chatInput').value = s;
+            sendChat();
+            div.remove();
+        };
+        div.appendChild(chip);
+    });
+    msgs.appendChild(div);
+    scrollChat();
+}
+
+async function sendChat() {
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // Remove suggestions if present
+    const sugs = document.querySelector('.chat-suggestions');
+    if (sugs) sugs.remove();
+
+    // Add user message
+    addUserMessage(msg);
+    input.value = '';
+    input.disabled = true;
+    document.getElementById('chatSend').disabled = true;
+
+    // Show typing indicator
+    const typing = addTypingIndicator();
+
+    try {
+        const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: msg,
+                history: chatHistory.slice(-8),  // last 4 exchanges
+            }),
+        });
+        const data = await res.json();
+
+        // Remove typing
+        typing.remove();
+
+        if (data.error) {
+            addBotMessage('Sorry, something went wrong: ' + data.error);
+        } else if (!data.ready) {
+            addBotMessage(data.response);
+        } else {
+            // Format response with sources
+            let html = formatMarkdown(data.response);
+
+            if (data.sources && data.sources.length > 0) {
+                html += '<div class="chat-sources">Sources: ';
+                html += data.sources.map(s =>
+                    `<a href="https://youtube.com/watch?v=${s.video_id}" target="_blank">${escHtml(s.title)}</a>`
+                ).join(' · ');
+                html += '</div>';
+            }
+
+            addBotMessageHTML(html);
+
+            // Update conversation history for context
+            chatHistory.push({ role: 'user', content: msg });
+            chatHistory.push({ role: 'assistant', content: data.response });
+        }
+    } catch (e) {
+        typing.remove();
+        addBotMessage('Connection error. Please try again.');
+    }
+
+    input.disabled = false;
+    document.getElementById('chatSend').disabled = false;
+    input.focus();
+}
+
+function addUserMessage(text) {
+    const msgs = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = 'chat-msg user';
+    div.innerHTML = `<div class="chat-bubble">${escHtml(text)}</div>`;
+    msgs.appendChild(div);
+    scrollChat();
+}
+
+function addBotMessage(text) {
+    const msgs = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = 'chat-msg bot';
+    div.innerHTML = `<div class="chat-bubble">${escHtml(text)}</div>`;
+    msgs.appendChild(div);
+    scrollChat();
+}
+
+function addBotMessageHTML(html) {
+    const msgs = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = 'chat-msg bot';
+    div.innerHTML = `<div class="chat-bubble">${html}</div>`;
+    msgs.appendChild(div);
+    scrollChat();
+}
+
+function addTypingIndicator() {
+    const msgs = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = 'chat-msg bot';
+    div.innerHTML = `<div class="chat-bubble chat-typing"><span></span><span></span><span></span></div>`;
+    msgs.appendChild(div);
+    scrollChat();
+    return div;
+}
+
+function scrollChat() {
+    const msgs = document.getElementById('chatMessages');
+    setTimeout(() => msgs.scrollTop = msgs.scrollHeight, 50);
+}
+
+function escHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+function formatMarkdown(text) {
+    // Basic markdown-like formatting
+    return escHtml(text)
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/`(.*?)`/g, '<code style="background:var(--bg2);padding:1px 4px;border-radius:3px;font-size:12px">$1</code>')
+        .replace(/\n\n/g, '<br><br>')
+        .replace(/\n/g, '<br>');
+}
+
+// Enter key to send
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && chatOpen && document.activeElement === document.getElementById('chatInput')) {
+        e.preventDefault();
+        sendChat();
+    }
+    // Escape to close
+    if (e.key === 'Escape' && chatOpen) {
+        toggleChat();
+    }
+});
+
+// Close chat on overlay click (outside panel)
+document.getElementById('chatOverlay')?.addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) toggleChat();
+});
+
 // Boot
 document.addEventListener('DOMContentLoaded', init);
-setInterval(init, 5 * 60 * 1000);
+setInterval(init, 5 * 60 * 1000);          // Full refresh every 5 min
+setInterval(refreshKnowledgeBase, 60 * 60 * 1000); // Knowledge Base every 1 hour
