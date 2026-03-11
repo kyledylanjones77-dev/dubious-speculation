@@ -9,9 +9,12 @@ let mortgageChartInstance = null;
 // Store raw data for timeframe switching
 let _btcHistoryData = null;
 let _econData = null;
+let _dashData = null;
+let _fcData = null;
 let _currentBtcDays = 365;
 let _currentEconDays = 365;
 let _currentSpDays = 365;
+let _sparkDrawn = false;
 
 async function api(path) {
     try { const r = await fetch(path); return r.ok ? await r.json() : null; }
@@ -25,6 +28,10 @@ function switchPage(name) {
     document.getElementById('page-' + name).classList.add('active');
     document.querySelector(`.bnav[data-page="${name}"]`).classList.add('active');
     window.scrollTo(0, 0);
+    // Draw sparklines once Assets page is visible (needs offsetWidth > 0)
+    if (name === 'assets' && !_sparkDrawn && _dashData) {
+        requestAnimationFrame(() => drawAllSparklines(_dashData));
+    }
 }
 
 // Init
@@ -51,7 +58,10 @@ async function init() {
 
     if (comp) renderComposite(comp);
     if (risk) renderRisk(risk);
-    if (fc) { renderTicker(fc); renderBtcPage(fc.bitcoin); renderAssets(fc); }
+    _dashData = dash;
+    _fcData = fc;
+    _sparkDrawn = false;
+    if (fc) { renderTicker(fc); renderBtcPage(fc.bitcoin); renderAssets(fc, dash); }
     // BTC Dominance from faster dashboard endpoint, fallback to forecasts
     const domData = fc?.btc_dominance || {};
     if (dash?.btc_dominance) {
@@ -99,16 +109,6 @@ function renderRisk(d) {
     $('cFair').textContent = fp(d.fair_value);
     $('cDist').textContent = d.distance_from_fair || '';
     $('actionBar').textContent = d.action || '';
-}
-
-// Cycle
-function renderCycle(d) {
-    const pos = d.current_position;
-    if (!pos) return;
-    const pct = (pos.cycle_progress || 0) * 100;
-    $('cycleNum').textContent = pct.toFixed(0) + '%';
-    $('cycleFill').style.width = pct + '%';
-    $('cycleDesc').textContent = (pos.cycle_year || '').split('(')[0].trim();
 }
 
 // Ticker
@@ -167,7 +167,7 @@ function renderBtcPage(d) {
             if (!f.low_estimate) continue;
             grid.innerHTML += `
                 <div class="fc-cell">
-                    <div class="fc-period">${period.replace('_', ' ')}</div>
+                    <div class="fc-period">${period.replace(/_/g, ' ')}</div>
                     <div class="fc-range">${fcp(f.low_estimate)}<br>-<br>${fcp(f.high_estimate)}</div>
                     <div class="fc-fair">Fair: ${fcp(f.fair_value_at_date)}</div>
                 </div>`;
@@ -253,6 +253,8 @@ function renderBtcChart(data, days) {
         : days <= 90 ? { month: 'short', day: 'numeric' }
         : { month: 'short', year: '2-digit' };
 
+    // Calculate offset for band index lookup (prices may be a slice of data.price_history)
+    const bandOffset = data.price_history.indexOf(prices[0]);
     for (let i = 0; i < prices.length; i += step) {
         const p = prices[i];
         labels.push(new Date(p.timestamp).toLocaleDateString('en-US', dateFmt));
@@ -260,12 +262,12 @@ function renderBtcChart(data, days) {
 
         // Only show bands for longer timeframes
         if (days > 90 && bands.fair) {
-            const origIdx = data.price_history.indexOf(p);
-            if (bands.fair[origIdx]) fairData.push(bands.fair[origIdx].price);
+            const origIdx = bandOffset >= 0 ? bandOffset + i : -1;
+            if (origIdx >= 0 && bands.fair[origIdx]) fairData.push(bands.fair[origIdx].price);
             else fairData.push(null);
-            if (bands.low && bands.low[origIdx]) lowData.push(bands.low[origIdx].price);
+            if (origIdx >= 0 && bands.low && bands.low[origIdx]) lowData.push(bands.low[origIdx].price);
             else lowData.push(null);
-            if (bands.high && bands.high[origIdx]) highData.push(bands.high[origIdx].price);
+            if (origIdx >= 0 && bands.high && bands.high[origIdx]) highData.push(bands.high[origIdx].price);
             else highData.push(null);
         }
     }
@@ -368,7 +370,7 @@ function renderScoreChart(scores) {
     if (!canvas || !scores) return;
 
     const labels = Object.keys(scores).map(fmtName);
-    const values = Object.values(scores).map(v => (typeof v === 'number' ? v : v) * 100);
+    const values = Object.values(scores).map(v => (typeof v === 'number' ? v : parseFloat(v) || 0) * 100);
     const colors = values.map(v => v > 0 ? 'rgba(0,200,5,0.7)' : 'rgba(255,80,0,0.7)');
 
     if (scoreChartInstance) scoreChartInstance.destroy();
@@ -412,40 +414,18 @@ function renderScoreChart(scores) {
     });
 }
 
-// Bands
-function renderBands(d) {
-    const el = $('btcBands');
-    if (!el || !d.bands) return;
-    el.innerHTML = '';
-    const colors = { bottom: '#00c805', low: '#44dd44', mid_low: '#88cc00', fair: '#5ac8fa', mid_high: '#ffcc00', high: '#ff8800', top: '#ff5000' };
-    for (const [name, price] of Object.entries(d.bands)) {
-        const isActive = d.current_band?.toLowerCase().includes(name);
-        el.innerHTML += `
-            <div class="band-row ${isActive ? 'active' : ''}">
-                <div class="band-dot" style="background:${colors[name] || '#fff'}"></div>
-                <span class="band-name">${name.replace('_', ' ')}</span>
-                <span class="band-price" style="color:${colors[name] || '#fff'}">${fp(price)}</span>
-            </div>`;
-    }
-    el.innerHTML += `
-        <div class="band-row" style="background:rgba(255,255,255,0.05)">
-            <div class="band-dot" style="background:#fff"></div>
-            <span class="band-name" style="color:#fff;font-weight:700">Current</span>
-            <span class="band-price">${fp(d.current_price)}</span>
-        </div>`;
-}
-
 // Assets
-function renderAssets(fc) {
+function renderAssets(fc, dash) {
     const container = $('assetSwipe');
+    if (!container) return;
     container.innerHTML = '';
     const assets = [
-        { k: 'ethereum', n: 'Ethereum (ETH)' },
-        { k: 'gold', n: 'Gold (XAU)' },
-        { k: 'silver', n: 'Silver (XAG)' },
-        { k: 'uranium', n: 'Uranium (URA)' },
-        { k: 'dogecoin', n: 'Dogecoin (DOGE)' },
-        { k: 'btc_dominance', n: 'BTC Dominance' },
+        { k: 'ethereum', n: 'Ethereum (ETH)', dk: 'ethereum' },
+        { k: 'gold', n: 'Gold (XAU)', dk: 'gold' },
+        { k: 'silver', n: 'Silver (XAG)', dk: 'silver' },
+        { k: 'uranium', n: 'Uranium (URA)', dk: 'uranium' },
+        { k: 'dogecoin', n: 'Dogecoin (DOGE)', dk: 'dogecoin' },
+        { k: 'btc_dominance', n: 'BTC Dominance', dk: null },
     ];
 
     for (const a of assets) {
@@ -453,11 +433,12 @@ function renderAssets(fc) {
         const price = d.current_price || d.current_dominance || 0;
         const bias = d.bias || d.bias_vs_btc || '';
         const biasClass = /bull|long|accum/i.test(bias) ? 'badge-bull' : /bear|cautious/i.test(bias) ? 'badge-bear' : 'badge-neutral';
+        const change24h = d.change_24h || (dash && a.dk && dash[a.dk] ? dash[a.dk].change_24h : null);
 
         let fcHtml = '';
         if (d.forecasts) {
             for (const [period, f] of Object.entries(d.forecasts)) {
-                const label = period.replace('_', ' ');
+                const label = period.replace(/_/g, ' ');
                 if (f.low_estimate) {
                     fcHtml += `<div class="ac-fc"><div style="color:var(--t3)">${label}</div><div class="fc-val">${fcp(f.low_estimate)}-${fcp(f.high_estimate)}</div></div>`;
                 } else if (f.note) {
@@ -477,16 +458,85 @@ function renderAssets(fc) {
             ctxHtml = `<div class="ac-extra" style="margin-top:8px;border-top:1px solid var(--border);padding-top:8px">${d.cowen_context.slice(0, 2).map(c => `<div style="font-size:11px;color:var(--t2);margin-bottom:4px">&#8226; ${c}</div>`).join('')}</div>`;
         }
 
+        // 24h change badge
+        const changeHtml = change24h != null ? `<span class="ac-change" style="color:${change24h >= 0 ? '#00c805' : '#ff5000'};font-size:12px;font-weight:600;margin-left:8px">${change24h >= 0 ? '+' : ''}${change24h.toFixed(2)}%</span>` : '';
+
+        // Sparkline canvas ID
+        const sparkId = `spark-${a.k.replace(/_/g, '')}`;
+
         container.innerHTML += `
             <div class="asset-card">
                 <div class="ac-header"><div class="ac-name">${a.n}</div></div>
-                <div class="ac-price">${a.k === 'btc_dominance' ? price.toFixed(1) + '%' : fp(price)}</div>
+                <div class="ac-price">${a.k === 'btc_dominance' ? price.toFixed(1) + '%' : fp(price)}${changeHtml}</div>
                 <div class="ac-bias ${biasClass}">${(bias.split(' - ')[0] || bias).substring(0, 25)}</div>
+                ${a.dk ? `<div class="spark-wrap"><canvas id="${sparkId}"></canvas></div>` : ''}
                 ${fcHtml ? `<div class="ac-forecasts">${fcHtml}</div>` : ''}
                 ${extra ? `<div class="ac-extra">${extra}</div>` : ''}
                 ${ctxHtml}
             </div>`;
     }
+
+    // Sparklines drawn when Assets page becomes visible (needs offsetWidth > 0)
+}
+
+function drawAllSparklines(dash) {
+    if (!dash) return;
+    const map = { ethereum: 'ethereum', gold: 'gold', silver: 'silver', uranium: 'uranium', dogecoin: 'dogecoin' };
+    for (const [key, dk] of Object.entries(map)) {
+        if (!dash[dk] || !dash[dk].price_history) continue;
+        const canvas = $(`spark-${key}`);
+        if (!canvas) continue;
+        drawSparkline(canvas, dash[dk].price_history);
+    }
+    _sparkDrawn = true;
+}
+
+function drawSparkline(canvas, history) {
+    if (!history || history.length < 2) return;
+    // Use last 90 days of data
+    const cutoff = Date.now() - 90 * 86400000;
+    let pts = history.filter(p => p.timestamp >= cutoff);
+    if (pts.length < 2) pts = history.slice(-90);
+    // Downsample to ~60 points
+    const step = Math.max(1, Math.floor(pts.length / 60));
+    const prices = [];
+    for (let i = 0; i < pts.length; i += step) prices.push(pts[i].price);
+
+    const ctx = canvas.getContext('2d');
+    const w = canvas.parentElement.offsetWidth;
+    const h = 48;
+    canvas.width = w * 2;
+    canvas.height = h * 2;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.scale(2, 2);
+
+    const min = Math.min(...prices);
+    const max = Math.max(...prices);
+    const range = max - min || 1;
+    const isUp = prices[prices.length - 1] >= prices[0];
+    const color = isUp ? '#00c805' : '#ff5000';
+
+    ctx.beginPath();
+    for (let i = 0; i < prices.length; i++) {
+        const x = (i / (prices.length - 1)) * w;
+        const y = h - ((prices[i] - min) / range) * (h - 4) - 2;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Fill gradient
+    ctx.lineTo(w, h);
+    ctx.lineTo(0, h);
+    ctx.closePath();
+    const grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, isUp ? 'rgba(0,200,5,0.15)' : 'rgba(255,80,0,0.15)');
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grad;
+    ctx.fill();
 }
 
 // Macro (DXY, Oil, Treasury - existing)
@@ -590,7 +640,6 @@ function renderEconCards(d) {
         if (item.signal) extra = `<div style="font-size:10px;color:var(--t3)">${item.signal}</div>`;
         if (item.above_sma_200 !== undefined) extra = `<div style="font-size:10px;color:${item.above_sma_200 ? '#00c805' : '#ff5000'}">${item.above_sma_200 ? 'Above' : 'Below'} 200-day SMA</div>`;
 
-        const descId = `info-${c.key}`;
         container.innerHTML += `
             <div class="macro-item">
                 <div class="macro-name">${c.label} <span class="info-toggle" onclick="toggleInfo(this)">i</span></div>
@@ -626,26 +675,36 @@ function renderEconChart(d, days) {
 
     const dateFmt = days <= 90 ? (d => d.substring(5)) : (d => d.substring(0, 7));
 
-    // Downsample claims for readability
-    const clStep = Math.max(1, Math.floor(claimsData.length / 60));
-    const clLabels = [];
-    const clValues = [];
-    for (let i = 0; i < claimsData.length; i += clStep) {
-        clLabels.push(dateFmt(claimsData[i].date));
-        clValues.push(claimsData[i].value);
+    // Merge both datasets onto a unified date axis
+    const dateMap = new Map();
+    for (const p of unempData) dateMap.set(p.date, { unemp: p.value });
+    for (const p of claimsData) {
+        const entry = dateMap.get(p.date) || {};
+        entry.claims = p.value;
+        dateMap.set(p.date, entry);
     }
+    const allDates = [...dateMap.keys()].sort();
 
-    // Unemployment is monthly — use all points
-    const uLabels = unempData.map(p => dateFmt(p.date));
-    const uValues = unempData.map(p => p.value);
-
-    // Use claims timeline if more points, else unemployment
-    const primaryLabels = clLabels.length > uLabels.length ? clLabels : uLabels;
+    // Downsample for readability
+    const step = Math.max(1, Math.floor(allDates.length / 60));
+    const labels = [];
+    const uValues = [];
+    const clValues = [];
+    let lastUnemp = null;
+    for (let i = 0; i < allDates.length; i += step) {
+        const dt = allDates[i];
+        const entry = dateMap.get(dt);
+        labels.push(dateFmt(dt));
+        // Forward-fill unemployment (monthly) across weekly dates
+        if (entry.unemp !== undefined) lastUnemp = entry.unemp;
+        uValues.push(lastUnemp);
+        clValues.push(entry.claims !== undefined ? entry.claims : null);
+    }
 
     if (econChartInstance) econChartInstance.destroy();
 
     const datasets = [];
-    if (uValues.length > 0) {
+    if (uValues.some(v => v !== null)) {
         datasets.push({
             label: 'Unemployment %',
             data: uValues,
@@ -656,9 +715,10 @@ function renderEconChart(d, days) {
             tension: 0.3,
             fill: true,
             yAxisID: 'y',
+            spanGaps: true,
         });
     }
-    if (clValues.length > 0) {
+    if (clValues.some(v => v !== null)) {
         datasets.push({
             label: 'Initial Claims (K)',
             data: clValues,
@@ -668,13 +728,14 @@ function renderEconChart(d, days) {
             tension: 0.3,
             fill: false,
             yAxisID: 'y1',
+            spanGaps: true,
         });
     }
 
     econChartInstance = new Chart(canvas, {
         type: 'line',
         data: {
-            labels: datasets.length > 1 ? (clLabels.length >= uLabels.length ? clLabels : uLabels) : (uLabels.length ? uLabels : clLabels),
+            labels,
             datasets,
         },
         options: {
@@ -1070,7 +1131,7 @@ function renderFridayPredictions(d) {
     const hEl = $('funHistory');
     if (hEl && d.history && d.history.length > 0) {
         hEl.innerHTML = '';
-        for (const week of d.history.reverse()) {
+        for (const week of [...d.history].reverse()) {
             let rows = '';
             for (const [asset, r] of Object.entries(week.results)) {
                 const icon = r.correct ? '&#10003;' : '&#10007;';
@@ -1288,23 +1349,23 @@ function changeBtcTimeframe(days) {
 
 function changeSpTimeframe(days) {
     _currentSpDays = days;
-    const bar = document.querySelector('#page-macro .card:nth-child(3) .tf-bar');
+    const bar = $('spTfBar');
     if (bar) bar.querySelectorAll('.tf-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.days) === days));
     if (_econData) renderSpChart(_econData, days);
 }
 
 function changeEconTimeframe(days) {
     _currentEconDays = days;
-    const bar = document.querySelector('#page-macro .card:nth-child(2) .tf-bar');
+    const bar = $('econTfBar');
     if (bar) bar.querySelectorAll('.tf-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.days) === days));
     if (_econData) renderEconChart(_econData, days);
 }
 
 // Actions
 async function refreshAll() {
-    $('refreshBtn').style.opacity = '0.3';
-    await init();
-    $('refreshBtn').style.opacity = '1';
+    const btn = $('refreshBtn');
+    if (btn) btn.style.opacity = '0.3';
+    try { await init(); } finally { if (btn) btn.style.opacity = '1'; }
 }
 
 async function checkNewVideos() {
